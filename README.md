@@ -5,20 +5,24 @@ An online bookstore class project for CSCI4050 spring '21
 https://flask.palletsprojects.com/en/1.1.x/installation/#installation
 
 TlDR:
-(linux) 
+(linux)
 > $ python3 -m venv venv
-> 
+>
 > $ . venv/bin/activate
-> 
+>
 > $ pip install Flask
 
 (windows)
 > $ py -3 -m venv venv
-> 
+>
 > \> venv\Scripts\activate
-> 
+>
 > $ pip install Flask
 
 
 # Flask quickstart (how to run the web server):
 https://flask.palletsprojects.com/en/1.1.x/quickstart/
+
+
+# Notes
+- CSS may not always update without a hard refresh (CTRL + Shift + r)
