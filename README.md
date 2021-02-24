@@ -23,12 +23,9 @@ TlDR:
 # Flask quickstart (how to run the web server):
 https://flask.palletsprojects.com/en/1.1.x/quickstart/
 
-# SCSS/SASS
-- [What are sass/scss](https://www.geeksforgeeks.org/what-is-the-difference-between-scss-and-sass)
+# SCSS Setup
+- [Difference between Sass/SCSS](https://www.geeksforgeeks.org/what-is-the-difference-between-scss-and-sass)
 - [libsass with Flask](https://sass.github.io/libsass-python/frameworks/flask.html)
 
-`pip install libsass`
-
-
-# Notes
-- CSS may not always update without a hard refresh (CTRL + Shift + r)
+- `pip install libsass`
+- `export FLASK_APP=bookmarqueapp` point export to entire package folder
