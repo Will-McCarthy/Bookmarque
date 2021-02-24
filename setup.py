@@ -1,8 +1,10 @@
-from flask import Flask
-from flask import render_template
+from setuptools import setup
 
-app = Flask(__name__)
-
-@app.route('/')
-def homepage():
-    return render_template('index.html')
+setup(
+    name='bookmarqueapp',
+    packages=['bookmarqueapp'],
+    include_package_data=True,
+    install_requires=[
+        'flask',
+    ],
+)

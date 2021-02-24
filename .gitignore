@@ -130,3 +130,6 @@ dmypy.json
 
 # MacOS Specific
 .DS_Store
+
+# Sass/SCSS
+bookmarqueapp/static/css/
