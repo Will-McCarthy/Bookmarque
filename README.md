@@ -6,14 +6,18 @@ https://flask.palletsprojects.com/en/1.1.x/installation/#installation
 
 TlDR:
 (linux) 
-$ python3 -m venv venv
-$ . venv/bin/activate
-$ pip install Flask
+> $ python3 -m venv venv
+> 
+> $ . venv/bin/activate
+> 
+> $ pip install Flask
 
 (windows)
-$ py -3 -m venv venv
-> venv\Scripts\activate
-$ pip install Flask
+> $ py -3 -m venv venv
+> 
+> \> venv\Scripts\activate
+> 
+> $ pip install Flask
 
 
 # Flask quickstart (how to run the web server):
