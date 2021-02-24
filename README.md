@@ -1,7 +1,7 @@
 # Bookmarque
 An online bookstore class project for Software Engineering (CSCI4050) Spring '21.
 
-# Flask installation for your machine:
+## Flask installation for your machine:
 https://flask.palletsprojects.com/en/1.1.x/installation/#installation
 
 ## TLDR
