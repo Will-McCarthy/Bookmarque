@@ -1,5 +1,15 @@
-$test-color: blue;
+/* color pallete */
+$blue: #15253B;
+$gold: #F4CE92;
+$dark-blue: #1A1D24;
+$dark-gold: #B6622D;
+
+/* font families */
+$serif-font: 'Crimson Text', serif;
+$sans-font: 'Open Sans', sans-serif;
+$title-font: 'Bebas Neue', cursive;
 
 body {
-  background-color: $test-color;
+  background-color: $gold;
+  font-family: $title-font;
 }
