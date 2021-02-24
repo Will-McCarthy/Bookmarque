@@ -12,7 +12,7 @@
   </head>
 
   <header>
-    <div id="main_logo">
+    <div class="main_logo">
       <img src="{{ url_for('static', filename='bookcase.svg') }}"/> Bookmarqué
     </div>
 
@@ -43,6 +43,31 @@
     {% block content %}{% endblock %}
 
   <footer>
+    <ul class="footer_column">
+      <li class="main_logo">Bookmarqué</li>
+      <li>Luxury Literature.</li>
+    </ul>
+
+    <ul class="footer_column">
+      <li><b>Explore</b></li>
+      <li><a>Home</a></li>
+      <li><a>About</a></li>
+      <li><a>Manage Profile</a></li>
+    </ul>
+
+    <ul class="footer_column">
+      <li><b>Visit</b></li>
+      <li>2404 West View Ct., Suite 111</li>
+      <li>Athens, Ga, USA 30601</li>
+    </ul>
+
+    <ul class="footer_column">
+      <li><b>Contact</b></li>
+      <li>202.555.0079</li>
+      <li>help@bookmarque.co</li>
+    </ul>
+
+    &copy 2021 Bookmarque. All Rights Reserved.
 
   </footer>
 </html>
