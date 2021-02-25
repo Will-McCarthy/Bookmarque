@@ -9,7 +9,7 @@ https://flask.palletsprojects.com/en/1.1.x/installation/#installation
 - we need to install Flask to use it
 - it is good practice to create a virtual environment when working on a Python project
   - essentially it is an isolated copy of Python so you can work on a specific project without worry of affecting other projects/installing different versions of things/etc.
-- run the following commands to create and start the venv
+- run the following commands to create and start the venv and then install Flask
 
 (Mac/Linux)
 ```
