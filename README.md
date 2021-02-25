@@ -5,6 +5,12 @@ An online bookstore class project for Software Engineering (CSCI4050) Spring '21
 https://flask.palletsprojects.com/en/1.1.x/installation/#installation
 
 ## TLDR
+
+- we need to install Flask to use it
+- it is good practice to create a virtual environment when working on a Python project
+  - essentially it is an isolated copy of Python so you can work on a specific project without worry of affecting other projects/installing different versions of things/etc.
+- run the following commands to create and start the venv
+
 (Mac/Linux)
 ```
 $ python3 -m venv venv
@@ -19,16 +25,19 @@ $ py -3 -m venv venv
 $ pip install Flask
 ```
 
-## Running
+- to exit venv, you can use `deactivate` from CLI
+- to gain access to the virtual environment at a later time you will need to run the activate script again
+
+## Starting a Flask Server
 ```
 $ export FLASK_APP=hello.py
 $ flask run
 ```
 Now just open the port Flask prints!
 
-See below for how this project is run as a package instead of a module.
+See SCSS setup for how this project is run as a package instead of a module.
 
-## Flask Quickstart Tutorial (how to run the web server):
+## Flask Quickstart Tutorial (How to Run the Web Server):
 https://flask.palletsprojects.com/en/1.1.x/quickstart/
 
 ## SCSS Setup
@@ -39,3 +48,5 @@ https://flask.palletsprojects.com/en/1.1.x/quickstart/
 pip install libsass
 export FLASK_APP=bookmarqueapp
 ```
+
+- instead of exporting a module you are doing so with the entire package folder
