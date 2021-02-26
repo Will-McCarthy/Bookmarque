@@ -16,12 +16,14 @@
 
         <div id="promo_bar">Receive 20% off at checkout when you use promo code: CS4050</div>
 
-        <div class="main_logo">
-            <img src="{{ url_for('static', filename='assets/bookcase.svg') }}"/>
-            <h1>Bookmarqué</h1>
-        </div>
+        <div id="menu_bar">
+          <h1 class="main_logo">
+            <img class="icon" src="{{ url_for('static', filename='assets/bookcase.svg') }}"/>
+            Bookmarqué
+          </h1>
 
-        <ul id="nav_bar">
+
+          <ul id="nav_bar">
             <li><a>Featured</a></li>
             <li><a>The Classics</a></li>
             <li><a>Thrillers</a></li>
@@ -31,16 +33,20 @@
             <li><a>Self-Help</a></li>
             <li><a>Non-Fiction</a></li>
             <li><a>Sci-Fi</a></li>
-        </ul>
+          </ul>
 
-        <form>
-          <select>
-            <option>All</option>
-          </select>
+          <form>
+            <select>
+              <option>All</option>
+              <option>Other Optionz</option>
+            </select>
+            <input type="text">
+            <input type="submit">
+          </form>
 
-          <input type="text">
-          <input type="submit">
-        </form>
+        <a><img class="icon" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
+        <a><img class="icon" src="{{ url_for('static', filename='assets/shoppingcart.svg') }}"></a>
+      </div>
       </header>
 
       <main>
@@ -50,7 +56,7 @@
   <footer>
    <div>
         <ul class="footer_column">
-          <li class="main_logo">Bookmarqué</li>
+          <li class="main_logo"><h1>Bookmarqué</h1></li>
           <li>Luxury Literature.</li>
         </ul>
 
