@@ -35,18 +35,20 @@
             <li><a href="#">Sci-Fi</a></li>
           </ul>
 
-          <form>
+          <form class="search_bar">
             <select>
               <option>All</option>
               <option>Other Optionz</option>
             </select>
             <input type="text">
-            <input type="submit">
+            <button type="submit"><img src="{{ url_for('static', filename='assets/search.svg') }}"></button>
           </form>
 
-        <a><img class="icon" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
-        <a><img class="icon" src="{{ url_for('static', filename='assets/shoppingcart.svg') }}"></a>
-      </div>
+          <div id="nav_icons">
+            <a><img class="icon" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
+            <a><img class="icon" src="{{ url_for('static', filename='assets/shoppingcart.svg') }}"></a>
+          </div>
+        </div>
       </header>
 
       <main>

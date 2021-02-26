@@ -1,8 +1,11 @@
 /* color pallete */
 $blue: #15253B;
-$gold: #F4CE92;
 $dark-blue: #1A1D24;
+$light-gold: #FBEDD7;
+$gold: #F4CE92;
 $dark-gold: #B6622D;
+$light-grey: #E1E1E1;
+
 
 /* font families */
 $font-serif: 'Crimson Text', serif;
@@ -46,6 +49,7 @@ header {
 #menu_bar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .main_logo {
@@ -74,9 +78,49 @@ header {
   text-decoration: underline;
 }
 
+#nav_icons {
+    padding-right: 1.5rem;
+}
+
 .icon {
   width: 1.75rem;
   height: 1.75rem;
+}
+
+/* search bar */
+.search_bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: solid $blue .25rem;
+}
+
+.search_bar input[type=text] {
+  background-color: white;
+  border: none;
+  height: 1rem;
+  font-family: $font-sans;
+}
+
+.search_bar button {
+  height: 2rem;
+  width: 2rem;
+  background: $blue;
+  border: none;
+}
+
+.search_bar select {
+  font-family: $font-sans;
+  background-color: $light-grey;
+  color: $dark-blue;
+  height: 2rem;
+  border: none;
+}
+
+.search_bar img {
+  height: 1.5rem;
+  width: 1.5rem;
 }
 
 /* footer */
@@ -108,5 +152,48 @@ footer div {
 }
 
 .footer_column a:hover {
-  text-decoration: underline;
+  font-weight: bold;
 }
+
+/* home page */
+#home_banner {
+  display: flex;
+  border-bottom: solid $blue .5rem;
+}
+
+#home_banner img {
+  max-width: 70vw;
+  height: auto;
+}
+
+#summary_banner {
+  background-color: $light-gold;
+  font-family: $font-serif;
+  padding-left: 2rem;
+  padding-right: 5rem;
+}
+
+#summary_banner h1 {
+  padding-top: 5rem;
+  margin-bottom: 0;
+}
+
+#summary_banner h3 {
+  margin: 0;
+}
+
+#summary_banner p {
+  font-family: $font-sans;
+}
+
+.button_blue {
+  background-color: $blue;
+  color: white;
+  text-decoration: none;
+  font-family: $font-sans;
+  font-weight: bold;
+
+  padding: .5rem 2rem .5rem 2rem;
+}
+
+/* featured gallery */
