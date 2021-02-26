@@ -11,63 +11,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Text&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
   </head>
 
-  <header>
-    <div class="main_logo">
-      <img src="{{ url_for('static', filename='bookcase.svg') }}"/> Bookmarqué
-    </div>
+  <body>
+        <header>
 
-    <div id="nav_bar">
-      <ul>
-        <li><a>Featured</a></li>
-        <li><a>The Classics</a></li>
-        <li><a>Thrillers</a></li>
-        <li><a>Science</a></li>
-        <li><a>Esoteric</a></li>
-        <li><a>Business</a></li>
-        <li><a>Self-Help</a></li>
-        <li><a>Non-Fiction</a></li>
-        <li><a>Sci-Fi</a></li>
-      </ul>
-    </div>
+        <div id="promo_bar">Receive 20% off at checkout when you use promo code: CS4050</div>
 
-    <form>
-      <select>
-        <option>All</option>
-      </select>
+        <div class="main_logo">
+            <img src="bookcase.svg"/>
+            <h1>Bookmarqué</h1>
+        </div>
 
-      <input type="text">
-      <input type="submit">
-    </form>
-  </header>
+        <ul id="nav_bar">
+            <li><a>Featured</a></li>
+            <li><a>The Classics</a></li>
+            <li><a>Thrillers</a></li>
+            <li><a>Science</a></li>
+            <li><a>Esoteric</a></li>
+            <li><a>Business</a></li>
+            <li><a>Self-Help</a></li>
+            <li><a>Non-Fiction</a></li>
+            <li><a>Sci-Fi</a></li>
+        </ul>
 
-    {% block content %}{% endblock %}
+        <form>
+          <select>
+            <option>All</option>
+          </select>
+
+          <input type="text">
+          <input type="submit">
+        </form>
+      </header>
+
+      <main>
+        {% block content %}{% endblock %}
+      </main>
 
   <footer>
-    <ul class="footer_column">
-      <li class="main_logo">Bookmarqué</li>
-      <li>Luxury Literature.</li>
-    </ul>
+   <div>
+        <ul class="footer_column">
+          <li class="main_logo">Bookmarqué</li>
+          <li>Luxury Literature.</li>
+        </ul>
 
-    <ul class="footer_column">
-      <li><b>Explore</b></li>
-      <li><a>Home</a></li>
-      <li><a>About</a></li>
-      <li><a>Manage Profile</a></li>
-    </ul>
+        <ul class="footer_column">
+          <li><b>Explore</b></li>
+          <li><a>Home</a></li>
+          <li><a>About</a></li>
+          <li><a>Manage Profile</a></li>
+        </ul>
 
-    <ul class="footer_column">
-      <li><b>Visit</b></li>
-      <li>2404 West View Ct., Suite 111</li>
-      <li>Athens, Ga, USA 30601</li>
-    </ul>
+        <ul class="footer_column">
+          <li><b>Visit</b></li>
+          <li>2404 West View Ct., Suite 111</li>
+          <li>Athens, Ga, USA 30601</li>
+        </ul>
 
-    <ul class="footer_column">
-      <li><b>Contact</b></li>
-      <li>202.555.0079</li>
-      <li>help@bookmarque.co</li>
-    </ul>
+        <ul class="footer_column">
+          <li><b>Contact</b></li>
+          <li>202.555.0079</li>
+          <li>help@bookmarque.co</li>
+        </ul>
+    </div>
 
-    &copy 2021 Bookmarque. All Rights Reserved.
+    <span>&copy 2021 Bookmarque. All Rights Reserved.</span>
 
   </footer>
+</body>
 </html>

@@ -5,11 +5,74 @@ $dark-blue: #1A1D24;
 $dark-gold: #B6622D;
 
 /* font families */
-$serif-font: 'Crimson Text', serif;
-$sans-font: 'Open Sans', sans-serif;
-$title-font: 'Bebas Neue', cursive;
+$font-serif: 'Crimson Text', serif;
+$font-sans: 'Open Sans', sans-serif;
+$font-title: 'Bebas Neue', cursive;
+
+html, body {
+    /*min-width: 1080px;*/
+    margin: 0;
+    height: 100%;
+    min-height: 100%;
+}
 
 body {
-  background-color: $gold;
-  font-family: $title-font;
+    display: flex;
+    flex-direction: column;
+}
+
+
+main {
+    flex: auto;
+}
+
+/* header */
+header {
+    background-color: white;
+    width: 100%;
+    flex: none;
+}
+
+#promo_bar {
+    background-color: $blue;
+    font-family: $font-sans;
+    color: white;
+
+    text-align: center;
+}
+
+.main_logo {
+    font-family: $font-title;
+}
+
+.main_logo img {
+    width: 1rem;
+    height: 1rem;
+}
+
+#nav_bar {
+    font-family: $font-serif;
+    list-style: none;
+}
+
+#nav_bar li {
+    float: left;
+    display: inline;
+}
+
+/* footer */
+footer {
+    background-color: $blue;
+    font-family: $font-sans;
+    color: white;
+
+    flex: none;
+}
+
+footer div {
+    column-count: 4;
+}
+
+.footer_column {
+    list-style: none;
 }
