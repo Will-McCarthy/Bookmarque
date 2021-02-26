@@ -10,7 +10,6 @@ $font-sans: 'Open Sans', sans-serif;
 $font-title: 'Bebas Neue', cursive;
 
 html, body {
-    /*min-width: 1080px;*/
     margin: 0;
     height: 100%;
     min-height: 100%;
@@ -35,8 +34,11 @@ header {
     background-color: $blue;
     font-family: $font-sans;
     font-weight: bold;
-    letter-spacing: .2rem;
+    font-size: .8rem;
+    letter-spacing: .15rem;
     color: white;
+
+    padding: .5rem 0 .5rem 0;
 
     text-align: center;
 }
@@ -44,9 +46,6 @@ header {
 #menu_bar {
   display: flex;
   align-items: center;
-
-  /* Remove the next line if you want the span to appear next to the h1 */
-  justify-content: space-between;
 }
 
 .main_logo {
@@ -61,12 +60,23 @@ header {
 }
 
 #nav_bar li {
+  padding-right: 1rem;
   float: left;
 }
 
+#nav_bar a, #nav_bar a:visited {
+  color: black;
+  text-decoration: none;
+}
+
+#nav_bar a:hover {
+  color: $gold;
+  text-decoration: underline;
+}
+
 .icon {
-  width: 2rem;
-  height: 2rem;
+  width: 1.75rem;
+  height: 1.75rem;
 }
 
 /* footer */
@@ -80,8 +90,23 @@ footer {
 
 footer div {
     column-count: 4;
+    padding: 2rem 0 2rem 0;
+    width: 75vw;
 }
 
 .footer_column {
     list-style: none;
+}
+
+.footer_column li {
+  padding-bottom: .25rem;
+}
+
+.footer_column a , .footer_column a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.footer_column a:hover {
+  text-decoration: underline;
 }
