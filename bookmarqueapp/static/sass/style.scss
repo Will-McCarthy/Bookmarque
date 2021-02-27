@@ -227,3 +227,18 @@ footer div {
   border-radius: 50%;
   background-color: yellow;
 }
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  padding: 10px;
+  content: "";
+  display: table;
+  clear: both;
+}

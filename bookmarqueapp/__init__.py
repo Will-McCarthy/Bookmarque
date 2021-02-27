@@ -13,3 +13,7 @@ app.wsgi_app = SassMiddleware(app.wsgi_app, {
 @app.route('/')
 def homepage():
     return render_template('index.html')
+
+@app.route('/admin')
+def admin():
+    return render_template('admin_view.html')
