@@ -6,7 +6,6 @@ $gold: #F4CE92;
 $dark-gold: #B6622D;
 $light-grey: #E1E1E1;
 
-
 /* font families */
 $font-serif: 'Crimson Text', serif;
 $font-sans: 'Open Sans', sans-serif;
@@ -56,6 +55,10 @@ header {
     font-family: $font-title;
     padding: 0;
     margin: 0;
+}
+
+.main_logo img {
+  padding: 0 0 0 .5rem;
 }
 
 #nav_bar {
@@ -184,6 +187,7 @@ footer div {
 
 #summary_banner p {
   font-family: $font-sans;
+  margin-bottom: 2rem;
 }
 
 .button_blue {
@@ -197,3 +201,29 @@ footer div {
 }
 
 /* featured gallery */
+#featured_gallery {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#featured_gallery h1 {
+  font-family: $font-serif;
+  text-decoration: underline;
+  letter-spacing: .15rem;
+}
+
+#featured_gallery span {
+  font-family: $font-sans;
+}
+
+.feat_gal_item img {
+  height: auto;
+  width: 8rem;
+}
+
+.circle {
+  border-radius: 50%;
+  background-color: yellow;
+}

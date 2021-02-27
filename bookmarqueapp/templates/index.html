@@ -5,7 +5,7 @@
   <img src="{{ url_for('static', filename='assets/home-banner.jpeg') }}" alt="Rustic Bookstore">
   <div id="summary_banner">
     <h1>Reading Reimagined</h1>
-    <h3>from cover to cover</h3>
+    <h3>from cover to cover.</h3>
     <p>The simplest way to shop for quality books. Curated by our experts so you can focus on relaxing.</p>
     <a class="button_blue" href="">Shop Books</a>
   </div>
@@ -15,10 +15,12 @@
   <h1>Featured</h1>
   <span>The place we keep everything you shouldn't miss out on.</span>
 
-  <div class="feat_gal_item">
-
+  <div class="feat_gal_row">
+    <div class="feat_gal_item">
+      <img src="{{ url_for('static', filename='assets/covers/cheffe.jpg') }}">
+      <span class="circle"></span>
+    </div>
   </div>
-
 </div>
 
 {% endblock %}
