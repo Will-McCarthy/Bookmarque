@@ -53,6 +53,7 @@ header {
 
 .main-logo {
     font-family: $font-title;
+    color: black;
     padding: 0;
     margin: 0;
 }
@@ -262,6 +263,12 @@ footer div {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  border: solid .25rem $blue;
+  padding: 2rem;
+}
+
+.popup-panel .main-logo {
+  text-align: center;
 }
 
 .popup-panel h1 {

@@ -12,6 +12,10 @@ app.wsgi_app = SassMiddleware(app.wsgi_app, {
 
 @app.route('/')
 def homepage():
+    return render_template('index.html')
+
+@app.route('/login')
+def login_panel():
     return render_template('login.html')
 
 @app.route('/admin')

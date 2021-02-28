@@ -12,16 +12,18 @@
   </head>
 
   <body>
-        <header>
+      <header>
 
         <div id="promo-bar">Receive 20% off at checkout when you use promo code: CS4050</div>
 
         <div id="menu-bar">
-          <h1 class="main-logo">
-            <img class="icon" src="{{ url_for('static', filename='assets/bookcase.svg') }}"/>
-            Bookmarqué
-          </h1>
 
+          <a href="{{ url_for('homepage') }}" style="text-decoration: none;">
+            <h1 class="main-logo">
+              <img class="icon" src="{{ url_for('static', filename='assets/bookcase.svg') }}"/>
+              Bookmarqué
+            </h1>
+          </a>
 
           <ul id="nav-bar">
             <li><a href="#">Featured</a></li>
@@ -45,7 +47,7 @@
           </form>
 
           <div id="nav-icons">
-            <a><img class="icon" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
+            <a href="{{ url_for('login_panel') }}"><img class="icon" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
             <a><img class="icon" src="{{ url_for('static', filename='assets/shoppingcart.svg') }}"></a>
           </div>
         </div>
