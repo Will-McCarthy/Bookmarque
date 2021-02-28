@@ -18,6 +18,7 @@ def homepage():
 def login_panel():
     return render_template('login.html')
 
+# registration pages, hard coded for now
 @app.route('/registration/information')
 def reg1():
     return render_template('reg1.html')
@@ -33,6 +34,10 @@ def reg3():
 @app.route('/registration/confirmation')
 def reg4():
     return render_template('reg4.html')
+
+@app.route('/view/The+Vacationers')
+def book_details():
+    return render_template('book_details_example.html')
 
 @app.route('/admin')
 def admin():
