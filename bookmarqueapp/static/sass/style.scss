@@ -317,3 +317,44 @@ footer div {
   display: table;
   clear: both;
 }
+
+
+.frow {
+  height: auto;
+  border: 0px;
+  padding: 1em;
+  width: 80%;
+  
+}
+
+.fcardrow {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-rows: 1fr;
+  grid-auto-columns: 1fr;
+  grid-gap: 5%;
+  justify-items: center;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.fcard {
+  display: block;
+  height:auto;
+  min-width: 15%;
+}
+
+.fcard img {
+  display: block;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 250px;
+
+}
+.fcard p {
+  text-align: center;
+  font-family: $font-serif;
+  font-size: large;
+  margin-bottom: 5%;
+}
