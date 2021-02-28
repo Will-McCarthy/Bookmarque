@@ -32,7 +32,7 @@ header {
     width: 100%;
 }
 
-#promo_bar {
+#promo-bar {
     background-color: $blue;
     font-family: $font-sans;
     font-weight: bold;
@@ -45,43 +45,43 @@ header {
     text-align: center;
 }
 
-#menu_bar {
+#menu-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.main_logo {
+.main-logo {
     font-family: $font-title;
     padding: 0;
     margin: 0;
 }
 
-.main_logo img {
+.main-logo img {
   padding: 0 0 0 .5rem;
 }
 
-#nav_bar {
+#nav-bar {
     font-family: $font-serif;
     list-style: none;
 }
 
-#nav_bar li {
+#nav-bar li {
   padding-right: 1rem;
   float: left;
 }
 
-#nav_bar a, #nav_bar a:visited {
+#nav-bar a, #nav_bar a:visited {
   color: black;
   text-decoration: none;
 }
 
-#nav_bar a:hover {
+#nav-bar a:hover {
   color: $gold;
   text-decoration: underline;
 }
 
-#nav_icons {
+#nav-icons {
     padding-right: 1.5rem;
 }
 
@@ -91,7 +91,7 @@ header {
 }
 
 /* search bar */
-.search_bar {
+.search-bar {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,21 +99,21 @@ header {
   border: solid $blue .25rem;
 }
 
-.search_bar input[type=text] {
+.search-bar input[type=text] {
   background-color: white;
   border: none;
   height: 1rem;
   font-family: $font-sans;
 }
 
-.search_bar button {
+.search-bar button {
   height: 2rem;
   width: 2rem;
   background: $blue;
   border: none;
 }
 
-.search_bar select {
+.search-bar select {
   font-family: $font-sans;
   background-color: $light-grey;
   color: $dark-blue;
@@ -121,7 +121,7 @@ header {
   border: none;
 }
 
-.search_bar img {
+.search-bar img {
   height: 1.5rem;
   width: 1.5rem;
 }
@@ -141,92 +141,133 @@ footer div {
     width: 75vw;
 }
 
-.footer_column {
+.footer-column {
     list-style: none;
 }
 
-.footer_column li {
+.footer-column li {
   padding-bottom: .25rem;
 }
 
-.footer_column a , .footer_column a:visited {
+.footer-column a , .footer_column a:visited {
   color: white;
   text-decoration: none;
 }
 
-.footer_column a:hover {
+.footer-column a:hover {
   font-weight: bold;
 }
 
 /* home page */
-#home_banner {
+#home-banner {
   display: flex;
   border-bottom: solid $blue .5rem;
 }
 
-#home_banner img {
+#home-banner img {
   max-width: 70vw;
   height: auto;
 }
 
-#summary_banner {
+#summary-banner {
   background-color: $light-gold;
   font-family: $font-serif;
   padding-left: 2rem;
   padding-right: 5rem;
 }
 
-#summary_banner h1 {
+#summary-banner h1 {
   padding-top: 5rem;
   margin-bottom: 0;
 }
 
-#summary_banner h3 {
+#summary-banner h3 {
   margin: 0;
 }
 
-#summary_banner p {
+#summary-banner p {
   font-family: $font-sans;
   margin-bottom: 2rem;
 }
 
-.button_blue {
+.button-blue {
   background-color: $blue;
   color: white;
   text-decoration: none;
   font-family: $font-sans;
-  font-weight: bold;
+  font-weight: normal;
+
+  padding: .5rem 2rem .5rem 2rem;
+}
+
+.button-gold {
+  background-color: $gold;
+  color: $dark-blue;
+  text-decoration: none;
+  font-family: $font-sans;
+  font-weight: normal;
 
   padding: .5rem 2rem .5rem 2rem;
 }
 
 /* featured gallery */
-#featured_gallery {
+#featured {
   display: flex;
-  flex-direction: column;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  padding-bottom: 5rem;
 }
 
-#featured_gallery h1 {
+#featured h1 {
   font-family: $font-serif;
   text-decoration: underline;
   letter-spacing: .15rem;
 }
 
-#featured_gallery span {
+#featured span {
   font-family: $font-sans;
 }
 
-.feat_gal_item img {
+.flex-grid {
+  display: flex;
+  justify-content: space-between;
+}
+
+.feat-item {
+  padding: 2.5rem 5rem 2.5rem 5rem;
+  display: grid;
+}
+
+.feat-item img {
+  grid-column: 1;
+  grid-row: 1;
   height: auto;
   width: 8rem;
 }
 
 .circle {
+  grid-column: 1;
+  grid-row: 1;
   border-radius: 50%;
-  background-color: yellow;
+  width: 15em;
+  height: 15em;
+  background-color: blue;
 }
+
+/* popup-panel used for login/registration pages */
+.popup-panel {
+  width: 25%;
+  font-family: $font-sans;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.popup-panel h1 {
+  font-weight: lighter;
+}
+
 
 /* Create three equal columns that floats next to each other */
 .column {

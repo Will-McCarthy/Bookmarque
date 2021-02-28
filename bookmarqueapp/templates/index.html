@@ -1,25 +1,32 @@
 {% extends "user_layout.html" %}
 {% block content %}
 
-<div id="home_banner">
+<div id="home-banner">
   <img src="{{ url_for('static', filename='assets/home-banner.jpeg') }}" alt="Rustic Bookstore">
-  <div id="summary_banner">
+  <div id="summary-banner">
     <h1>Reading Reimagined</h1>
     <h3>from cover to cover.</h3>
     <p>The simplest way to shop for quality books. Curated by our experts so you can focus on relaxing.</p>
-    <a class="button_blue" href="">Shop Books</a>
+    <a class="button-blue" href="">Shop Books</a>
   </div>
 </div>
 
-<div id="featured_gallery">
+<div id="featured">
   <h1>Featured</h1>
   <span>The place we keep everything you shouldn't miss out on.</span>
 
-  <div class="feat_gal_row">
-    <div class="feat_gal_item">
-      <img src="{{ url_for('static', filename='assets/covers/cheffe.jpg') }}">
-      <span class="circle"></span>
+  <div class="flex-grid">
+    <div class="flex-col">
+      <div class="feat-item">
+        <div class="circle"></div>
+        <img src="{{ url_for('static', filename='assets/covers/cheffe.jpg') }}">
+      </div>
+      <div class="feat-item">
+        <img src="{{ url_for('static', filename='assets/covers/cheffe.jpg') }}">
+        <div class="circle"></div>
+      </div>
     </div>
+
   </div>
 </div>
 
