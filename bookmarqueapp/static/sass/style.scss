@@ -278,6 +278,8 @@ footer div {
   justify-content: space-between;
   border: solid .25rem $blue;
   padding: 2rem;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .popup-panel .main-logo {
@@ -301,7 +303,17 @@ footer div {
   margin-top: 1rem;
 }
 
-#card-details {}
+#card-details {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 5%;
+  grid-auto-columns: 30%;
+  width: 100%;
+}
+#card-details select{
+  height: 22px;
+}
+
 
 .center {
   text-align: center;
@@ -336,7 +348,7 @@ footer div {
   grid-auto-flow: column;
   grid-auto-rows: 1fr;
   grid-auto-columns: 1fr;
-  grid-gap: 5%;
+  grid-gap: 1em;
   justify-items: center;
   margin-bottom: 1em;
   margin-top: 1em;
