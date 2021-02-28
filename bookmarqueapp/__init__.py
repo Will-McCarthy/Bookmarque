@@ -18,6 +18,22 @@ def homepage():
 def login_panel():
     return render_template('login.html')
 
+@app.route('/registration/information')
+def reg1():
+    return render_template('reg1.html')
+
+@app.route('/registration/payment')
+def reg2():
+    return render_template('reg2.html')
+
+@app.route('/registration/shipping')
+def reg3():
+    return render_template('reg3.html')
+
+@app.route('/registration/confirmation')
+def reg4():
+    return render_template('reg4.html')
+
 @app.route('/admin')
 def admin():
     return render_template('admin_view.html')

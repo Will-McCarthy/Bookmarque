@@ -9,11 +9,12 @@
   <input type="text">
   <label>Password</label>
   <input type="text">
-  <input class="button-blue" type="submit">
-  <input type="checkbox">Keep me signed in
+  <input class="button-blue" type="submit" value="Login">
+
+  <span><input type="checkbox">Keep me signed in</span>
 
   <span>-- or --</span>
-  <a class="button-gold">Create a new account</a>
+  <a class="button-gold" href="{{ url_for('reg1') }}">Create a new account</a>
 
 </form>
 

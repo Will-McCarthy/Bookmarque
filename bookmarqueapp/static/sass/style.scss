@@ -51,9 +51,13 @@ header {
   justify-content: space-between;
 }
 
+#title {
+  text-decoration: none;
+  color: black;
+}
+
 .main-logo {
     font-family: $font-title;
-    color: black;
     padding: 0;
     margin: 0;
 }
@@ -197,6 +201,11 @@ footer div {
   text-decoration: none;
   font-family: $font-sans;
   font-weight: normal;
+  outline: none;
+  border: none;
+
+  text-align: center;
+  /*box-shadow: */
 
   padding: .5rem 2rem .5rem 2rem;
 }
@@ -207,6 +216,10 @@ footer div {
   text-decoration: none;
   font-family: $font-sans;
   font-weight: normal;
+  outline: none;
+  border: none;
+
+  text-align: center;
 
   padding: .5rem 2rem .5rem 2rem;
 }
@@ -262,7 +275,7 @@ footer div {
   font-family: $font-sans;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   border: solid .25rem $blue;
   padding: 2rem;
 }
@@ -275,6 +288,20 @@ footer div {
   font-weight: lighter;
 }
 
+.popup-panel label {
+  font-size: .75rem;
+  font-weight: bold;
+}
+
+.popup-panel input {
+  margin-bottom: .5rem;
+}
+
+.popup-panel a, .popup-panel input[type=submit] {
+  margin-top: 1rem;
+}
+
+#card-details {}
 
 /* Create three equal columns that floats next to each other */
 .column {
