@@ -3,34 +3,21 @@
 
 <form class="popup-panel">
   <h1 class="main-logo">Bookmarqué</h2>
-  <h1>Payment Info</h1>
+  <h1>Create Account</h1>
 
-  <label>Card Type</label>
+  <label>First Name</label>
   <input type="text">
-  <label>Card Number</label>
+  <label>Last Name</label>
   <input type="text">
-  <label>Expiration Date</label>
-  <div id="card-details">
-    <select>
-      <option>MM</option>
-      <option>01</option>
-      <option>02</option>
-      <option>03</option>
-      <option>04</option>
-      <option>05</option>
-      <option>06</option>
-      <option>07</option>
-      <option>08</option>
-      <option>09</option>
-      <option>10</option>
-      <option>11</option>
-      <option>12</option>
-    </select>
-    <input type="number">
-    <input type="text" placeholder="SVC">
-  </div>
+  <label>Phone Number (xxx) xxx-xxxx</label>
+  <input type="text">
+  <label>Email Address</label>
+  <input type="text">
+  <label>Password</label>
+  <input type="text">
+  <span>Note: Password must be at least 8 characters long and contain both letters and numbers.</span>
 
-  <a class="button-blue" href="{{ url_for('reg2') }}">Skip for now</a>
+  <a class="button-gold" href="{{ url_for('reg2') }}">Continue</a>
 
 </form>
 
