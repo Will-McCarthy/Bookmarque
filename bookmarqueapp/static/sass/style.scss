@@ -49,6 +49,8 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  white-space: nowrap;
 }
 
 #title {
@@ -243,32 +245,6 @@ footer div {
   font-family: $font-sans;
 }
 
-.flex-grid {
-  display: flex;
-  justify-content: space-between;
-}
-
-.feat-item {
-  padding: 2.5rem 5rem 2.5rem 5rem;
-  display: grid;
-}
-
-.feat-item img {
-  grid-column: 1;
-  grid-row: 1;
-  height: auto;
-  width: 8rem;
-}
-
-.circle {
-  grid-column: 1;
-  grid-row: 1;
-  border-radius: 50%;
-  width: 15em;
-  height: 15em;
-  background-color: blue;
-}
-
 /* popup-panel used for login/registration pages */
 .overlay {
   position:fixed;
@@ -324,7 +300,6 @@ footer div {
   font-size: .75rem;
 }
 
-
 #card-details {
   display: grid;
   grid-auto-flow: column;
@@ -332,10 +307,81 @@ footer div {
   grid-auto-columns: 30%;
   width: 100%;
 }
+
 #card-details select{
   height: 22px;
 }
 
+/* book details */
+#book-listing {
+  font-family: $font-sans;
+  padding-top: 2rem;
+  border-top: solid .15rem $blue;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#book-listing img {
+  width: auto;
+  height: 20rem;
+  margin-left: 2.5rem;
+  margin-right: 1rem;
+}
+
+#book-details {
+  flex-basis: 30%;
+}
+
+#book-details h1 {
+  font-family: $font-serif;
+  letter-spacing: .2rem;
+  margin: 0;
+}
+
+#book-details h3 {
+  font-weight: lighter;
+  margin: 0;
+}
+
+#book-add-box {
+  border: solid .25rem $blue;
+  box-shadow: 1px 1px 2px grey;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  width: 15rem;
+  float: right;
+  margin-right: 2.5rem;
+  flex-basis: 20%;
+  margin-left: auto;
+  height: 70%;
+}
+
+#book-add-box h1 {
+  font-family: $font-serif;
+}
+
+.quant-button {
+  display: flex;
+  justify-content: center;
+  border: solid .25rem $blue;
+}
+
+.quant-button input[type=submit] {
+  width: 90%;
+}
+
+.quant-button input[type=number] {
+  width: 10%;
+  border: none;
+  background-color: $light-gold;
+}
+
+#book-summary {
+  font-family: $font-sans;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
 
 .center {
   text-align: center;
