@@ -270,6 +270,16 @@ footer div {
 }
 
 /* popup-panel used for login/registration pages */
+.overlay {
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:1000;
+  backdrop-filter: blur(3px);
+}
+
 .popup-panel {
   width: 25%;
   font-family: $font-sans;
@@ -277,9 +287,16 @@ footer div {
   flex-direction: column;
   justify-content: space-between;
   border: solid .25rem $blue;
-  padding: 2rem;
-  margin-left: auto;
+
+  background-color: white;
+
+  position: fixed;
+  left: 0;
+  right: 0;
   margin-right: auto;
+  margin-left: auto;
+  margin-top: 10%;
+  padding: 2rem;
 }
 
 .popup-panel .main-logo {
@@ -306,6 +323,7 @@ footer div {
 .popup-panel span {
   font-size: .75rem;
 }
+
 
 #card-details {
   display: grid;
