@@ -232,7 +232,7 @@ footer div {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
 }
 
 #featured h1 {
@@ -419,7 +419,7 @@ footer div {
   grid-auto-columns: 1fr;
   grid-gap: 1em;
   justify-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 3em;
   margin-top: 1em;
 }
 
@@ -437,11 +437,17 @@ footer div {
   max-height: 250px;
 
 }
+
 .fcard p {
   text-align: center;
   font-family: $font-serif;
   font-size: large;
   margin-bottom: 5%;
+}
+
+.fcard a{
+  text-decoration: none;
+  color: black;
 }
 
 table, th, td {
