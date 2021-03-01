@@ -1,30 +1,109 @@
 {% extends "user_layout.html" %}
 {% block content %}
-<div id="menu_bar" style="background-color:#c4c4c4;">
-  <ul id="nav_bar" style="justify: center;">
+<div id="menu-bar" style="background-color:#c4c4c4; justify-content: center;">
+  <ul id="nav-bar">
     <li><a href="#">Manage Books</a></li>
-    <li><a href="#">Manage Users</a></li>
-    <li><a href="#">Manage Orders</a></li>
-    <li><a href="#">Toggle User/Admin View</a></li>
+    <li style="margin-left:5em;"><a href="#">Manage Users</a></li>
+    <li style="margin-left:5em;"><a href="#">Manage Orders</a></li>
+    <li style="margin-left:5em;"><a href="#">Toggle User/Admin View</a></li>
   </ul>
 </div>
 
-<table>
-  <tr>
-    <th>IBSN</th>
-    <th>Book Title</th>
-    <th>Author</th>
-    <th>Subject</th>
-    <th>Total Coppies</th>
-    <th>Current Coppies</th>
-  </tr>
-  <tr>
-    <td>January</td>
-    <td>$100</td>
-  </tr>
-  <tr>
-    <td>February</td>
-    <td>$80</td>
-  </tr>
-</table>
+<div>
+  <table>
+    <tr>
+      <th>IBSN</th>
+      <th>Book Title</th>
+      <th>Author</th>
+      <th>Subject</th>
+      <th>Total Coppies</th>
+      <th>Current Coppies</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>178-0-39397-283-2</td>
+      <td>Moby Dick</td>
+      <td>Herman Melville</td>
+      <td>Fantasy</td>
+      <td>100</td>
+      <td>50</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>978-1-61213-028-6</td>
+      <td>50 Shades of Gray</td>
+      <td>EL James</td>
+      <td>Erotic</td>
+      <td>420</td>
+      <td>69</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </table>
+</div>
+<!-- <div class="v20_135">
+  <div class="v60_3">
+    <div class="v59_2"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <div class="v59_13"></div>
+    <span class="v60_5">Author</span>
+    <span class="v60_6">Subject</span>
+    <span class="v60_8">Current Copies</span>
+    <span class="v60_7">Total Copies</span>
+    <span class="v60_1">ISBN</span>
+    <span class="v60_4">Book Title</span>
+    <div class="v60_9"></div>
+  </div>
+  <span class="v60_0">Search:</span>
+  <div class="v69_101"></div>
+  <div class="v69_105"></div>
+  <div class="v69_103"></div>
+  <div class="v69_102"></div>
+  <div class="v69_104"></div>
+  <div class="v60_21">
+    <div class="v60_18"></div>
+    <span class="v60_20">Edit Book</span>
+  </div>
+  <span class="v60_25">+ Add Entry</span>
+  <div class="v69_99"></div>
+  <div class="v69_100"></div>
+</div>
+
+</table>-->
 {% endblock %}
