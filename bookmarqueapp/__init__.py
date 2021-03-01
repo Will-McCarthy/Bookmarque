@@ -17,3 +17,7 @@ def homepage():
 @app.route('/admin')
 def admin():
     return render_template('admin_view.html')
+
+@app.route('/manage-books')
+def manageBooks():
+    return render_template('manage_books.html')

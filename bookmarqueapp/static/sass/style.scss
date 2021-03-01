@@ -237,8 +237,11 @@ footer div {
 
 /* Clear floats after the columns */
 .row:after {
-  padding: 10px;
   content: "";
   display: table;
   clear: both;
+}
+
+table, th, td {
+  border: 1px solid black;
 }

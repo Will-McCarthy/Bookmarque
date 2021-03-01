@@ -1,0 +1,30 @@
+{% extends "user_layout.html" %}
+{% block content %}
+<div id="menu_bar" style="background-color:#c4c4c4;">
+  <ul id="nav_bar" style="justify: center;">
+    <li><a href="#">Manage Books</a></li>
+    <li><a href="#">Manage Users</a></li>
+    <li><a href="#">Manage Orders</a></li>
+    <li><a href="#">Toggle User/Admin View</a></li>
+  </ul>
+</div>
+
+<table>
+  <tr>
+    <th>IBSN</th>
+    <th>Book Title</th>
+    <th>Author</th>
+    <th>Subject</th>
+    <th>Total Coppies</th>
+    <th>Current Coppies</th>
+  </tr>
+  <tr>
+    <td>January</td>
+    <td>$100</td>
+  </tr>
+  <tr>
+    <td>February</td>
+    <td>$80</td>
+  </tr>
+</table>
+{% endblock %}
