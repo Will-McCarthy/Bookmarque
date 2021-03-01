@@ -12,18 +12,20 @@
   </head>
 
   <body>
-        <header>
+      <header>
 
-        <div id="promo_bar">Receive 20% off at checkout when you use promo code: CS4050</div>
+        <div id="promo-bar">Receive 20% off at checkout when you use promo code: CS4050</div>
 
-        <div id="menu_bar">
-          <h1 class="main_logo">
-            <img class="icon" src="{{ url_for('static', filename='assets/bookcase.svg') }}"/>
-            Bookmarqué
-          </h1>
+        <div id="menu-bar">
 
+          <a id="title" href="{{ url_for('homepage') }}">
+            <h1 class="main-logo">
+              <img class="icon" src="{{ url_for('static', filename='assets/bookcase.svg') }}"/>
+              Bookmarqué
+            </h1>
+          </a>
 
-          <ul id="nav_bar">
+          <ul id="nav-bar">
             <li><a href="#">Featured</a></li>
             <li><a href="#">The Classics</a></li>
             <li><a href="#">Thrillers</a></li>
@@ -35,7 +37,7 @@
             <li><a href="#">Sci-Fi</a></li>
           </ul>
 
-          <form class="search_bar">
+          <form class="search-bar">
             <select>
               <option>All</option>
               <option>Other Optionz</option>
@@ -44,8 +46,8 @@
             <button type="submit"><img src="{{ url_for('static', filename='assets/search.svg') }}"></button>
           </form>
 
-          <div id="nav_icons">
-            <a><img class="icon" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
+          <div id="nav-icons">
+            <a href="{{ url_for('login_panel') }}"><img class="icon" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
             <a><img class="icon" src="{{ url_for('static', filename='assets/shoppingcart.svg') }}"></a>
           </div>
         </div>
@@ -57,25 +59,25 @@
 
   <footer>
    <div>
-        <ul class="footer_column">
-          <li class="main_logo"><h1>Bookmarqué</h1></li>
+        <ul class="footer-column">
+          <li class="main-logo"><h1>Bookmarqué</h1></li>
           <li>Luxury Literature.</li>
         </ul>
 
-        <ul class="footer_column">
+        <ul class="footer-column">
           <li><b>Explore</b></li>
           <li><a href="#">Home</a></li>
           <li><a href="#">About</a></li>
           <li><a href="#">Manage Profile</a></li>
         </ul>
 
-        <ul class="footer_column">
+        <ul class="footer-column">
           <li><b>Visit</b></li>
           <li>2404 West View Ct., Suite 111</li>
           <li>Athens, Ga, USA 30601</li>
         </ul>
 
-        <ul class="footer_column">
+        <ul class="footer-column">
           <li><b>Contact</b></li>
           <li>202.555.0079</li>
           <li>help@bookmarque.co</li>
