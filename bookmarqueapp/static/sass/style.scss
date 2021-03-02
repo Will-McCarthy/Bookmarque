@@ -475,3 +475,121 @@ td {
 td a { //need to make a's in td's with this padding
   padding: 0.5rem 0.1rem;
 }
+
+
+
+//CSS used for search view
+
+.search-container{
+  background-color: $gold;
+  border-bottom: .5rem solid $blue;
+  margin: 0;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+.left-container{
+  width: 20%;
+  min-width: 1fr;
+  float: left;
+}
+.right-container{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 25% 25% 25% 25%;
+  row-gap: 2px;
+  column-gap: 2px;
+  width: 80%;
+  float: left;
+  background-color: #c4c4c4;
+}
+
+.search-card {
+   padding-top: 1em;
+   padding-bottom: 1em;
+   padding-left: 2em;
+   padding-right: 2em;
+   background-color: white;
+}
+
+.search-card a {
+  color: black;
+  text-decoration: none;
+}
+
+.title {
+  margin-bottom: 0;
+  font-family: $font-serif;
+}
+
+.author {
+  font-family: $font-sans;
+  margin-top: 0;
+}
+
+.price {
+  font-family: $font-serif
+}
+
+.stock {
+  font-family: $font-sans;
+  float: right;
+}
+
+.tags {
+  display: block;
+  font-family: $font-sans;
+  font-size: small;
+  color: gray;
+  padding-top: 10%;
+
+}
+
+.tags p {
+  margin: 0;
+}
+
+.search-card img {
+  display: block;
+  height: 100%;
+  float:left;
+  margin-left: 1em;
+  margin-right: 1em;
+  max-height: 250px;
+  margin-top: 1em;
+}
+
+.full-search-bar {
+  display: grid;
+  grid-template-columns: auto 2em;
+  padding: 0;
+  border: solid $blue 0.25rem;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.full-search-bar input[type=text] {
+  background-color: white;
+  border: none;
+  height: 2rem;
+  width: 100%;
+  font-family: $font-sans;
+  text-align: center;
+}
+
+.full-search-bar button {
+  height: 100%;
+  width: 100%;
+  background: $blue;
+  border: none;
+}
+
+
+.full-search-bar img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.filter {
+  display: block;
+}
