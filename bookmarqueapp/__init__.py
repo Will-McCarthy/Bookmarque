@@ -46,3 +46,7 @@ def admin():
 @app.route('/manage-books')
 def manageBooks():
     return render_template('manage_books.html')
+
+@app.route('/manage-books/book-entry')
+def bookEntry():
+    return render_template('book_entry.html')
