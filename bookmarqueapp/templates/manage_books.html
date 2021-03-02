@@ -1,12 +1,17 @@
 {% extends "user_layout.html" %}
 {% block content %}
 <div id="menu-bar" style="background-color:#c4c4c4; justify-content: center;">
-  <ul id="nav-bar">
-    <li><a href="#">Manage Books</a></li>
-    <li style="margin-left:5em;"><a href="#">Manage Users</a></li>
-    <li style="margin-left:5em;"><a href="#">Manage Orders</a></li>
-    <li style="margin-left:5em;"><a href="#">Toggle User/Admin View</a></li>
+  <ul id="nav-bar" style="width: 90%; margin-right: 5%; margin-left: 5%; display: flex; justify-content: space-between;">
+    <li><a href="{{ url_for('manageBooks') }}">Manage Books</a></li>
+    <li><a href="#">Manage Users</a></li>
+    <li><a href="#">Manage Orders</a></li>
+    <li><a href="#">Toggle User/Admin View</a></li>
   </ul>
+</div>
+
+<div style="margin: 3%; width:96%; display: flex; justify-content: flex-end; align-items: flex-end;">
+  <label for="fname">Search:</label>
+  <input type="text" id="fname" name="fname">
 </div>
 
 <div>
@@ -27,7 +32,7 @@
       <td>Fantasy</td>
       <td>100</td>
       <td>50</td>
-      <td></td>
+      <td><input type="button" value="Edit Book"></input></td>
     </tr>
     <tr>
       <td>978-1-61213-028-6</td>
@@ -36,7 +41,7 @@
       <td>Erotic</td>
       <td>420</td>
       <td>69</td>
-      <td></td>
+      <td><input type="button" value="Edit Book"></input></td>
     </tr>
     <tr>
       <td></td>
@@ -64,6 +69,15 @@
       <td></td>
       <td></td>
       <td></td>
+    </tr>
+    <tr>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input type="button" value="Add Book"></input></td>
     </tr>
   </table>
 </div>
