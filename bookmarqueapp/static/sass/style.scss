@@ -373,6 +373,21 @@ footer div {
   margin-right: 2.5rem;
 }
 
+/* shopping cart */
+#shopping-cart {
+  border-top: solid 0.15rem $blue;
+  display: flex;
+}
+
+#cart-list {
+  overflow: scroll;
+  border: dashed blue 2px;
+}
+
+.cart-item {
+  border: dashed yellow 2px;
+}
+
 .center {
   text-align: center;
 }
@@ -596,4 +611,16 @@ td a { //need to make a's in td's with this padding
 
 .filter {
   display: block;
+}
+
+#search-filters {
+  font-family: $font-sans;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#search-filters fieldset {
+  border-color: $blue;
+  margin-top: .5rem;
 }
