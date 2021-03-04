@@ -7,7 +7,7 @@
     <h1>Reading Reimagined</h1>
     <h3>from cover to cover.</h3>
     <p>The simplest way to shop for quality books. Curated by our experts so you can focus on relaxing.</p>
-    <a class="button-blue" href="">Shop Books</a>
+    <a class="button-blue" href="{{ url_for('search') }}">Shop Books</a>
   </div>
 </div>
 
@@ -19,39 +19,53 @@
     <div class = "fcardrow">
       <div class = "fcard">
         <a href="{{ url_for('book_details') }}">
-          <img src="{{ url_for('static', filename='assets/covers/all we saw.jpg') }}" alt="cheffe"/>
+        <img src="{{ url_for('static', filename='assets/covers/all we saw.jpg') }}" alt="cheffe"/>
+        <p> All We Saw </p>
         </a>
-        <p> The Cheffe</p>
       </div>
       <div class = "fcard">
+        <a href="{{ url_for('book_details') }}">
         <img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}" alt="cheffe"/>
         <p> Black Hole Blues</p>
+        </a>
       </div>
       <div class = "fcard">
+        <a href="{{ url_for('book_details') }}">
         <img src="{{ url_for('static', filename='assets/covers/cheffe.jpg') }}" alt="cheffe"/>
         <p> The Cheffe</p>
+        </a>
       </div>
       <div class = "fcard">
+        <a href="{{ url_for('book_details') }}">
         <img src="{{ url_for('static', filename='assets/covers/inevitable victorian thing.jpg') }}" alt="cheffe"/>
         <p> That Inevitable Victorian Thing</p>
+        </a>
       </div>
     </div>
     <div class = "fcardrow">
       <div class = "fcard">
+        <a href="{{ url_for('book_details') }}">
         <img src="{{ url_for('static', filename='assets/covers/nuruddin farah.jpg') }}" alt="cheffe"/>
         <p> Nurrudin Farah</p>
+        </a>
       </div>
       <div class = "fcard">
+        <a href="{{ url_for('book_details') }}">
         <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
         <p> The Selfie as Big as the Ritz</p>
+        </a>
       </div>
       <div class = "fcard">
+        <a href="{{ url_for('book_details') }}">
         <img src="{{ url_for('static', filename='assets/covers/the divines.jpg') }}" alt="cheffe"/>
         <p> The Divines</p>
+        </a>
       </div>
       <div class = "fcard">
+        <a href="{{ url_for('book_details') }}">
         <img src="{{ url_for('static', filename='assets/covers/the vacationers.jpg') }}" alt="cheffe"/>
         <p> The Vacationers</p>
+        </a>
       </div>
     </div>
   </div>

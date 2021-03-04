@@ -2,7 +2,7 @@
 {% block content %}
 <div id="menu-bar" style="background-color:#c4c4c4; justify-content: center;">
   <ul id="nav-bar" style="width: 90%; margin-right: 5%; margin-left: 5%; display: flex; justify-content: space-between;">
-    <li><a href="#">Manage Books</a></li>
+    <li><a href="{{ url_for('manageBooks') }}">Manage Books</a></li>
     <li><a href="#">Manage Users</a></li>
     <li><a href="#">Manage Orders</a></li>
     <li><a href="#">Toggle User/Admin View</a></li>
@@ -11,13 +11,16 @@
 
 <div class="row">
   <div class="column">
-    <h2>Manage Books</h2>
+    <img src="{{ url_for('static', filename='assets/archLibrary.png') }}" alt="archLibrary"/>
+    <a class="button-gold" href="{{ url_for('manageBooks') }}">Manage Books</a>
   </div>
-  <div class="column" style="background-color:#bbb;">
-    <h2>Manage Users</h2>
+  <div class="column">
+    <img src="{{ url_for('static', filename='assets/coffeeGlasses.png') }}" alt="coffeeGlasses"/>
+    <a class="button-gold" href="#">Manage Users</a>
   </div>
-  <div class="column" style="background-color:#ccc;">
-    <h2>Manage Orders</h2>
+  <div class="column">
+    <img src="{{ url_for('static', filename='assets/stairsLibrary.png') }}" alt="stairsLibrary"/>
+    <a class="button-gold" href="#">Manage Orders</a>
   </div>
 </div>
 {% endblock %}

@@ -5,51 +5,47 @@ $light-gold: #FBEDD7;
 $gold: #F4CE92;
 $dark-gold: #B6622D;
 $light-grey: #E1E1E1;
-
 /* font families */
 $font-serif: 'Crimson Text', serif;
 $font-sans: 'Open Sans', sans-serif;
 $font-title: 'Bebas Neue', cursive;
 
-html, body {
-    margin: 0;
-    height: 100%;
-    min-height: 100%;
+body,
+html {
+  margin: 0;
+  height: 100%;
+  min-height: 100%;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-    flex: auto;
+  flex: auto;
 }
-
 /* header */
 header {
-    background-color: white;
-    width: 100%;
+  background-color: white;
+  width: 100%;
 }
 
 #promo-bar {
-    background-color: $blue;
-    font-family: $font-sans;
-    font-weight: bold;
-    font-size: .8rem;
-    letter-spacing: .15rem;
-    color: white;
-
-    padding: .5rem 0 .5rem 0;
-
-    text-align: center;
+  background-color: $blue;
+  font-family: $font-sans;
+  font-weight: bold;
+  font-size: 0.8rem;
+  letter-spacing: 0.15rem;
+  color: white;
+  padding: 0.5rem 0;
+  text-align: center;
 }
 
 #menu-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   white-space: nowrap;
 }
 
@@ -59,18 +55,18 @@ header {
 }
 
 .main-logo {
-    font-family: $font-title;
-    padding: 0;
-    margin: 0;
+  font-family: $font-title;
+  padding: 0;
+  margin: 0;
 }
 
 .main-logo img {
-  padding: 0 0 0 .5rem;
+  padding: 0 0 0 0.5rem;
 }
 
 #nav-bar {
-    font-family: $font-serif;
-    list-style: none;
+  font-family: $font-serif;
+  list-style: none;
 }
 
 #nav-bar li {
@@ -78,7 +74,8 @@ header {
   float: left;
 }
 
-#nav-bar a, #nav_bar a:visited {
+#nav-bar a,
+#nav_bar a:visited {
   color: black;
   text-decoration: none;
 }
@@ -89,21 +86,20 @@ header {
 }
 
 #nav-icons {
-    padding-right: 1.5rem;
+  padding-right: 1.5rem;
 }
 
 .icon {
   width: 1.75rem;
   height: 1.75rem;
 }
-
 /* search bar */
 .search-bar {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 0;
-  border: solid $blue .25rem;
+  border: solid $blue 0.25rem;
 }
 
 .search-bar input[type=text] {
@@ -132,31 +128,30 @@ header {
   height: 1.5rem;
   width: 1.5rem;
 }
-
 /* footer */
 footer {
-    background-color: $blue;
-    font-family: $font-sans;
-    color: white;
-
-    flex: none;
+  background-color: $blue;
+  font-family: $font-sans;
+  color: white;
+  flex: none;
 }
 
 footer div {
-    column-count: 4;
-    padding: 2rem 0 2rem 0;
-    width: 75vw;
+  column-count: 4;
+  padding: 2rem 0;
+  width: 75vw;
 }
 
 .footer-column {
-    list-style: none;
+  list-style: none;
 }
 
 .footer-column li {
-  padding-bottom: .25rem;
+  padding-bottom: 0.25rem;
 }
 
-.footer-column a , .footer_column a:visited {
+.footer-column a,
+.footer_column a:visited {
   color: white;
   text-decoration: none;
 }
@@ -164,11 +159,10 @@ footer div {
 .footer-column a:hover {
   font-weight: bold;
 }
-
 /* home page */
 #home-banner {
   display: flex;
-  border-bottom: solid $blue .5rem;
+  border-bottom: solid $blue 0.5rem;
 }
 
 #home-banner img {
@@ -205,11 +199,9 @@ footer div {
   font-weight: normal;
   outline: none;
   border: none;
-
   text-align: center;
   /*box-shadow: */
-
-  padding: .5rem 2rem .5rem 2rem;
+  padding: 0.5rem 2rem;
 }
 
 .button-gold {
@@ -220,39 +212,35 @@ footer div {
   font-weight: normal;
   outline: none;
   border: none;
-
   text-align: center;
-
-  padding: .5rem 2rem .5rem 2rem;
+  padding: 0.5rem 2rem;
 }
-
 /* featured gallery */
 #featured {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 5rem;
+  padding-bottom: 3rem;
 }
 
 #featured h1 {
   font-family: $font-serif;
   text-decoration: underline;
-  letter-spacing: .15rem;
+  letter-spacing: 0.15rem;
 }
 
 #featured span {
   font-family: $font-sans;
 }
-
 /* popup-panel used for login/registration pages */
 .overlay {
-  position:fixed;
-  width:100%;
-  height:100%;
-  top:0;
-  left:0;
-  z-index:1000;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
   backdrop-filter: blur(3px);
 }
 
@@ -262,10 +250,8 @@ footer div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: solid .25rem $blue;
-
+  border: solid 0.25rem $blue;
   background-color: white;
-
   position: fixed;
   left: 0;
   right: 0;
@@ -284,20 +270,21 @@ footer div {
 }
 
 .popup-panel label {
-  font-size: .75rem;
+  font-size: 0.75rem;
   font-weight: bold;
 }
 
 .popup-panel input {
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 
-.popup-panel a, .popup-panel input[type=submit] {
+.popup-panel a,
+.popup-panel input[type=submit] {
   margin-top: 1rem;
 }
 
 .popup-panel span {
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 #card-details {
@@ -308,15 +295,14 @@ footer div {
   width: 100%;
 }
 
-#card-details select{
+#card-details select {
   height: 22px;
 }
-
 /* book details */
 #book-listing {
   font-family: $font-sans;
   padding-top: 2rem;
-  border-top: solid .15rem $blue;
+  border-top: solid 0.15rem $blue;
   display: flex;
   flex-wrap: wrap;
 }
@@ -334,7 +320,7 @@ footer div {
 
 #book-details h1 {
   font-family: $font-serif;
-  letter-spacing: .2rem;
+  letter-spacing: 0.2rem;
   margin: 0;
 }
 
@@ -343,8 +329,12 @@ footer div {
   margin: 0;
 }
 
+.star-rating {
+  color: $gold;
+}
+
 #book-add-box {
-  border: solid .25rem $blue;
+  border: solid 0.25rem $blue;
   box-shadow: 1px 1px 2px grey;
   display: flex;
   flex-direction: column;
@@ -364,7 +354,7 @@ footer div {
 .quant-button {
   display: flex;
   justify-content: center;
-  border: solid .25rem $blue;
+  border: solid 0.25rem $blue;
 }
 
 .quant-button input[type=submit] {
@@ -383,19 +373,44 @@ footer div {
   margin-right: 2.5rem;
 }
 
+/* shopping cart */
+#shopping-cart {
+  border-top: solid 0.15rem $blue;
+  display: flex;
+}
+
+#cart-list {
+  overflow: scroll;
+  border: dashed blue 2px;
+}
+
+.cart-item {
+  border: dashed yellow 2px;
+}
+
 .center {
   text-align: center;
 }
-
 /* Create three equal columns that floats next to each other */
 .column {
-  background-color:#aaa;
   margin: 2%;
   float: left;
-  width: 28%;
-  height: 500px; /* Should be removed. Only for demonstration */
+  width: 29%;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
+.column img {
+  object-fit: cover;
+  height: 100%;
+}
+
+.column a {
+  position: absolute;
+}
 /* Clear floats after the columns */
 .row:after {
   content: "";
@@ -403,13 +418,11 @@ footer div {
   clear: both;
 }
 
-
 .frow {
   height: auto;
-  border: 0px;
+  border: 0;
   padding: 1em;
   width: 80%;
-
 }
 
 .fcardrow {
@@ -419,13 +432,13 @@ footer div {
   grid-auto-columns: 1fr;
   grid-gap: 1em;
   justify-items: center;
-  margin-bottom: 1em;
+  margin-bottom: 3em;
   margin-top: 1em;
 }
 
 .fcard {
   display: block;
-  height:auto;
+  height: auto;
   min-width: 15%;
 }
 
@@ -435,8 +448,8 @@ footer div {
   margin-left: auto;
   margin-right: auto;
   max-height: 250px;
-
 }
+
 .fcard p {
   text-align: center;
   font-family: $font-serif;
@@ -444,27 +457,40 @@ footer div {
   margin-bottom: 5%;
 }
 
-table, th, td {
+.fcard a {
+  text-decoration: none;
+  color: black;
+}
+
+table,
+td,
+th {
   border: 1px solid black;
   border-collapse: collapse;
 }
+
 table {
   background: #c4c4c4;
   border-collapse: collapse;
   width: 90%;
   margin: 5%;
 }
-th, td {
+
+td,
+th {
   width: 1%;
   padding: 10px;
   text-align: left;
 }
-tr{
+
+tr {
   height: 40px;
 }
-td{
+
+td {
   background: #f2f2f2;
 }
+
 
 /* Checkout Process */
 #ordersummary{
@@ -638,3 +664,138 @@ div{
   padding-left:20%;
   font-family: $font-sans;
 }
+=======
+td a { //need to make a's in td's with this padding
+  padding: 0.5rem 0.1rem;
+}
+
+
+
+//CSS used for search view
+
+.search-container{
+  background-color: $gold;
+  border-bottom: .5rem solid $blue;
+  margin: 0;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+.left-container{
+  width: 20%;
+  min-width: 1fr;
+  float: left;
+}
+.right-container{
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 25% 25% 25% 25%;
+  row-gap: 2px;
+  column-gap: 2px;
+  width: 80%;
+  float: left;
+  background-color: #c4c4c4;
+}
+
+.search-card {
+   padding-top: 1em;
+   padding-bottom: 1em;
+   padding-left: 2em;
+   padding-right: 2em;
+   background-color: white;
+}
+
+.search-card a {
+  color: black;
+  text-decoration: none;
+}
+
+.title {
+  margin-bottom: 0;
+  font-family: $font-serif;
+}
+
+.author {
+  font-family: $font-sans;
+  margin-top: 0;
+}
+
+.price {
+  font-family: $font-serif
+}
+
+.stock {
+  font-family: $font-sans;
+  float: right;
+}
+
+.tags {
+  display: block;
+  font-family: $font-sans;
+  font-size: small;
+  color: gray;
+  padding-top: 10%;
+
+}
+
+.tags p {
+  margin: 0;
+}
+
+.search-card img {
+  display: block;
+  height: 100%;
+  float:left;
+  margin-left: 1em;
+  margin-right: 1em;
+  max-height: 250px;
+  margin-top: 1em;
+}
+
+.full-search-bar {
+  display: grid;
+  grid-template-columns: auto 2em;
+  padding: 0;
+  border: solid $blue 0.25rem;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.full-search-bar input[type=text] {
+  background-color: white;
+  border: none;
+  height: 2rem;
+  width: 100%;
+  font-family: $font-sans;
+  text-align: center;
+}
+
+.full-search-bar button {
+  height: 100%;
+  width: 100%;
+  background: $blue;
+  border: none;
+}
+
+
+.full-search-bar img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.filter {
+  display: block;
+}
+
+#search-filters {
+  font-family: $font-sans;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+#search-filters fieldset {
+  border-color: $blue;
+  margin-top: .5rem;
+}
+

@@ -1,0 +1,22 @@
+{% include "manage_books.html" %}
+<div class="overlay">
+  <form class="popup-panel">
+    <h1 class="main-logo">Bookmarqué</h1>
+    <h1>Book Entry</h1>
+
+    <label>IBSN</label>
+    <input type="text">
+    <label>Book Title</label>
+    <input type="text">
+    <label>Author</label>
+    <input type="text">
+    <label>Subject</label>
+    <input type="text">
+    <label>Total Coppies</label>
+    <input type="text">
+    <span>Note: Password must be at least 8 characters long and contain both letters and numbers.</span>
+
+    <a class="button-gold" href="{{ url_for('manageBooks') }}">Continue</a>
+
+  </form>
+</div>

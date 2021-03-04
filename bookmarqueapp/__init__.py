@@ -35,6 +35,10 @@ def reg3():
 def reg4():
     return render_template('reg4.html')
 
+@app.route('/search/')
+def search():
+    return render_template('search_view.html')
+
 @app.route('/view/The+Vacationers')
 def book_details():
     return render_template('book_details_example.html')
@@ -46,6 +50,7 @@ def admin():
 @app.route('/manage-books')
 def manageBooks():
     return render_template('manage_books.html')
+
 
 @app.route('/checkout1')
 def checkout1():
@@ -63,3 +68,12 @@ def checkout3():
 @app.route('/checkout4')
 def checkout4():
     return render_template('checkout4.html')
+
+@app.route('/manage-books/book-entry')
+def bookEntry():
+    return render_template('book_entry.html')
+
+@app.route('/cart')
+def shopping_cart():
+    return render_template('shopping_cart.html')
+

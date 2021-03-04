@@ -1,0 +1,21 @@
+{% extends "user_layout.html" %}
+{% block content %}
+
+<div id="shopping-cart">
+  <div id="cart-list">
+    <div class="cart-item">
+        <a href="{{ url_for('book_details') }}">
+            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
+            <h3>The Selfie as Big as the Ritz</h3>
+            <h3>79.99</h3>
+
+        </a>
+    </div>
+  </div>
+
+  <div id="promo-box">
+
+  </div>
+</div>
+
+{% endblock %}
