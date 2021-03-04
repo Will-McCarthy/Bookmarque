@@ -525,24 +525,25 @@ td {
   width: 30%;
   font-family: $font-serif;
   margin-right: 1em;
-  position:fixed;
+  position:absolute;
   top:200px;
   left:200px;
   float: left;
   height:100%;
   
+  
 }
 
 #checkout_title{
-  margin-left: 20%;
-  margin-top: -8%;
-  position: fixed;
+  margin-left: 63%;
+  margin-top: -26%;
+  position: absolute;
   font-size: 200%;
   font-weight: lighter;
 }
 
 .shipping-form, .saved-address-info, .payment-form{
-  width: 30%;
+  width: 100%;
   font-family: $font-serif;
   display: flex;
   flex-direction: column;
@@ -550,15 +551,16 @@ td {
   border: solid .15rem $light-grey;
   background-color: white;
 
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   margin-top: auto;
   margin-left: 20%;
   padding: 1rem;
   float: left;
-  
 }
+
+
 .edit-cart-button{
   padding-left: 80%;
   color: black;
@@ -567,7 +569,6 @@ td {
 #ship-to-label, #payment-label{
   font-family: $font-serif;
   font-weight: lighter;
-  padding-left: 27%;
   font-size: 120%;
 
 }
@@ -619,6 +620,9 @@ div{
   background-color: $light-grey;
   font-family: $font-sans;
   font-weight: bold;
+  position: absolute;
+  width: 100%;
+  margin-top: 5%;
 }
 
 #payment-label{
@@ -629,7 +633,7 @@ div{
 }
 
 #promo-div{
-  margin-top: 5%;
+  margin-top: 10%;
   margin-bottom: 10%;
 }
 #promotion-input{
@@ -664,7 +668,7 @@ div{
   padding-left:20%;
   font-family: $font-sans;
 }
-=======
+
 td a { //need to make a's in td's with this padding
   padding: 0.5rem 0.1rem;
 }

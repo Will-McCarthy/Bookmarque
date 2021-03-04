@@ -64,10 +64,13 @@ def checkout2():
 def checkout3():
     return render_template('checkout3.html')
 
-
 @app.route('/checkout4')
 def checkout4():
     return render_template('checkout4.html')
+
+@app.route('/checkout5')
+def checkout5():
+    return render_template('checkout5.html')
 
 @app.route('/manage-books/book-entry')
 def bookEntry():
