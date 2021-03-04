@@ -54,3 +54,7 @@ def manageBooks():
 @app.route('/manage-books/book-entry')
 def bookEntry():
     return render_template('book_entry.html')
+
+@app.route('/cart')
+def shopping_cart():
+    return render_template('shopping_cart.html')
