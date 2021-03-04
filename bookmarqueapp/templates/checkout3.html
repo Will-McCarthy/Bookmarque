@@ -1,0 +1,105 @@
+{% extends "user_layout.html" %}
+{% block content %}
+
+<div id="checkout_body">
+    <h1 id="checkout_title">Checkout</h1>
+    <img class="progbar_img" src="static/assets/checkout_ui_assets/prog2.png" alt="prog2_placeholder">
+    
+    <div>
+        <span style="display:block;">
+       
+        <a href="checkout4.html" alt="plus_img" style="margin-top: 10%; margin-left:20%; color:black; text-decoration: none;">Have a promotion code?</a>
+
+        </span>
+        <hr style="margin-left:20%; width: 110%;">
+    </div>
+    
+    <div>
+        <h1 id="payment-label" style="padding-left: -10%;">Payment</h1>
+    </div>
+        
+    <form class="payment-form" action="/filename.php">
+        <label for="cardtype">Card Type</label>
+        <input class="shipping-input" type="text" placeholder="Required">
+        <label for="lname">Card Number</label>
+        <input class="shippng-input" type="text" placeholder="Required">
+        <label for="street">Expires On</label>
+        <div style="display:block;">
+            <select class="shipping-input" style="width: 40%;">
+                    <option>- Month -</option>
+                    <option value="January">January</option>
+                    <option value="Febuary">Febuary</option>
+                    <option value="March">March</option>
+                    <option value="April">April</option>
+                    <option value="May">May</option>
+                    <option value="June">June</option>
+                    <option value="July">July</option>
+                    <option value="August">August</option>
+                    <option value="September">September</option>
+                    <option value="October">October</option>
+                    <option value="November">November</option>
+                    <option value="December">December</option>
+            </select>
+
+            <select class="shipping-input" style="width: 30%;">
+                    <option>- Year -</option>
+                    <option value="2018">2028</option>
+                    <option value="2017">2027</option>
+                    <option value="2016">2026</option>
+                    <option value="2020">2025</option>
+                    <option value="2019">2024</option>
+                    <option value="2018">2023</option>
+                    <option value="2017">2022</option>
+                    <option value="2016">2021</option>
+                    <option value="2020">2020</option>
+            </select>
+        </div>
+
+        
+        <label for="cvv">Security Code (eg: 123)</label>
+        <span>
+            <input class="shipping-input" type="text" placeholder="Required" style="width: 30%;">
+        </span>
+</form>
+    <input id="checkout3_button" type="submit" value="NEXT: REVIEW AND PLACE ORDER" onclick=next()>
+</div>
+</div>
+
+<div id="ordersummary">
+    <div id="innerbox">
+        <a class="edit-cart-button" href="#">Edit cart </a>
+        <h2 style="font-weight: lighter">Order Summary</h2>
+       <div id="first_section">
+            <h3 style="float: left; font-weight: lighter; margin: 0; padding-left: 2em;">Title</h3>
+            <h3 style="float: right; font-weight: lighter; margin: 0;">Price</h3>
+       </div>
+       <hr style="width:100%;">
+        <ul class="book-list">
+            <a href="#" img src="static/assets/checkout_ui_assets/trash.png" alt="trashcan-img"></a>
+            <li><span style="float:left;">Harry Potter & The Sorcerer's Stone</span><span style="float:right; padding-left:2em;">$12.99</span></li>
+            <li><span style="float:left;">The Alchemist</span><span style="float:right; padding-left:2em;">$9.99</span></li>
+        </ul>
+        <br><br><br><br><br><br><br><br>
+        <ul class="price-summary">
+            <li class="merchandise-row">
+                    <span class="merchandise-label" style="float:left;">Merchandise: </span>
+                    <span class="merchandise-amount" style="float:right;">$22.98</span><br>
+            </li>
+            <li class="shipping-row">
+                    <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
+                    <span class="shipping-amount" style="float:right;">$3.54</span><br>
+            </li> 
+            <li class="tax-row">
+                <span class="tax-label" style="float:left">Tax: </span>
+                <span class="tax-amount" style="float:right">$1.42</span>
+            </li>
+        </ul>
+        <br><hr>
+        <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
+        <h2 style="font-weight:lighter; float: right;">$27.94 </h2>
+        
+</div>
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "user_layout.html" %}
+{% block content %}
+
+<div id="checkout_body">
+    <h1 id="checkout_title">Checkout</h1>
+    <img class="progbar_img" src="static/assets/checkout_ui_assets/prog1.png" alt="prog1_placeholder">
+    <div>
+        <h1 id="ship-to-label">Ship To:</h1>
+    </div>
+   <div class="saved-address-info">
+        <a class="edit-cart-button" href="#">Edit cart </a>
+       <p style="margin:0;">Matthew Smith</p>
+       <p style="margin:0;">123 Research Drive</p>
+       <p style="margin:0;">Athens, GA 30606</p>
+       <p style="margin:0;">(123)-456-7890</p>
+   </div>
+  
+  
+   <button type="button" onclick="window.location.href=checkout3.html" id="checkout2_button">NEXT: PAYMENT</button>
+
+</div>
+</div>
+
+<div id="ordersummary">
+    <div id="innerbox">
+        <a class="edit-cart-button" href="#">Edit cart </a>
+        <h2 style="font-weight: lighter">Order Summary</h2>
+       <div id="first_section">
+            <h3 style="float: left; font-weight: lighter; margin: 0; padding-left: 2em;">Title</h3>
+            <h3 style="float: right; font-weight: lighter; margin: 0;">Price</h3>
+       </div>
+       <hr style="width:100%;">
+        <ul class="book-list">
+            <a href="#" img src="static/assets/checkout_ui_assets/trash.png" alt="trashcan-img"></a>
+            <li><span style="float:left;">Harry Potter & The Sorcerer's Stone</span><span style="float:right; padding-left:2em;">$12.99</span></li>
+            <li><span style="float:left;">The Alchemist</span><span style="float:right; padding-left:2em;">$9.99</span></li>
+        </ul>
+        <br><br><br><br><br><br><br><br>
+        <ul class="price-summary">
+            <li class="merchandise-row">
+                    <span class="merchandise-label" style="float:left;">Merchandise: </span>
+                    <span class="merchandise-amount" style="float:right;">$22.98</span><br>
+            </li>
+            <li class="shipping-row">
+                    <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
+                    <span class="shipping-amount" style="float:right;">$3.54</span><br>
+            </li> 
+            <li class="tax-row">
+                <span class="tax-label" style="float:left">Tax: </span>
+                <span class="tax-amount" style="float:right">$1.42</span>
+            </li>
+        </ul>
+        <br><hr>
+        <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
+        <h2 style="font-weight:lighter; float: right;">$27.94 </h2>
+        
+</div>
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

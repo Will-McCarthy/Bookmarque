@@ -51,6 +51,24 @@ def admin():
 def manageBooks():
     return render_template('manage_books.html')
 
+
+@app.route('/checkout1')
+def checkout1():
+    return render_template('checkout1.html')
+
+@app.route('/checkout2')
+def checkout2():
+    return render_template('checkout2.html')
+
+@app.route('/checkout3')
+def checkout3():
+    return render_template('checkout3.html')
+
+
+@app.route('/checkout4')
+def checkout4():
+    return render_template('checkout4.html')
+
 @app.route('/manage-books/book-entry')
 def bookEntry():
     return render_template('book_entry.html')
@@ -58,3 +76,4 @@ def bookEntry():
 @app.route('/cart')
 def shopping_cart():
     return render_template('shopping_cart.html')
+
