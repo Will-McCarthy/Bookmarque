@@ -465,3 +465,176 @@ tr{
 td{
   background: #f2f2f2;
 }
+
+/* Checkout Process */
+#ordersummary{
+  float:right;
+  background-color: $gold;
+  padding: 10%;
+  padding-top: 2%;
+  padding-left: 2%;
+  font-family: $font-serif;
+
+  font-weight: lighter;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  
+}
+.book-list, .price-summary{
+  list-style-type: none;
+  padding-left: -5%;
+}
+
+#innerbox{
+  background-color: #F5F5F5;
+  z-index: 1000;
+  padding: 2em;
+  height: 60%;
+  padding-top: 1em;
+}
+
+#checkout_body{
+  width: 30%;
+  font-family: $font-serif;
+  margin-right: 1em;
+  position:fixed;
+  top:200px;
+  left:200px;
+  float: left;
+  height:100%;
+  
+}
+
+#checkout_title{
+  margin-left: 20%;
+  margin-top: -8%;
+  position: fixed;
+  font-size: 200%;
+  font-weight: lighter;
+}
+
+.shipping-form, .saved-address-info, .payment-form{
+  width: 30%;
+  font-family: $font-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: solid .15rem $light-grey;
+  background-color: white;
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin-top: auto;
+  margin-left: 20%;
+  padding: 1rem;
+  float: left;
+  
+}
+.edit-cart-button{
+  padding-left: 80%;
+  color: black;
+}
+
+#ship-to-label, #payment-label{
+  font-family: $font-serif;
+  font-weight: lighter;
+  padding-left: 27%;
+  font-size: 120%;
+
+}
+#checkout1_button{
+  background-color: black;
+  color: white;
+  font-family: $font-serif;
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 2%;
+}
+
+/*Spacing within form on checkout page*/
+div{
+  form{
+    label, input, select{
+      padding: .5em;
+    }
+  }
+}
+
+/*Temporary, this will be replaced with JS after demo*/
+.progbar_img{
+  width: 100%;
+  margin-top: -18%;
+  padding-left: 25%;
+}
+
+/*checkout2.html CSS*/
+#checkout2_button, #checkout3_button{
+  margin-top: 50%;
+  background-color: black;
+  color: white;
+  font-family: $font-serif;
+  font-size: 110%;
+  width: 50%;
+  height: 5%;
+  margin-left: 50%;
+}
+
+#checkout3_button{
+  width: 70%;
+  height: 5%;
+  margin-top: 85%;
+  margin-left: 40%;
+}
+
+.payment-form{
+  background-color: $light-grey;
+  font-family: $font-sans;
+  font-weight: bold;
+}
+
+#payment-label{
+  margin-top: -10;
+  margin-bottom: 0;
+  padding-left: -5%;
+
+}
+
+#promo-div{
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+#promotion-input{
+  padding: .5em;
+  border: solid .10rem black;
+  padding-left: 50%;
+  margin-left: 20%;
+  width: 12%;
+}
+
+#promotion_button{
+  font-weight:bolder;
+  font-family: $font-sans;
+  border: solid .15rem black;
+  margin-left: 1em;
+  width: 30%;
+  background-color: white;
+}
+
+.promotion-form{
+  display:flex;
+  align-items: center;
+}
+#promo-question{
+  margin-top: 10%;
+   margin-left:20%; 
+   color:black; 
+   text-decoration: none;
+}
+#promotion-label{
+  font-weight:bolder;
+  padding-left:20%;
+  font-family: $font-sans;
+}
