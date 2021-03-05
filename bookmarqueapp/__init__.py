@@ -72,6 +72,10 @@ def checkout4():
 def checkout5():
     return render_template('checkout5.html')
 
+@app.route('/checkout6')
+def checkout6():
+    return render_template('checkout6.html')
+
 @app.route('/manage-books/book-entry')
 def bookEntry():
     return render_template('book_entry.html')
