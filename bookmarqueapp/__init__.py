@@ -51,9 +51,42 @@ def admin():
 def manageBooks():
     return render_template('manage_books.html')
 
+
+@app.route('/checkout1')
+def checkout1():
+    return render_template('checkout1.html')
+
+@app.route('/checkout2')
+def checkout2():
+    return render_template('checkout2.html')
+
+@app.route('/checkout3')
+def checkout3():
+    return render_template('checkout3.html')
+
+@app.route('/checkout4')
+def checkout4():
+    return render_template('checkout4.html')
+
+@app.route('/checkout5')
+def checkout5():
+    return render_template('checkout5.html')
+
+@app.route('/checkout6')
+def checkout6():
+    return render_template('checkout6.html')
+
 @app.route('/manage-books/book-entry')
 def bookEntry():
     return render_template('book_entry.html')
+
+@app.route('/cart')
+def shopping_cart():
+    return render_template('shopping_cart.html')
+
+@app.route('/cart/history')
+def order_history():
+    return render_template('order_history.html')
 
 @app.route('/profile')
 def profile():
@@ -70,3 +103,4 @@ def card_panel():
 @app.route('/profile/edit')
 def edit_profile():
     return render_template('edit_profile.html')
+
