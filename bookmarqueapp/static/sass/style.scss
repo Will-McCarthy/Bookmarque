@@ -5,6 +5,7 @@ $light-gold: #FBEDD7;
 $gold: #F4CE92;
 $dark-gold: #B6622D;
 $light-grey: #E1E1E1;
+$red: #FF0000;
 /* font families */
 $font-serif: 'Crimson Text', serif;
 $font-sans: 'Open Sans', sans-serif;
@@ -922,3 +923,110 @@ td a { //need to make a's in td's with this padding
   border-color: $blue;
   margin-top: .5rem;
 }
+
+// CSS used for profile pages
+.profile-buffer {
+    display: grid;
+    grid-template-columns: 100px;
+}
+
+.profile-format {
+    margin-right: 5%;
+    margin-left: 10%;
+    font-family: $font-sans;
+    text-align: left;
+    font-size: small;
+    display: grid;
+    grid-template-columns: auto auto auto auto; // 475px
+    grid-template-rows: auto auto auto auto; // 25% across the board
+    //padding-left: 100px;
+    //padding-right: 100px;
+    row-gap: 100px;
+    column-gap: 50px;
+}
+
+.profile-label {
+    font-family: $font-sans;
+    font-weight: bold;
+}
+
+.profile-links {
+    a:link {
+	color:dark $blue;
+    }
+    a:active {
+	color:dark $blue;
+    }
+    a:visited {
+	color:dark $blue;
+    }
+    font-size: x-small;
+}
+
+.profile-submit {
+    //text-align: left;
+    //font-size: small;
+    //width: 10%;
+    text-size: small;
+    text-align: right;
+    font-family: $font-sans;
+    padding-right: 250px;
+}
+
+.profile-required {
+    color: $red;
+    font-size: x-small;
+}
+
+.profile-asterisks {
+    color: $red;
+}
+
+.edit-fields {
+    input {
+	size: 20;
+    }
+}
+
+.password-req {
+    minlength: 8;
+}
+
+.submit-options {
+    font-family: $font-sans;
+    //text-align: left;
+    //font-size: small;
+    display: grid;
+    grid-template-columns: auto auto; // 475px
+    grid-template-rows: auto; // 25% across the board
+    //padding-left: 100px;
+    //padding-right: 100px;
+    row-gap: 100px;
+    column-gap: 50px;
+}
+
+.button-blue-adjusted {
+    background-color: $blue;
+    color: white;
+    text-decoration: none;
+    font-family: $font-sans;
+    font-weight: normal;
+    font-size: small;
+    outline: none;
+    border: none;
+    text-align: center;
+    /*box-shadow: */
+    padding: 0.45rem 2rem;
+}
+
+.button-grey {
+    background-color: $light-grey;
+    color: black;
+    text-decoration: none;
+    font-family: $font-sans;
+    font-weight: normal;
+    outline: none;
+    border: none;
+    text-align: center;
+    /*box-shadow: */
+    padding: 0.5rem 2rem;

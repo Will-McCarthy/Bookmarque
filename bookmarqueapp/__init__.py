@@ -87,3 +87,20 @@ def shopping_cart():
 @app.route('/cart/history')
 def order_history():
     return render_template('order_history.html')
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+@app.route('/profile/update-password')
+def password_panel():
+    return render_template('update_password.html')
+
+@app.route('/profile/update-card')
+def card_panel():
+    return render_template('update_card.html')
+
+@app.route('/profile/edit')
+def edit_profile():
+    return render_template('edit_profile.html')
+
