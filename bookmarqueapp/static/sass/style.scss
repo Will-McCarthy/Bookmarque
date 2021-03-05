@@ -1031,3 +1031,15 @@ td a { //need to make a's in td's with this padding
     /*box-shadow: */
     padding: 0.5rem 2rem;
 }
+
+.card-details-edit {
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 5%;
+  grid-auto-columns: 30%;
+  width: 100%;
+
+  select {
+      height: 31px;
+  }
+}
