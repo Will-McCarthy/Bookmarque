@@ -547,7 +547,6 @@ td {
   padding-top: 2%;
   padding-left: 2%;
   font-family: $font-serif;
-
   font-weight: lighter;
   height: 100%;
   min-height: 100%;
@@ -644,7 +643,7 @@ div{
   padding-left: 25%;
 }
 
-/*checkout2.html CSS*/
+/*checkout2-5 CSS*/
 #checkout2_button, #checkout3_button{
   margin-top: 50%;
   background-color: black;
@@ -715,6 +714,51 @@ div{
   padding-left:20%;
   font-family: $font-sans;
 }
+
+/* checkout6.html*/
+#outer-box-left{
+  background-color: $light-gold;
+  position: absolute;
+  height: 85%;
+  width: 120%;
+  float: left;
+  margin-left: 25%;
+
+}
+
+#inner-box-top, #inner-box-middle, #inner-box-bottom{
+  background-color: white;
+  margin: 1em;
+  position: absolute;
+  padding: .5em;
+  z-index: 1000;
+  height: 25%;
+  width: 90%;
+} 
+
+#inner-box-middle{
+  margin-top: 40%;
+  height: 34%;
+}
+
+#inner-box-bottom{
+  margin-top: 90%;
+}
+
+#checkout6_button{
+  margin-top: 158%;
+  margin-left: 45%;
+  background-color: rgba(15, 130, 109, 0.78);
+  color: white;
+  font-family: $font-serif;
+  font-size: 110%;
+  width: 80%;
+  height: 5%;
+  display: inline-block;
+  float:left;
+
+}
+
 
 td a { //need to make a's in td's with this padding
   padding: 0.5rem 0.1rem;

@@ -1,0 +1,82 @@
+{% extends "user_layout.html" %}
+{% block content %}
+
+<div id="checkout_body" style="float:left;">
+    <h1 id="checkout_title">Checkout</h1>
+    <img class="progbar_img" src="static/assets/checkout_ui_assets/prog3.png" alt="prog3_placeholder" style="padding-top:.4em; position:absolute">
+    
+    <h2 style="font-weight: lighter; margin-left: 50%; margin-top: 20%;">You're almost finished!</h2>
+    
+    <div id="outer-box-left">
+        <div id="inner-box-top">
+            <a class="edit-cart-button" href="#" style="padding-left: 95%;">Edit</a>
+            <p style="margin:0; font-size: 110%;">Shipping To</p><br>
+            <p style="margin:0; font-weight: bold;">Matthew Smith</p>
+            <p style="margin:0;">123 Research Drive</p>
+            <p style="margin:0;">Athens, GA 30606</p>
+            <p style="margin:0;">(123)-456-7890</p>
+        </div>
+
+        <div id="inner-box-middle">
+                <a class="edit-cart-button" href="#" style="padding-left: 95%;">Edit</a>
+                <p style="margin:0; font-size: 110%;">Item(s)</p><br>
+                <img class="checkout_book_imgs" src="static/assets/checkout_ui_assets/harrypotter.png" alt="book1" style="padding-top:.4em; position:absolute">
+                <p style="padding-left: 15%;">Harry Potter and the Sorcerer's Stone  <span style="float:right;">$12.99</span></p>
+                <p style="padding-left: 15%; margin-top: -3%;">Qty: 1</p>
+                <img class="checkout_book_imgs" src="static/assets/checkout_ui_assets/alchemist.png" alt="book2" style="padding-top:1.5em; position:absolute"><br>
+                <p style="padding-left: 15%;">The Alchemist  <span style="float:right;">$9.99</span></p><br>
+                <p style="padding-left: 15%; margin-top: -8%;">Qty: 1</p>
+
+        </div>
+
+        <div id="inner-box-bottom">
+                <a class="edit-cart-button" href="#" style="padding-left: 95%;">Edit</a>
+                <p style="margin:0; font-size: 110%;">Payment</p><br>
+                <p style="margin: 0; margin-left: 25%;">Discover</p>
+                <p style="margin:0; margin-left: 25%;">XXXX-XXXX-XXXX-4567</p>
+        </div>
+    </div>
+
+    <button type="button" onclick="window.location.href=checkout3.html" id="checkout6_button">PLACE ORDER</button>
+
+</div>
+
+
+<div id="ordersummary">
+    <div id="innerbox">
+        <a class="edit-cart-button" href="#">Edit cart </a>
+        <h2 style="font-weight: lighter">Order Summary</h2>
+       <div id="first_section">
+            <h3 style="float: left; font-weight: lighter; margin: 0; padding-left: 2em;">Title</h3>
+            <h3 style="float: right; font-weight: lighter; margin: 0;">Price</h3>
+       </div>
+       <hr style="width:100%;">
+        <ul class="book-list">
+            <a href="#" img src="static/assets/checkout_ui_assets/trash.png" alt="trashcan-img"></a>
+            <li><span style="float:left;">Harry Potter & The Sorcerer's Stone</span><span style="float:right; padding-left:2em;">$12.99</span></li>
+            <li><span style="float:left;">The Alchemist</span><span style="float:right; padding-left:2em;">$9.99</span></li>
+        </ul>
+        <br><br><br><br><br><br><br><br>
+        <ul class="price-summary">
+            <li class="merchandise-row">
+                    <span class="merchandise-label" style="float:left;">Merchandise: </span>
+                    <span class="merchandise-amount" style="float:right;">$22.98</span><br>
+            </li>
+            <li class="shipping-row">
+                    <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
+                    <span class="shipping-amount" style="float:right;">$3.54</span><br>
+            </li> 
+            <li class="tax-row">
+                <span class="tax-label" style="float:left">Tax: </span>
+                <span class="tax-amount" style="float:right">$1.42</span>
+            </li>
+        </ul>
+        <br><hr>
+        <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
+        <h2 style="font-weight:lighter; float: right;">$27.94 </h2>
+        
+</div>
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}
