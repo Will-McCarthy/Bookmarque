@@ -391,7 +391,8 @@ footer div {
   color: black;
 }
 
-#cart-list {
+/* shopping cart and order history */
+#book-list {
   overflow-y: scroll;
   height: 70%;
   display: flex;
@@ -438,6 +439,29 @@ footer div {
 
 .book-item h3 {
   margin: 0;
+}
+
+#order-history {
+  border-top: solid .15rem $blue;
+  height: 100%;
+  font-family: $font-sans;
+}
+
+#order-history h1 {
+  font-family: $font-serif;
+}
+
+#order-history #book-list {
+  width: 50%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+#order-history .order-details {
+  background-color: $light-grey;
+  display: flex;
+  justify-content: space-between;
+  padding: .5rem;
 }
 
 .center {
@@ -739,7 +763,7 @@ div{
   z-index: 1000;
   height: 25%;
   width: 90%;
-} 
+}
 
 #inner-box-middle{
   margin-top: 40%;
