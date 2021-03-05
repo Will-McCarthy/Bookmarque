@@ -84,3 +84,6 @@ def bookEntry():
 def shopping_cart():
     return render_template('shopping_cart.html')
 
+@app.route('/cart/history')
+def order_history():
+    return render_template('order_history.html')
