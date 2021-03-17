@@ -40,13 +40,22 @@ See SCSS setup for how this project is run as a package instead of a module.
 ## Flask Quickstart Tutorial (How to Run the Web Server):
 https://flask.palletsprojects.com/en/1.1.x/quickstart/
 
-## SCSS Setup
+## SCSS/Mysql Setup
 - [Difference between Sass/SCSS](https://www.geeksforgeeks.org/what-is-the-difference-between-scss-and-sass)
 - [libsass with Flask](https://sass.github.io/libsass-python/frameworks/flask.html)
+- [mysql with Flask](https://www.askpython.com/python-modules/flask/flask-mysql-database)
+
+To start, you'll have to have an active mysql server on your computer. This can be done through various tools such as XAAMP, MySQL Workbench, or PHPMyAdmin, but the end result should be an active server connection. You can find the database SQL file in the repository.
+
+Next, you'll have to provide the credentials to your MySQL connection at the top of your local __init__.py file
 
 ```
 pip install libsass
+pip install flask_mysqldb
 export FLASK_APP=bookmarqueapp
 ```
 
+To test if your MySQL connection is really working, you can go to the /mysqltest route in your web browser. This will make a query to the MySQL server for data. You can see if it succeeded by checking the terminal running your flask app.
+
 - instead of exporting a module you are doing so with the entire package folder
+

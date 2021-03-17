@@ -1,14 +1,30 @@
 from flask import Flask
 from flask import render_template # for file extends
+from flask_mysqldb import MySQL
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 
 
 app = Flask(__name__)
-
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'YOURPASSWORDHERE'
+app.config['MYSQL_DB'] = 'YOURSCHEMAHERE'
+mysql = MySQL(app)
 # configure directory locations for Sass/SCSS
 app.wsgi_app = SassMiddleware(app.wsgi_app, {
     'bookmarqueapp': ('static/sass', 'static/css', '/static/css')
 })
+
+@app.route('/mysqltest')
+def test():
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT * FROM book;''')
+    rv = cursor.fetchall()
+    print(rv)
+    #cursor.execute(''' INSERT INTO info_table VALUES(%s,%s)''',(name,age))
+    mysql.connection.commit()
+    return render_template('index.html')
+
 
 @app.route('/')
 def homepage():
