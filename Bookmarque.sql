@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `address` (
-  `addressID` int NOT NULL,
+  `addressID` int NOT NULL COMMENT 'Identifies customer addresses.',
   `addressStreet` varchar(45) DEFAULT NULL,
   `addressCity` varchar(45) DEFAULT NULL,
   `addressState` varchar(45) DEFAULT NULL,
@@ -84,7 +84,7 @@ DROP TABLE IF EXISTS `book_categories`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `book_categories` (
   `categoryID` int NOT NULL,
-  `categoryName` varchar(45) DEFAULT NULL,
+  `categoryName` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Book category/genre.',
   PRIMARY KEY (`categoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -135,7 +135,7 @@ DROP TABLE IF EXISTS `card`;
 CREATE TABLE `card` (
   `cardID` int NOT NULL,
   `cardNumber` varchar(45) DEFAULT NULL,
-  `cardExpDate` datetime DEFAULT NULL,
+  `cardExpDate` datetime DEFAULT NULL COMMENT 'Only Month and Year fields are relevant for records.',
   `cardType` varchar(45) DEFAULT NULL,
   `cardSVC` int DEFAULT NULL,
   PRIMARY KEY (`cardID`)
@@ -162,7 +162,7 @@ DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order` (
   `orderID` int NOT NULL,
   `orderTime` datetime DEFAULT NULL,
-  `orderStatus` varchar(45) DEFAULT NULL,
+  `orderStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Pending, Placed, Shipped, or Arrived.',
   `orderAmount` double DEFAULT NULL,
   `promoID` int DEFAULT NULL,
   `addressID` int NOT NULL,
@@ -195,7 +195,7 @@ DROP TABLE IF EXISTS `order_has_book`;
 CREATE TABLE `order_has_book` (
   `orderID` int NOT NULL,
   `ISBN` char(13) NOT NULL,
-  `orderBookQuantity` varchar(45) DEFAULT NULL,
+  `orderBookQuantity` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Number of copies of the book ordered.',
   PRIMARY KEY (`orderID`,`ISBN`),
   KEY `fk_order_has_book_book1_idx` (`ISBN`),
   KEY `fk_order_has_book_order1_idx` (`orderID`),
@@ -225,8 +225,8 @@ CREATE TABLE `promotion` (
   `promoDiscount` double DEFAULT NULL,
   `promoStart` datetime DEFAULT NULL,
   `promoEnd` datetime DEFAULT NULL,
-  `promoEmailStatus` varchar(45) DEFAULT NULL,
-  `promoUses` varchar(45) DEFAULT NULL,
+  `promoEmailStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Emailed or Not Sent.',
+  `promoUses` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Keeps track of how many times a promotion was used.',
   PRIMARY KEY (`promoID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -300,13 +300,14 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `userID` int NOT NULL,
-  `userEmail` varchar(45) DEFAULT NULL,
+  `userID` int NOT NULL COMMENT 'Identifies Web Users, Admins, and Customers.',
+  `userEmail` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Needs to be unique for non-web users.',
   `userFName` varchar(45) DEFAULT NULL,
   `userLName` varchar(45) DEFAULT NULL,
-  `userStatus` varchar(45) DEFAULT NULL,
-  `userType` varchar(45) DEFAULT NULL,
-  `addressID` int DEFAULT NULL,
+  `userStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Active, Inactive, or Suspended.',
+  `userType` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Web User, Customer, or Admin.',
+  `userPassword` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `addressID` int DEFAULT NULL COMMENT 'Can be null to account for the optional address field.',
   PRIMARY KEY (`userID`),
   UNIQUE KEY `userEmail_UNIQUE` (`userEmail`),
   KEY `fk_users_address1_idx` (`addressID`)
@@ -319,7 +320,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (101,'janedoe@gmail.com','Jane','Doe','Active','Customer',101),(102,'johndoe@gmail.com','John','Doe','Active','Customer',101),(103,'jimmycricket@uga.edu','Jimmy','Cricket','Active','Admin',NULL),(104,'petergriffin@yahoo.com','Peter','Griffin','Suspended','Customer',104),(105,NULL,NULL,NULL,NULL,'Web User',NULL),(106,'johnsnow@gmail.com','John','Snow','Inactive','Customer',NULL),(107,'lebronjames@yahoo.com','Lebron','James','Active','Customer',103);
+INSERT INTO `users` VALUES (101,'janedoe@gmail.com','Jane','Doe','Active','Customer','JaneDoe&22',101),(102,'johndoe@gmail.com','John','Doe','Active','Customer','JDoe42$**',101),(103,'jimmycricket@uga.edu','Jimmy','Cricket','Active','Admin','1234password!',NULL),(104,'petergriffin@yahoo.com','Peter','Griffin','Suspended','Customer','Loishehe54@',104),(105,NULL,NULL,NULL,NULL,'Web User',NULL,NULL),(106,'johnsnow@gmail.com','John','Snow','Inactive','Customer','asdf987#',NULL),(107,'lebronjames@yahoo.com','Lebron','James','Active','Customer','bBall4^LA',103);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -357,4 +358,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-13 14:54:11
+-- Dump completed on 2021-03-22 15:26:35
