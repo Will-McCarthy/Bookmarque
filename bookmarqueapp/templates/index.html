@@ -17,58 +17,60 @@
 
   <div class = "frow">
     <div class = "fcardrow">
+      {% for item in featured %}
       <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/all we saw.jpg') }}" alt="cheffe"/>
-        <p> All We Saw </p>
+        <a href="{{ url_for('book_details', ISBN=item[0] ) }}">
+        <img src="{{ url_for('static', filename='assets/covers/'+  item[4]  ) }}" alt="cheffe"/>
+        <p> {{ item[1] }} </p>
         </a>
       </div>
-      <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}" alt="cheffe"/>
-        <p> Black Hole Blues</p>
-        </a>
-      </div>
-      <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/cheffe.jpg') }}" alt="cheffe"/>
-        <p> The Cheffe</p>
-        </a>
-      </div>
-      <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/inevitable victorian thing.jpg') }}" alt="cheffe"/>
-        <p> That Inevitable Victorian Thing</p>
-        </a>
-      </div>
+      {% endfor %}
     </div>
+  </div>
+
+  <h1>Newly Released</h1>
+  <span>You can find all of your new favorites here.</span>
+
+  <div class = "frow">
     <div class = "fcardrow">
+      {% for item in newly_released%}
       <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/nuruddin farah.jpg') }}" alt="cheffe"/>
-        <p> Nurrudin Farah</p>
+        <a href="{{ url_for('book_details', ISBN=item[0]) }}">
+        <img src="{{ url_for('static', filename='assets/covers/'+  item[4]  ) }}" alt="cheffe"/>
+        <p> {{ item[1] }} </p>
         </a>
       </div>
-      <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-        <p> The Selfie as Big as the Ritz</p>
-        </a>
-      </div>
-      <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/the divines.jpg') }}" alt="cheffe"/>
-        <p> The Divines</p>
-        </a>
-      </div>
-      <div class = "fcard">
-        <a href="{{ url_for('book_details') }}">
-        <img src="{{ url_for('static', filename='assets/covers/the vacationers.jpg') }}" alt="cheffe"/>
-        <p> The Vacationers</p>
-        </a>
-      </div>
+      {% endfor %}
     </div>
+  </div>
   </div>
 </div>
 
 {% endblock %}
+
+<!--
+<div class = "fcard">
+  <a href="{{ url_for('book_details') }}">
+  <img src="{{ url_for('static', filename='assets/covers/all we saw.jpg') }}" alt="cheffe"/>
+  <p> All We Saw </p>
+  </a>
+</div>
+<div class = "fcard">
+  <a href="{{ url_for('book_details') }}">
+  <img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}" alt="cheffe"/>
+  <p> Black Hole Blues</p>
+  </a>
+</div>
+<div class = "fcard">
+  <a href="{{ url_for('book_details') }}">
+  <img src="{{ url_for('static', filename='assets/covers/cheffe.jpg') }}" alt="cheffe"/>
+  <p> The Cheffe</p>
+  </a>
+</div>
+<div class = "fcard">
+  <a href="{{ url_for('book_details') }}">
+  <img src="{{ url_for('static', filename='assets/covers/inevitable victorian thing.jpg') }}" alt="cheffe"/>
+  <p> That Inevitable Victorian Thing</p>
+  </a>
+</div>
+-->

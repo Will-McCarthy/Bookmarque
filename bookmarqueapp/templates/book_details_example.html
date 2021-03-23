@@ -4,28 +4,41 @@
 <div id="book-listing">
   <div id="cover">
     <span class="circle"></span>
-    <img src="{{ url_for('static', filename='assets/covers/the vacationers.jpg') }}" alt="The Vacationers"/>
+    <img src="{{ url_for('static', filename='assets/covers/'+  data[4]  ) }}" alt="{{data[1]}}"/>
   </div>
   <div id="book-details">
-    <h1>The Vacationers</h1>
-    <h3>Emma Straub</h3>
-    <p>2014 Penguin Publishing Group</p>
-    <p><i>Featured, Novel, Domestic Fiction, Drama</i></p>
-    <div class="star-rating">★★★☆☆</div>
+    <h1>{{ data[1] }} </h1>
+    <h3>{{ data[2] }} {{ data[3] }}</h3>
+    <p>{{ data[8] }}</p>
+    <p><i>
+    {% for item in tags %}
+       {{item[0]}}, 
+    {% endfor %}
+    </i></p>
+
+    <div class="star-rating">
+    {% for i in range(data[7]) %}
+    ★
+    {% endfor %}
+    {% for i in range(5-data[7]) %}
+    ☆
+    {% endfor %}
+    </div>
   </div>
   <div id="book-add-box">
     <form class="quant-button">
       <input class="button-blue" type="submit" value="Add to Cart">
       <input type="number" placeholder="1">
     </form>
-    <h1>25.99 USD</h1>
+    <h1>{{ data[5] }} USD</h1>
     <span>In Stock</span>
+    <!-- <span> data[6] left </span>-->
   </div>
 </div>
 
 <div id="book-summary">
   <p>
-    For the Posts, a two-week trip to the Balearic island of Mallorca with their extended family and friends is a celebration: Franny and Jim are observing their thirty-fifth wedding anniversary, and their daughter, Sylvia, has graduated from high school. The sunlit island, its mountains and beaches, its tapas and tennis courts, also promise an escape from the tensions simmering at home in Manhattan. But all does not go according to plan: over the course of the vacation, secrets come to light, old and new humiliations are experienced, childhood rivalries resurface, and ancient wounds are exacerbated.
+    {{data[10]}}
   </p>
 </div>
 
