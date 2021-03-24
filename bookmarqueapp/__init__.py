@@ -28,7 +28,13 @@ def test():
 
 @app.route('/')
 def homepage():
-    return render_template('index.html')
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT * FROM book, book_has_book_categories WHERE book.ISBN = book_has_book_categories.ISBN AND categoryID = '1' LIMIT 4;''')
+    featured = cursor.fetchall()
+    cursor.execute('''SELECT * FROM book, book_has_book_categories WHERE book.ISBN = book_has_book_categories.ISBN AND categoryID = '18' LIMIT 4;''')
+    newly_released = cursor.fetchall()
+    mysql.connection.commit()
+    return render_template('index.html', featured=featured, newly_released=newly_released)
 
 @app.route('/login')
 def login_panel():
@@ -55,9 +61,17 @@ def reg4():
 def search():
     return render_template('search_view.html')
 
-@app.route('/view/The+Vacationers')
-def book_details():
-    return render_template('book_details_example.html')
+
+@app.route('/view/<ISBN>')
+def book_details(ISBN):
+    print(str(ISBN))
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT * FROM book WHERE book.ISBN = ''' + str(ISBN)+ ''';''')
+    fetch = cursor.fetchall()
+    cursor.execute('''SELECT book_categories.categoryName FROM book_has_book_categories, book_categories WHERE book_has_book_categories.ISBN = ''' + str(ISBN)+ ''' AND book_has_book_categories.categoryID = book_categories.categoryID;''')
+    tag_fetch = cursor.fetchall()
+    mysql.connection.commit()
+    return render_template('book_details_example.html', data=fetch[0],tags=list(tag_fetch))
 
 @app.route('/admin')
 def admin():
