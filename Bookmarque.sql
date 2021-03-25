@@ -307,6 +307,7 @@ CREATE TABLE `users` (
   `userStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Active, Inactive, or Suspended.',
   `userType` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Web User, Customer, or Admin.',
   `userPassword` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `userPhone` varchar(45) DEFAULT NULL,
   `userSubStatus` varchar(45) DEFAULT NULL,
   `addressID` int DEFAULT NULL COMMENT 'Can be null to account for the optional address field.',
   PRIMARY KEY (`userID`),
@@ -321,7 +322,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (101,'janedoe@gmail.com','Jane','Doe','Active','Customer','JaneDoe&22','Deactive',101),(102,'johndoe@gmail.com','John','Doe','Active','Customer','JDoe42$**','Active',101),(103,'jimmycricket@uga.edu','Jimmy','Cricket','Active','Admin','1234password!','Deactive',NULL),(104,'petergriffin@yahoo.com','Peter','Griffin','Suspended','Customer','Loishehe54@','Deactive',104),(105,NULL,NULL,NULL,NULL,'Web User',NULL,NULL,NULL),(106,'johnsnow@gmail.com','John','Snow','Inactive','Customer','asdf987#','Deactive',NULL),(107,'lebronjames@yahoo.com','Lebron','James','Active','Customer','bBall4^LA','Active',103);
+INSERT INTO `users` VALUES (101,'janedoe@gmail.com','Jane','Doe','Active','Customer','JaneDoe&22','123-456-7890','Deactive',101),(102,'johndoe@gmail.com','John','Doe','Active','Customer','JDoe42$**','971-221-8787','Active',101),(103,'jimmycricket@uga.edu','Jimmy','Cricket','Active','Admin','1234password!','124-458-9989','Deactive',NULL),(104,'petergriffin@yahoo.com','Peter','Griffin','Suspended','Customer','Loishehe54@','245-545-7777','Deactive',104),(105,NULL,NULL,NULL,NULL,'Web User',NULL,NULL,NULL,NULL),(106,'johnsnow@gmail.com','John','Snow','Inactive','Customer','asdf987#','656-221-6240','Deactive',NULL),(107,'lebronjames@yahoo.com','Lebron','James','Active','Customer','bBall4^LA','987-145-6654','Active',103);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -359,4 +360,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-24 17:23:13
+-- Dump completed on 2021-03-24 22:23:50
