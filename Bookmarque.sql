@@ -27,6 +27,7 @@ CREATE TABLE `address` (
   `addressStreet` varchar(45) DEFAULT NULL,
   `addressCity` varchar(45) DEFAULT NULL,
   `addressState` varchar(45) DEFAULT NULL,
+  `addressZip` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`addressID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -37,7 +38,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (101,'123 Generic Street','Athens','GA'),(102,'245 Mario Lane','San Francisco','CA'),(103,'987 Sunset Boulevard','Los Angeles','CA'),(104,'221 Baked Alaska Way','Miami','FL');
+INSERT INTO `address` VALUES (101,'123 Generic Street','Athens','GA','30605'),(102,'245 Mario Lane','San Francisco','CA','01458'),(103,'987 Sunset Boulevard','Los Angeles','CA','16542'),(104,'221 Baked Alaska Way','Miami','FL','98754');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -360,4 +361,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-24 22:23:50
+-- Dump completed on 2021-03-24 23:15:42
