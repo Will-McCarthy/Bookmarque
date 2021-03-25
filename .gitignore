@@ -133,3 +133,6 @@ dmypy.json
 
 # Sass/SCSS
 bookmarqueapp/static/css/
+
+# Configuration File
+config.py

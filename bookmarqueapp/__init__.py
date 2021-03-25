@@ -2,13 +2,14 @@ from flask import Flask
 from flask import render_template # for file extends
 from flask_mysqldb import MySQL
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
+from . import config as cfg # for loading in db configurations
 
 
 app = Flask(__name__)
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'YOURPASSWORDHERE'
-app.config['MYSQL_DB'] = 'YOURSCHEMAHERE'
+app.config['MYSQL_HOST'] = cfg.mysql["host"]
+app.config['MYSQL_USER'] = cfg.mysql["user"]
+app.config['MYSQL_PASSWORD'] = cfg.mysql["password"]
+app.config['MYSQL_DB'] = cfg.mysql["db"]
 mysql = MySQL(app)
 # configure directory locations for Sass/SCSS
 app.wsgi_app = SassMiddleware(app.wsgi_app, {
@@ -140,4 +141,3 @@ def card_panel():
 @app.route('/profile/edit')
 def edit_profile():
     return render_template('edit_profile.html')
-
