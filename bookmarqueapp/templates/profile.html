@@ -4,11 +4,11 @@
   <h1>My Profile</h1>
   <div class="profile-format">
     <label class="profile-label">First Name <span class="profile-asterisks">*</span></label>
-    <span>John</span>
+    <span>{{ details[2] }}</span>
     <label class="profile-label">Address</label>
-    <span>1234 Generic Rd<br>Athens, GA 30605</span>
+    <span>{{ add[0] }}<br>{{ add[1] }}, {{ add[2] }} {{ add[3] }}</span>
     <label class="profile-label">Last Name <span class="profile-asterisks">*</span></label>
-    <span>Doe</span>
+    <span>{{ details[3] }}</span>
     <div>
       <label class="profile-label">Card Information</label>
       <br><span class="profile-links"><a href="/profile/update-card">+ Add New Card</a></span>
@@ -20,18 +20,18 @@
       <br><span class="profile-links"><a href="">Change Card</a></span>
     </span>
     <label class="profile-label">Phone Number (XXX) XXX-XXXX <span class="profile-asterisks">*</span></label>
-    <span>(123) 456-7890</span>
+    <span>{{ details[7] }}</span>
     <div>
       <label class="profile-label">Password <span class="profile-asterisks">*</span></label>
       <br><span class="profile-links"><a href="/profile/update-password">Update Password</a></span>
     </div>
-    <span>***********
+    <span>{{ details[6] }}
       <br><span class="profile-links"><a href="">Display Password</a></span>
     </span>
     <label class="profile-label">Email Address <span class="profile-asterisks">*</span></label>
-    <span>johndoe@generic.com</span>
+    <span>{{ details[1] }}</span>
     <label class="profile-label">Promotion Subscription</label>
-    <span>Active</span>
+    <span>{{ details[8] }}</span>
   </div>
   <div class="profile-submit">
     <span class="profile-required">*Required</span><br>

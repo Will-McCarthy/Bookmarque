@@ -120,7 +120,14 @@ def order_history():
 
 @app.route('/profile')
 def profile():
-    return render_template('profile.html')
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    information = cursor.fetchall()
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''');
+    address = cursor.fetchall()
+    mysql.connection.commit()
+    return render_template('profile.html', details=information[0], add=address[0])
+    #return render_template('profile.html')
 
 @app.route('/profile/update-password')
 def password_panel():
