@@ -235,7 +235,8 @@ footer div {
   font-family: $font-sans;
 }
 /* popup-panel used for login/registration pages */
-.overlay {
+#overlay {
+  display: none;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -286,6 +287,10 @@ footer div {
 
 .popup-panel span {
   font-size: 0.75rem;
+}
+
+.popup-tab {
+  display: none;
 }
 
 #card-details {
