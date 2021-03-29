@@ -72,7 +72,7 @@ function switchTab(newTab) {
     $('tab-' + tab).style.display = "none"; //remove old tab
   } //if
 
-  $('tab-' + newTab).style.display = "block"; //display updated tab
+  $('tab-' + newTab).style.display = "flex"; //display updated tab
   tab = newTab;
 } //switchTab
 

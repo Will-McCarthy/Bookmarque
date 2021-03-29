@@ -271,26 +271,27 @@ footer div {
   font-weight: lighter;
 }
 
-.popup-panel label {
+.popup-tab label {
   font-size: 0.75rem;
   font-weight: bold;
 }
 
-.popup-panel input {
+.popup-tab input {
   margin-bottom: 0.5rem;
 }
 
-.popup-panel a,
-.popup-panel input[type=submit] {
+.popup-tab a,
+.popup-tab input[type=submit] {
   margin-top: 1rem;
 }
 
-.popup-panel span {
+.popup-tab span {
   font-size: 0.75rem;
 }
 
 .popup-tab {
   display: none;
+  flex-direction: column;
 }
 
 #card-details {
@@ -663,13 +664,13 @@ td {
 }
 
 /*Spacing within form on checkout page*/
-div{
-  form{
-    label, input, select{
-      padding: .5em;
-    }
-  }
-}
+// div{
+//   form{
+//     label, input, select{
+//       padding: .5em;
+//     }
+//   }
+// }
 
 /*Temporary, this will be replaced with JS after demo*/
 .progbar_img{
