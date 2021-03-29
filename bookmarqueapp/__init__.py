@@ -128,8 +128,6 @@ def profile():
         city = request.form.get('city')
         if (city is None or city == ""):
             city = initAdd[1]
-
-        print("middle")
             
         state = request.form.get('state')
         if (state is None or state == ""):
@@ -139,21 +137,35 @@ def profile():
         if (zipCode is None or zipCode == ""):
             zipCode = initAdd[3]
 
-        print("password start")
+        # handles update_password form
         password = request.form.get('password')
         if (password is None or password == ""):
             password = initial[6]
-        passConfirm = request.form.get('passConfirm')
-    #    passConfirm = request.form.get('passConfirm')
+        passConfirm = request.form.get('passConfirm') # used to check if password is same in both fields
         submit = request.form.get('Save')
         if (submit is None):
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm):
             cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', [password])
+
+        # handles update_card form
+        cardList = request.form.get('cardList')
+
+        cardNumber = request.form.get('cardNumber')
+
+        monthList = request.form.get('monthList')
+
+        yearList = request.form.get('yearList')
+
+        confirm = request.form.get("saveCard")
+        if (confirm is None):
+            confirm = "Cancel"
+        if (confirm == "Save"):
             
+        
         status = request.form.get('status')
         password = request.form.get('password')
-        if (status is None and password is None):
+        if (status is None and password is None): #not on update_password and status is unchecked
             status = "Deactive"
         else:
             status = initial[8]
@@ -162,17 +174,16 @@ def profile():
         value = cursor.fetchone()
         addressValue = value[0]
         addressValue += 1
-        #cursor.execute('''INSERT INTO users (userID, userFName, userLName) VALUES ("108", %s, %s);''', (fName, lName));
-        #print(status + " : is status")
-        if (status == "Active"):
+        
+        if (status == "Active"): # subscription for promos is checked
             cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = "101";''', (fName, lName, phone, status))
-        else:
+        else: # subcription for promos is not checked
             cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = "101";''', (fName, lName, phone))
         cursor.execute('''SELECT addressID FROM users WHERE userID = "101";''')
         checkValue = cursor.fetchone()
         check = checkValue[0]
         #print(check is None)
-        if (password is None and check is None):
+        if (password is None and check is None): # not on update_password form and there is no existing address associated
             print(addressValue)
             cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', ([addressValue], address, city, state, zipCode))
             cursor.execute('''UPDATE users SET addressID = %s WHERE userID = "101";''', [addressValue])
@@ -180,7 +191,6 @@ def profile():
             cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = "101";''', (address, city, state, zipCode))
         mysql.connection.commit()
 
-    #cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
     information = cursor.fetchall()
     cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
@@ -201,7 +211,13 @@ def password_panel():
 
 @app.route('/profile/update-card')
 def card_panel():
-    return render_template('update_card.html')
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    information = cursor.fetchall()
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    address = cursor.fetchall()
+    mysql.connection.commit()
+    return render_template('update_card.html', details=information[0], add=address[0])
 
 @app.route('/profile/edit')
 def edit_profile():
