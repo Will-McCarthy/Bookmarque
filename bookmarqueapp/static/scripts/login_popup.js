@@ -42,9 +42,9 @@ var $ = function(id) {
   return document.getElementById(id);
 } //$
 
-function blurOverlay() {
-  $("overlay").style.display = "block";
-} //blurOverlay
+function toggleOverlay() {
+  $("overlay").style.display = ($("overlay").style.display == "block") ? "none" : "block";
+} //toggleOverlay
 
 /*
  * Check if the current user is logged in based on session cookies
@@ -59,7 +59,7 @@ var checkUserLoginStatus = function() {
     //~redirect to users profile page~
   } else {
     switchTab(tabs.LOGIN); //update tab to login
-    blurOverlay(); //blur background and remove access
+    toggleOverlay(); //blur background and remove access
   } //if else
 } //checkuserLoginStatus
 
@@ -80,19 +80,33 @@ function switchTab(newTab) {
  * Add event listeners to elements on window.
  */
 window.onload = function() {
+
+  //button which either takes user to login/registration popup or to profile management
   var profileBtn = $('profile-button');
   profileBtn.onclick = checkUserLoginStatus;
 
+  //button which takes user to registration form
   var registrationBtn = $('registration-button');
   registrationBtn.onclick = function() {
     switchTab(tabs.REGISTRATION);
   };
 
-  //BROKEN :(
-  var continueBtns = document.getElementByClassName("continue-registration-button");
-  for (var i = 0; i < continueRegistrationBtn.length; i++) {
+  //functionality for buttons to iterate through registration form
+  var continueBtns = document.getElementsByClassName("continue-registration-button");
+  for (i = 0; i < continueBtns.length; i++) {
     continueBtns[i].onclick = function() {
       switchTab(tab + 1);
     };
   } //for
+
+  //close popup button functionality
+  var closeBtns = document.getElementsByClassName("close-popup-button");
+  for (i = 0; i < closeBtns.length; i++) {
+    closeBtns[i].onclick = function() {
+      toggleOverlay();
+      switchTab(tabs.NONE);
+    };
+  } //for
+
+
 } //window.onload
