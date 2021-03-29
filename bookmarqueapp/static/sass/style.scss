@@ -203,6 +203,7 @@ footer div {
   text-align: center;
   /*box-shadow: */
   padding: 0.5rem 2rem;
+  cursor: pointer;
 }
 
 .button-gold {
@@ -215,7 +216,18 @@ footer div {
   border: none;
   text-align: center;
   padding: 0.5rem 2rem;
+  cursor: pointer;
 }
+
+.button-blue:hover, .button-gold:hover {
+  filter: brightness(120%);
+  box-shadow: 0rem .05rem .15rem $dark-blue;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
 /* featured gallery */
 #featured {
   display: flex;
