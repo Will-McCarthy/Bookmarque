@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template # for file extends
+from flask import request
 from flask_mysqldb import MySQL
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 from . import config as cfg # for loading in db configurations
@@ -97,12 +98,49 @@ def shopping_cart():
 def order_history():
     return render_template('order_history.html')
 
-@app.route('/profile')
+@app.route('/profile', methods = ['POST', 'GET'])
 def profile():
+    if request.method == 'POST':
+        fName = request.form['fName']
+        #print(fName is None)
+        #print(fName)
+        lName = request.form['lName']
+        #print(lName)
+        address = request.form['address']
+        phone = request.form['phone']
+        city = request.form['city']
+        state = request.form['state']
+        zipCode = request.form['zip']
+        status = request.form.get('status')
+        if (status is None):
+            status = "Deactive"
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT MAX(addressID) FROM address;''');
+        value = cursor.fetchone()
+        addressValue = value[0]
+        addressValue += 1
+        #cursor.execute('''INSERT INTO users (userID, userFName, userLName) VALUES ("108", %s, %s);''', (fName, lName));
+        #print(status + " : is status")
+        if (status == "Active"):
+            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = "101";''', (fName, lName, phone, status))
+        else:
+            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = "101";''', (fName, lName, phone))
+        cursor.execute('''SELECT addressID FROM users WHERE userID = "101";''')
+        checkValue = cursor.fetchone()
+        check = checkValue[0]
+        print(check is None)
+        if (check is None):
+            print(addressValue)
+            cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', (addressValue, address, city, state, zipCode))
+            cursor.execute('''UPDATE users SET addressID = %s WHERE users.userID = "101";''', (addressValue))
+        else:
+            cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = "101";''', (address, city, state, zipCode))
+        mysql.connection.commit()
+
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''');
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
     address = cursor.fetchall()
     mysql.connection.commit()
     return render_template('profile.html', details=information[0], add=address[0])
@@ -119,3 +157,4 @@ def card_panel():
 @app.route('/profile/edit')
 def edit_profile():
     return render_template('edit_profile.html')
+

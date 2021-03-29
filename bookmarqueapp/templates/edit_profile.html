@@ -2,41 +2,37 @@
 {% block content %}
 <div class="center">
   <h1>Edit Profile</h1>
+  <form action="/profile" method="POST">
   <div class="profile-format">
     <label class="profile-label">First Name <span class="profile-asterisks">*</span></label>
     <div class="edit-fields">
-      <input type="text">
+      <input type="text" name="fName">
     </div>
     <label class="profile-label">Address</label>
     <div class="edit-fields">
-      <input type="text">
+      <input type="text" name="address">
     </div>
-    <label class="profile-label">Last Name <span class="profile-asterisks">*</span></label>
+    <label class="profile-label">Last Name<span class="profile-asterisks">*</span></label>
     <div class="edit-fields">
-      <input type="text">
+      <input type="text" name="lName">
     </div>
     <label class="profile-label">City</label>
     <div class="edit-fields">
-      <input type="text">
+      <input type="text" name="city">
     </div>
     <label class="profile-label">Phone Number (XXX) XXX-XXXX <span class="profile-asterisks">*</span></label>
      <div class="edit-fields">
-      <input type="text">
+      <input type="text" name="phone">
     </div>
     <label class="profile-label">State</label>
      <div class="edit-fields">
-      <input type="text">
+      <input type="text" name="state">
     </div>
     <label class="profile-label">Promotion Subscription</label>
-    <div class="promo-box">
-    <select>
-      <option>Deactive</option>
-      <option>Active</option>
-    </select>
-    </div>
+    <input type="checkbox" name="status" value="Active">
     <label class="profile-label">Zip Code</label>
     <div class="edit-fields">
-      <input type="text">
+      <input type="text" name="zip">
     </div>
   </div>
   <br>
@@ -45,8 +41,9 @@
   <br>
   <div class="profile-submit">
     <span class="profile-required">*Required</span><br>
-    <a class="button-blue-adjusted" href="/profile">Save Changes</a>
+    <input class="button-blue-adjusted" type="submit" value="Save Changes">
   </div>
+  </form>
 </div>
 {% endblock %}
        
