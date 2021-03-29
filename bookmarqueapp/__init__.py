@@ -108,6 +108,9 @@ def profile():
     cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
     email = cursor.fetchone()
     email = email[0]
+    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    card = cursor.fetchall()
+    initCard = card[0]
     initial = information[0]
     initAdd = address[0]
     if request.method == 'POST':
@@ -153,18 +156,26 @@ def profile():
 
         # handles update_card form
         cardList = request.form.get('cardList')
+        if (cardList is None or cardList == ""):
+            cardList = initCard[3]
         
         cardNumber = request.form.get('cardNumber')
-
+        if (cardNumber is None or cardNumber == ""):
+            cardNumber = initCard[1]
+        
         monthList = request.form.get('monthList')
-
+        
         yearList = request.form.get('yearList')
+
+        SVC = request.form.get('SVC')
+        if (SVC is None or SVC == ""):
+            SVC = initCard[4]
 
         confirm = request.form.get("saveCard")
         if (confirm is None):
             confirm = "Cancel"
-        #if (confirm == "Save"):
-        
+        if (confirm == "Save"):
+            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s WHERE users_has_card.userEmail = %s;''' (cardType, cardNumber, [SVC], email))
         
         status = request.form.get('status')
         password = request.form.get('password')
@@ -194,8 +205,17 @@ def profile():
             cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = "101";''', (address, city, state, zipCode))
         mysql.connection.commit()
 
+    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    information = cursor.fetchall()
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    address = cursor.fetchall()
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    email = cursor.fetchone()
+    email = email[0]
+    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('profile.html', details=information[0], add=address[0])
+    return render_template('profile.html', details=information[0], add=address[0], card=card[0])
     #return render_template('profile.html')
 
 @app.route('/profile/update-password')
@@ -205,8 +225,13 @@ def password_panel():
     information = cursor.fetchall()
     cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
     address = cursor.fetchall()
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    email = cursor.fetchone()
+    email = email[0]
+    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('update_password.html', details=information[0], add=address[0])
+    return render_template('update_password.html', details=information[0], add=address[0], card=card[0])
 
 @app.route('/profile/update-card')
 def card_panel():
@@ -215,8 +240,13 @@ def card_panel():
     information = cursor.fetchall()
     cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
     address = cursor.fetchall()
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    email = cursor.fetchone()
+    email = email[0]
+    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('update_card.html', details=information[0], add=address[0])
+    return render_template('update_card.html', details=information[0], add=address[0], card=card[0])
 
 @app.route('/profile/edit')
 def edit_profile():
