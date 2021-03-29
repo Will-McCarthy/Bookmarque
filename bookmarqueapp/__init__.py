@@ -149,7 +149,7 @@ def profile():
         if (submit is None):
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm):
-            cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', (password))
+            cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', [password])
             
         status = request.form.get('status')
         password = request.form.get('password')
@@ -172,10 +172,10 @@ def profile():
         checkValue = cursor.fetchone()
         check = checkValue[0]
         #print(check is None)
-        if (check is None):
+        if (password is None and check is None):
             print(addressValue)
-            cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%d, %s, %s, %s, %s);''', (addressValue, address, city, state, zipCode))
-            cursor.execute('''UPDATE users SET addressID = %d WHERE userID = "101";''', (addressValue))
+            cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', ([addressValue], address, city, state, zipCode))
+            cursor.execute('''UPDATE users SET addressID = %s WHERE userID = "101";''', [addressValue])
         else:
             cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = "101";''', (address, city, state, zipCode))
         mysql.connection.commit()
