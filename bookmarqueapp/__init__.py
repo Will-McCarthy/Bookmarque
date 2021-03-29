@@ -105,6 +105,9 @@ def profile():
     information = cursor.fetchall()
     cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
     address = cursor.fetchall()
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    email = cursor.fetchone()
+    email = email[0]
     initial = information[0]
     initAdd = address[0]
     if request.method == 'POST':
@@ -150,7 +153,7 @@ def profile():
 
         # handles update_card form
         cardList = request.form.get('cardList')
-
+        
         cardNumber = request.form.get('cardNumber')
 
         monthList = request.form.get('monthList')
@@ -160,8 +163,8 @@ def profile():
         confirm = request.form.get("saveCard")
         if (confirm is None):
             confirm = "Cancel"
-        if (confirm == "Save"):
-            
+        #if (confirm == "Save"):
+        
         
         status = request.form.get('status')
         password = request.form.get('password')
@@ -191,10 +194,6 @@ def profile():
             cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = "101";''', (address, city, state, zipCode))
         mysql.connection.commit()
 
-    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
-    information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
-    address = cursor.fetchall()
     mysql.connection.commit()
     return render_template('profile.html', details=information[0], add=address[0])
     #return render_template('profile.html')
