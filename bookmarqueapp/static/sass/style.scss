@@ -1055,3 +1055,57 @@ td a { //need to make a's in td's with this padding
 	width: 178px;
     }
 }
+
+/* popup-plane used for update password and update card */
+.popup-overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  backdrop-filter: blur(3px);
+}
+
+.popup-plane {
+  width: 25%;
+  font-family: $font-sans;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: solid 0.25rem $blue;
+  background-color: white;
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 10%;
+  padding: 2rem;
+}
+
+.popup-plane .main-logo {
+  text-align: center;
+}
+
+.popup-plane h1 {
+  font-weight: lighter;
+}
+
+.popup-plane label {
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.popup-plane input {
+  margin-bottom: 0.5rem;
+}
+
+.popup-plane a,
+.popup-plane input[type=submit] {
+  margin-top: 1rem;
+}
+
+.popup-plane span {
+  font-size: 0.75rem;
+}
