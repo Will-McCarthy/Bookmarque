@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Host: 127.0.0.1    Database: bookmarque
+-- Host: localhost    Database: project
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -301,7 +301,7 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
-  `userID` int NOT NULL COMMENT 'Identifies Web Users, Admins, and Customers.',
+  `userID` int NOT NULL AUTO_INCREMENT COMMENT 'Identifies Web Users, Admins, and Customers.',
   `userEmail` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Needs to be unique for non-web users.',
   `userFName` varchar(45) DEFAULT NULL,
   `userLName` varchar(45) DEFAULT NULL,
@@ -314,7 +314,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`userID`),
   UNIQUE KEY `userEmail_UNIQUE` (`userEmail`),
   KEY `fk_users_address1_idx` (`addressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -362,4 +362,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-30 13:45:57
+-- Dump completed on 2021-03-30 14:53:29
