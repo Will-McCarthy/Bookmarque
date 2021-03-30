@@ -5,3 +5,8 @@ mysql = {
     "password": "",
     "db": ""
 }
+
+email = {
+    "user": "projdeploy@gmail.com",
+    "password": "CSCI4050"
+}

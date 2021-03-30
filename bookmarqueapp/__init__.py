@@ -5,6 +5,11 @@ from flask import request
 from flask import url_for
 from flask_mysqldb import MySQL
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
+import smtplib, ssl, email
+from email import encoders  # email import for sending emails
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from . import config as cfg # for loading in db configurations
 
 
@@ -13,6 +18,24 @@ app.config['MYSQL_HOST'] = cfg.mysql["host"]
 app.config['MYSQL_USER'] = cfg.mysql["user"]
 app.config['MYSQL_PASSWORD'] = cfg.mysql["password"]
 app.config['MYSQL_DB'] = cfg.mysql["db"]
+
+# Email Initialization
+try:
+    gmail_server_user = cfg.email['user']
+    gmail_server_password = cfg.email['password']
+    #SMTP initialization and setups
+    port = 465
+    # Create a secure SSL context
+    context = ssl.create_default_context()
+    #Server connection
+    server = smtplib.SMTP_SSL("smtp.gmail.com", port, context=context)
+    server.login(gmail_server_user, gmail_server_password)
+except Exception as ex:
+    print("Email couldn't start: " + str(ex))
+
+
+
+
 mysql = MySQL(app)
 # configure directory locations for Sass/SCSS
 app.wsgi_app = SassMiddleware(app.wsgi_app, {
@@ -154,6 +177,24 @@ def profile():
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm):
             cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', [password])
+
+        #Send out email to user
+        #Email Generation
+        message = MIMEMultipart()
+        message["From"] = gmail_server_user
+        #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
+        test_email = "projdeploy@gmail.com"
+        message["To"] = test_email
+        message["Subject"] = "Your password has been changed"
+        msgAlternative = MIMEMultipart('alternative')
+        #Inline html, which could be replaced with larger template files if needed
+        msgText = MIMEText("<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>", 'html', 'utf-8')
+        msgAlternative.attach(msgText)
+        message.attach(msgAlternative)
+        print("Send out an email here")
+        text = message.as_string()
+        print(text)
+        server.sendmail(gmail_server_user, test_email, text)
 
         # handles update_card form and create_card form
         cardList = request.form.get('cardList')
