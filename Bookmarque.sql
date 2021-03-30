@@ -38,7 +38,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (101,'123 Generic Street','Athens','GA','30605'),(102,'245 Mario Lane','San Francisco','CA','01458'),(103,'987 Sunset Boulevard','Los Angeles','CA','16542'),(104,'221 Baked Alaska Way','Miami','FL','98754');
+INSERT INTO `address` VALUES (101,'H Street','Brunswick','TN','30754'),(102,'245 Mario Lane','San Francisco','CA','01458'),(103,'987 Sunset Boulevard','Los Angeles','CA','16542'),(104,'221 Baked Alaska Way','Miami','FL','98754'),(105,'4741 Angel Road','Flowery Branch','GA','21252');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,7 +149,7 @@ CREATE TABLE `card` (
 
 LOCK TABLES `card` WRITE;
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
-INSERT INTO `card` VALUES (1001,'1001 1002 1003 1004',NULL,'MasterCard',NULL),(1002,'1234 5678 9012 3456',NULL,'Visa',NULL);
+INSERT INTO `card` VALUES (1001,'0101 6969 8787 1111','2028-06-01 00:00:00','Visa',221),(1002,'1234 5678 9012 3456',NULL,'Visa',NULL),(1003,'8989 7474 5656 0000',NULL,'MasterCard',100),(1004,'1111 1111 1111 0000',NULL,'Discover',777),(1005,'7777 4444 0125 3210','2030-12-01 00:00:00','MasterCard',123);
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -323,7 +323,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (101,'janedoe@gmail.com','Jane','Doe','Active','Customer','JaneDoe&22','123-456-7890','Deactive',101),(102,'johndoe@gmail.com','John','Doe','Active','Customer','JDoe42$**','971-221-8787','Active',101),(103,'jimmycricket@uga.edu','Jimmy','Cricket','Active','Admin','1234password!','124-458-9989','Deactive',NULL),(104,'petergriffin@yahoo.com','Peter','Griffin','Suspended','Customer','Loishehe54@','245-545-7777','Deactive',104),(105,NULL,NULL,NULL,NULL,'Web User',NULL,NULL,NULL,NULL),(106,'johnsnow@gmail.com','John','Snow','Inactive','Customer','asdf987#','656-221-6240','Deactive',NULL),(107,'lebronjames@yahoo.com','Lebron','James','Active','Customer','bBall4^LA','987-145-6654','Active',103);
+INSERT INTO `users` VALUES (101,'janedoe@gmail.com','Jennifer','Jones','Active','Customer','password','123-456-2558','Deactive',105),(102,'johndoe@gmail.com','John','Doe','Active','Customer','JDoe42$**','971-221-8787','Active',101),(103,'jimmycricket@uga.edu','Jimmy','Cricket','Active','Admin','1234password!','124-458-9989','Deactive',NULL),(104,'petergriffin@yahoo.com','Peter','Griffin','Suspended','Customer','Loishehe54@','245-545-7777','Deactive',104),(105,NULL,NULL,NULL,NULL,'Web User',NULL,NULL,NULL,NULL),(106,'johnsnow@gmail.com','John','Snow','Inactive','Customer','asdf987#','656-221-6240','Deactive',NULL),(107,'lebronjames@yahoo.com','Lebron','James','Active','Customer','bBall4^LA','987-145-6654','Active',103);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -349,6 +349,7 @@ CREATE TABLE `users_has_card` (
 
 LOCK TABLES `users_has_card` WRITE;
 /*!40000 ALTER TABLE `users_has_card` DISABLE KEYS */;
+INSERT INTO `users_has_card` VALUES ('janedoe@gmail.com',1001);
 /*!40000 ALTER TABLE `users_has_card` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -361,4 +362,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-24 23:15:42
+-- Dump completed on 2021-03-30 13:45:57
