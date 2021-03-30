@@ -113,19 +113,19 @@ def profile():
     initial = information[0]
     initAdd = address[0]
     if request.method == 'POST':
-        
+
         fName = request.form.get('fName')
         if (fName is None or fName == ""):
             fName = initial[2]
-            
+
         lName = request.form.get('lName')
         if (lName is None or lName == ""):
             lName = initial[3]
-            
+
         address = request.form.get('address')
         if (address is None or address == ""):
             address = initAdd[0]
-            
+
         phone = request.form.get('phone')
         if (phone is None or phone == ""):
             phone = initial[7]
@@ -133,7 +133,7 @@ def profile():
         city = request.form.get('city')
         if (city is None or city == ""):
             city = initAdd[1]
-            
+
         state = request.form.get('state')
         if (state is None or state == ""):
             state = initAdd[2]
@@ -157,13 +157,13 @@ def profile():
         cardList = request.form.get('cardList')
         if (cardList is None or cardList == ""):
             cardList = initCard[3]
-        
+
         cardNumber = request.form.get('cardNumber')
         if (cardNumber is None or cardNumber == ""):
             cardNumber = initCard[1]
-        
+
         monthList = request.form.get('monthList')
-        
+
         yearList = request.form.get('yearList')
 
         SVC = request.form.get('SVC')
@@ -195,7 +195,7 @@ def profile():
         if (test == "Confirm" and maxCard <= 2):
             cursor.execute('''INSERT INTO card (cardID, cardNumber, cardType, cardSVC) VALUES (%s, %s, %s, %s);''', ([cardValue], cardNumber, cardList, SVC))
             cursor.execute('''INSERT INTO users_has_card (userEmail, cardID) VALUES (%s, %s);''', (email, [cardValue]))
-            
+
         status = request.form.get('status')
         password = request.form.get('password')
         if (status is None and password is None): #not on update_password and status is unchecked
@@ -208,7 +208,7 @@ def profile():
         value = cursor.fetchone()
         addressValue = value[0]
         addressValue += 1
-        
+
         if (status == "Active"): # subscription for promos is checked
             cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = "101";''', (fName, lName, phone, status))
         else: # subcription for promos is not checked
@@ -288,3 +288,25 @@ def card_panel_2():
 def edit_profile():
     return render_template('edit_profile.html')
 
+# registration and login #
+@app.route('/register', methods=['POST'])
+def register_user():
+    if request.method == 'POST':
+
+        # pull hidden input value for url which called /register
+        next_url = request.form.get("next")
+
+        # if url exists redirect user to the page they were on
+        if next_url:
+            return redirect(next_url)
+
+    return redirect('/') # if all else fails go to the homepage
+
+@app.route('/login', methods=['POST'])
+def login():
+    if request.method == 'POST':
+        print('login')
+    else:
+        print('do not login')
+
+    return redirect('/')
