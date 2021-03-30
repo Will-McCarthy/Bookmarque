@@ -78,6 +78,16 @@ function switchTab(newTab) {
 } //switchTab
 
 /*
+ * Check form for completeness and correctness.
+ * Display error messages on incorrect or empty fields.
+ * @return boolean for form status
+ */
+function validateForm() {
+  return true;
+} //validateForm
+
+
+/*
  * Add event listeners to elements on window.
  */
 window.onload = function() {
@@ -96,7 +106,9 @@ window.onload = function() {
   var continueBtns = document.getElementsByClassName("continue-registration-button");
   for (i = 0; i < continueBtns.length; i++) {
     continueBtns[i].onclick = function() {
-      switchTab(tab + 1);
+      if (validateForm()) {
+        switchTab(tab + 1);
+      }
     };
   } //for
 
