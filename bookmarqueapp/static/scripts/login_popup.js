@@ -33,6 +33,9 @@ const tabs = {
 
 var tab = tabs.NONE; //popup menu tab currently being rendered
 
+var emailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+var phoneformat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+
 /*
  * Abbreviated way to grab HTML elements by their ID.
  * @param   {String}  id  Element id in the HTML tag.
@@ -100,13 +103,16 @@ function validateForm() {
           field.style.border = '';
         } //else
 
-
-
+        //specialty cases for phone and email validation
+        if ((field.name == 'phone' && !field.value.match(phoneformat))
+              || (field.name =='email' && !field.value.match(emailformat))) {
+          completeness = false;
+          field.style.border = 'solid .15rem red';
+        } //if
       } //for
 
       return completeness;
 
-      break;
     case tabs.PAYMENT:
 
       // check if anything is filled in, if nothing then change button back to 'skip for now' and return true
