@@ -86,9 +86,21 @@ function validateForm() {
 
   switch (tab) {
     case tabs.REGISTRATION:
+
+      let completeness = true;
+      var inputFields = $('tab-' + tab).getElementsByTagName('input');
+
+      //if any field is not filled in set completness to false and display error message
+      for (i = 0; i < inputFields.length; i++) {
+        if (inputFields[i].value == '') completeness = false;
+        //<display error message here>
+
+      } //for
+
+      return completeness;
+
       break;
     case tabs.PAYMENT:
-      return false;
 
       // check if anything is filled in, if nothing then change button back to 'skip for now' and return true
       //
@@ -98,7 +110,6 @@ function validateForm() {
     case tabs.ADDRESS:
       break;
   } //switch
-
   return true;
 } //validateForm
 
