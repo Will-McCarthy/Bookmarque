@@ -4,7 +4,7 @@ from flask import redirect
 from flask import request
 from flask import url_for
 from flask_mysqldb import MySQL #Mysql
-from flask_login import LoginManager #Logins
+from flask_login import LoginManager, current_user, login_user #Logins
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 import smtplib, ssl, email
 from email import encoders  # email import for sending emails
@@ -12,6 +12,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from . import config as cfg # for loading in db configurations
+from .models import User
 
 
 app = Flask(__name__)
@@ -19,6 +20,13 @@ app.config['MYSQL_HOST'] = cfg.mysql["host"]
 app.config['MYSQL_USER'] = cfg.mysql["user"]
 app.config['MYSQL_PASSWORD'] = cfg.mysql["password"]
 app.config['MYSQL_DB'] = cfg.mysql["db"]
+
+#Login initialization
+#Example secret key, probably should be changed.
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+login_manager = LoginManager()
+login_manager.login_view = 'auth.login'
+login_manager.init_app(app)
 
 # Email Initialization
 try:
@@ -178,24 +186,24 @@ def profile():
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm):
             cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', [password])
+            #Send out email to user
+            #Email Generation
+            message = MIMEMultipart()
+            message["From"] = gmail_server_user
+            #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
+            test_email = "projdeploy@gmail.com"
+            message["To"] = test_email
+            message["Subject"] = "Your password has been changed"
+            msgAlternative = MIMEMultipart('alternative')
+            #Inline html, which could be replaced with larger template files if needed
+            msgText = MIMEText("<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>", 'html', 'utf-8')
+            msgAlternative.attach(msgText)
+            message.attach(msgAlternative)
+            print("Send out an email here")
+            text = message.as_string()
+            print(text)
+            server.sendmail(gmail_server_user, test_email, text)
 
-        #Send out email to user
-        #Email Generation
-        message = MIMEMultipart()
-        message["From"] = gmail_server_user
-        #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
-        test_email = "projdeploy@gmail.com"
-        message["To"] = test_email
-        message["Subject"] = "Your password has been changed"
-        msgAlternative = MIMEMultipart('alternative')
-        #Inline html, which could be replaced with larger template files if needed
-        msgText = MIMEText("<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>", 'html', 'utf-8')
-        msgAlternative.attach(msgText)
-        message.attach(msgAlternative)
-        print("Send out an email here")
-        text = message.as_string()
-        print(text)
-        server.sendmail(gmail_server_user, test_email, text)
 
         # handles update_card form and create_card form
         cardList = request.form.get('cardList')
@@ -359,6 +367,12 @@ def register_user():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        # Check to see if email is taken
+
+        #Add user to the database
+
+        # Redirect to login
+
         # payment information
         # cardType, cardNumber, expMonth, expYear
         # address, city, state, zip
@@ -382,8 +396,33 @@ def register_user():
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
+        # PULL IN Email and password from login form here and insert into sql statement below.
+        
+        user_email = None
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT userID FROM users WHERE email = %s;''', (user_email))
+        information = cursor.fetchall()
+        print(information)
+        mysql.connection.commit()
+        user = load_user(user_id = information[0][0])
+        # Use the user returned from load_user above to compare password from the form
+        #if successful -> login
+        #  if not user or !PASSWORD_COMPARISON:
+        login_user(user)
         print('login')
     else:
         print('do not login')
 
     return redirect('/')
+
+#This function shoud be called when a user is first logging in.
+@login_manager.user_loader
+def load_user(user_id):
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', (user_id))
+    information = cursor.fetchall()
+    print(information)
+    mysql.connection.commit()
+    user = User(information[0][0], information[0][1], information[0][6], information[0][2], information[0][3])
+    # SQL to return an instance of information pertaining to a user from DB
+    return user;
