@@ -123,6 +123,8 @@ function validateRegistration() {
       field.style.border = '';
     } //else
   } //for
+
+  return completeness;
 } //validateRegistration
 
 function validatePayment() {
