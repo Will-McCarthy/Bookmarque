@@ -89,42 +89,49 @@ function validateForm() {
 
   switch (tab) {
     case tabs.REGISTRATION:
-
-      let completeness = true;
-      let inputFields = $('tab-' + tab).getElementsByTagName('input');
-
-      //if any field is not filled in set completness to false and display error message
-      for (let i = 0; i < inputFields.length; i++) {
-        let field = inputFields[i];
-        if (field.value == '') {
-          completeness = false;
-          field.style.border = 'solid .15rem red';
-        } else {
-          field.style.border = '';
-        } //else
-
-        //specialty cases for phone and email validation
-        if ((field.name == 'phone' && !field.value.match(phoneformat))
-              || (field.name =='email' && !field.value.match(emailformat))) {
-          completeness = false;
-          field.style.border = 'solid .15rem red';
-        } //if
-      } //for
-
-      return completeness;
-
+      return validateRegistration();
+      break;
     case tabs.PAYMENT:
-
-      // check if anything is filled in, if nothing then change button back to 'skip for now' and return true
-      //
-      // if something is filled in check that everything is
-      // change button to say save
+      return validatePayment();
       break;
     case tabs.ADDRESS:
+      return validateAddress();
       break;
   } //switch
   return true;
 } //validateForm
+
+function validateRegistration() {
+  let completeness = true;
+  let inputFields = $('tab-' + tab).getElementsByTagName('input');
+
+  //if any field is not filled in set completness to false and display error message
+  for (let i = 0; i < inputFields.length; i++) {
+    let field = inputFields[i];
+    if (field.value == '') {
+      completeness = false;
+      field.style.border = 'solid .15rem red';
+
+    //specialty cases for phone and email validation
+    } else if ((field.name == 'phone' && !field.value.match(phoneformat))
+            || (field.name =='email' && !field.value.match(emailformat))) {
+
+      completeness = false;
+      field.style.border = 'solid .15rem red';
+      field.value = 'Please use a valid format';
+    } else {
+      field.style.border = '';
+    } //else
+  } //for
+} //validateRegistration
+
+function validatePayment() {
+  return true;
+}
+
+function validateAddress() {
+  return true;
+}
 
 /*
  * Change value of hidden skip field for corresponding tab to true.
