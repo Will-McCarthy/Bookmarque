@@ -175,7 +175,7 @@ def profile():
         if (confirm is None):
             confirm = "Cancel"
         if (confirm == "Save"):
-            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s WHERE users_has_card.userEmail = %s;''' (cardType, cardNumber, [SVC], email))
+            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], email))
         
         status = request.form.get('status')
         password = request.form.get('password')
