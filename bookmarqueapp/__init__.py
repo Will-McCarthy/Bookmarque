@@ -27,7 +27,6 @@ def test():
     mysql.connection.commit()
     return render_template('index.html')
 
-
 @app.route('/')
 def homepage():
     cursor = mysql.connection.cursor()
@@ -154,7 +153,7 @@ def profile():
         if (submit == "Save" and password == passConfirm):
             cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', [password])
 
-        # handles update_card form
+        # handles update_card form and create_card form
         cardList = request.form.get('cardList')
         if (cardList is None or cardList == ""):
             cardList = initCard[3]
@@ -171,19 +170,42 @@ def profile():
         if (SVC is None or SVC == ""):
             SVC = initCard[4]
 
+        # confirm is for update card
         confirm = request.form.get("saveCard")
+        print(confirm)
         if (confirm is None):
             confirm = "Cancel"
         if (confirm == "Save"):
+            print("this should only print when updating but it is printing when creating new cards as well")
             cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], email))
-        
+
+        # ensures cards have unique ids
+        cursor.execute('''SELECT MAX(cardID) FROM card;''');
+        val = cursor.fetchone()
+        cardValue = val[0]
+        cardValue += 1
+
+        cursor.execute('''SELECT COUNT(*) FROM users_has_card WHERE userEmail = %s;''', [email])
+        maxCard = cursor.fetchone()
+        maxCard = maxCard[0]
+
+        #test is for create card
+        test = request.form.get("createCard")
+        if (test is None):
+            test = "Exit"
+        if (test == "Confirm" and maxCard <= 3):
+            print("-----------------------------------------")
+            cursor.execute('''INSERT INTO card (cardID, cardNumber, cardType, cardSVC) VALUES (%s, %s, %s, %s);''', ([cardValue], cardNumber, cardList, SVC))
+            cursor.execute('''INSERT INTO users_has_card (userEmail, cardID) VALUES (%s, %s);''', (email, [addressValue]))
+            
         status = request.form.get('status')
         password = request.form.get('password')
         if (status is None and password is None): #not on update_password and status is unchecked
             status = "Deactive"
         else:
             status = initial[8]
-            
+
+        #ensures addresses have unique ids
         cursor.execute('''SELECT MAX(addressID) FROM address;''');
         value = cursor.fetchone()
         addressValue = value[0]
@@ -193,6 +215,7 @@ def profile():
             cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = "101";''', (fName, lName, phone, status))
         else: # subcription for promos is not checked
             cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = "101";''', (fName, lName, phone))
+
         cursor.execute('''SELECT addressID FROM users WHERE userID = "101";''')
         checkValue = cursor.fetchone()
         check = checkValue[0]
@@ -235,6 +258,21 @@ def password_panel():
 
 @app.route('/profile/update-card')
 def card_panel():
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    information = cursor.fetchall()
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    address = cursor.fetchall()
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    email = cursor.fetchone()
+    email = email[0]
+    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    card = cursor.fetchall()
+    mysql.connection.commit()
+    return render_template('update_card.html', details=information[0], add=address[0], card=card[0])
+
+@app.route('/profile/create-card')
+def card_panel_2():
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
     information = cursor.fetchall()
