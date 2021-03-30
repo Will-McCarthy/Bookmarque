@@ -142,7 +142,7 @@ def profile():
     cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
     email = cursor.fetchone()
     email = email[0]
-    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     card = cursor.fetchall()
     initCard = card[0]
     initial = information[0]
@@ -226,9 +226,9 @@ def profile():
         if (yearList is None or yearList == ""):
             cursor.execute('''SELECT YEAR(cardExpDate) FROM card WHERE cardID = %s;''', [cID])
             yearList = cursor.fetchone()
-            yearList = monthList[0]
+            yearList = yearList[0]
 
-        dateConcat = yearList + monthList + "01" #converts year and month into datetime format
+        dateConcat = str(yearList) + str(monthList) + "01" #converts year and month into datetime format
             
         SVC = request.form.get('SVC')
         if (SVC is None or SVC == ""):
