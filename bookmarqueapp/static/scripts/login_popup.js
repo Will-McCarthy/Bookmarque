@@ -92,8 +92,15 @@ function validateForm() {
 
       //if any field is not filled in set completness to false and display error message
       for (let i = 0; i < inputFields.length; i++) {
-        if (inputFields[i].value == '') completeness = false;
-        //<display error message here>
+        let field = inputFields[i];
+        if (field.value == '') {
+          completeness = false;
+          field.style.border = 'solid .15rem red';
+        } else {
+          field.style.border = '';
+        } //else
+
+
 
       } //for
 
