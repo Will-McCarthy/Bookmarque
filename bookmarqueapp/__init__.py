@@ -225,9 +225,9 @@ def profile():
         if (yearList is None or yearList == ""):
             cursor.execute('''SELECT YEAR(cardExpDate) FROM card WHERE cardID = %s;''', [cID])
             yearList = cursor.fetchone()
-            yearList = monthList[0]
+            yearList = yearList[0]
 
-        dateConcat = yearList + monthList + "01" #converts year and month into datetime format
+        dateConcat = str(yearList) + str(monthList) + "01" #converts year and month into datetime format
             
         SVC = request.form.get('SVC')
         if (SVC is None or SVC == ""):
