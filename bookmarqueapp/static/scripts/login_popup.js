@@ -88,10 +88,10 @@ function validateForm() {
     case tabs.REGISTRATION:
 
       let completeness = true;
-      var inputFields = $('tab-' + tab).getElementsByTagName('input');
+      let inputFields = $('tab-' + tab).getElementsByTagName('input');
 
       //if any field is not filled in set completness to false and display error message
-      for (i = 0; i < inputFields.length; i++) {
+      for (let i = 0; i < inputFields.length; i++) {
         if (inputFields[i].value == '') completeness = false;
         //<display error message here>
 
@@ -133,18 +133,18 @@ function skip() {
 window.onload = function() {
 
   //button which either takes user to login/registration popup or to profile management
-  var profileBtn = $('profile-button');
+  let profileBtn = $('profile-button');
   profileBtn.onclick = checkUserLoginStatus;
 
   //button which takes user to registration form
-  var registrationBtn = $('registration-button');
+  let registrationBtn = $('registration-button');
   registrationBtn.onclick = function() {
     switchTab(tabs.REGISTRATION);
   };
 
   //functionality for buttons to iterate through registration form
-  var continueBtns = document.getElementsByClassName('continue-registration-button');
-  for (i = 0; i < continueBtns.length; i++) {
+  let continueBtns = document.getElementsByClassName('continue-registration-button');
+  for (let i = 0; i < continueBtns.length; i++) {
     continueBtns[i].onclick = function() {
       if (validateForm()) {
         switchTab(tab + 1);
@@ -153,8 +153,8 @@ window.onload = function() {
   } //for
 
   //skip buttons will not validate fields but instead clear them
-  var skipBtns = document.getElementsByClassName('skip');
-  for (i = 0; i < skipBtns.length; i++) {
+  let skipBtns = document.getElementsByClassName('skip');
+  for (let i = 0; i < skipBtns.length; i++) {
     skipBtns[i].onclick = function() {
       skip();
       switchTab(tab + 1);
@@ -162,8 +162,8 @@ window.onload = function() {
   } //for
 
   //close popup button functionality
-  var closeBtns = document.getElementsByClassName('close-popup-button');
-  for (i = 0; i < closeBtns.length; i++) {
+  let closeBtns = document.getElementsByClassName('close-popup-button');
+  for (let i = 0; i < closeBtns.length; i++) {
     closeBtns[i].onclick = function() {
       toggleOverlay();
       switchTab(tabs.NONE);
