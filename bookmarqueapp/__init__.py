@@ -369,7 +369,23 @@ def register_user():
         email = request.form.get('email')
         password = request.form.get('password')
 
-        print(request.form.get('shipping-skipped'))
+
+        # if we have payment information add to the database and associate with user
+        if (request.form.get('payment-skipped') == 'false'):
+            cardType = request.form.get('cardType')
+            cardNumber = request.form.get('cardNumber')
+            expMonth = request.form.get('expMonth')
+            expYear = request.form.get('expYear')
+            svc = request.form.get('svc')
+
+        # if we have shipping information add to the database and associate with user
+        if (request.form.get('shipping-skipped') == 'false'):
+            address = request.form.get('address')
+            city = request.form.get('city')
+            state = request.form.get('state')
+            zip = request.form.get('zip')
+
+
         # Check to see if email is taken
 
         cursor = mysql.connection.cursor()
@@ -388,34 +404,6 @@ def register_user():
             userid = cursor.fetchall()
             mysql.connection.commit()
 
-
-
-        # Redirect to login
-
-        # # payment information
-        # cardType = request.form.get('cardType')
-        # cardNumber = request.form.get('cardNumber')
-        # expMonth = request.form.get('expMonth')
-        # expYear = request.form.get('expYear')
-        # svc = request.form.get('svc')
-        #
-        # # shipping information
-        # address = request.form.get('address')
-        # city = request.form.get('city')
-        # state = request.form.get('state')
-        # zip = request.form.get('zip')
-
-
-
-        # add user to the database
-        # cursor = mysql.connection.cursor()
-        # query = ''
-        # cursor.execute(query)
-        # cursor.commit()
-
-        # send verification email
-
-        # send.email()
 
         # if url exists redirect user to the page they were on
         if next_url:
