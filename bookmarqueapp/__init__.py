@@ -295,8 +295,30 @@ def edit_profile():
 def register_user():
     if request.method == 'POST':
 
-        # pull hidden input value for url which called /register
-        next_url = request.form.get("next")
+        # get information from form
+        # pull hidden input value for url which called '/register'
+        next_url = request.form.get('next')
+
+        # user information
+        first_name = request.form.get('fName')
+        last_name = request.form.get('lName')
+        phone = request.form.get('phone')
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        # payment information
+        # cardType, cardNumber, expMonth, expYear
+        # address, city, state, zip
+
+        # add user to the database
+        # cursor = mysql.connection.cursor()
+        # query = ''
+        # cursor.execute(query)
+        # cursor.commit()
+
+        # send verification email
+
+        # send.email()
 
         # if url exists redirect user to the page they were on
         if next_url:

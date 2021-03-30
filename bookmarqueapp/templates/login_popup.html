@@ -28,15 +28,16 @@
       <h1>Create Account</h1>
 
       <label>First Name</label>
-      <input type="text">
+      <input type="text" name="fName">
       <label>Last Name</label>
-      <input type="text">
-      <label>Phone Number (xxx) xxx-xxxx</label>
-      <input type="text">
+      <input type="text" name="lName">
+      <label>Phone Number</label>
+      <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+      placeholder="XXX-XXX-XXXX" minlength="10" maxlength="14">
       <label>Email Address</label>
-      <input type="text">
+      <input type="email" name="email">
       <label>Password</label>
-      <input type="text">
+      <input type="password" name="password">
       <span>Note: Password must be at least 8 characters long and contain both letters and numbers.</span>
 
       <a class="continue-registration-button button-gold">Continue</a>
@@ -46,12 +47,12 @@
       <h1>Payment Info</h1>
 
       <label>Card Type</label>
-      <input type="text">
+      <input type="text" name="cardType">
       <label>Card Number</label>
-      <input type="text">
+      <input type="text" name="cardNumber">
       <label>Expiration Date</label>
       <div id="card-details">
-        <select>
+        <select name="expMonth">
           <option>MM</option>
           <option>01</option>
           <option>02</option>
@@ -66,8 +67,8 @@
           <option>11</option>
           <option>12</option>
         </select>
-        <input type="number">
-        <input type="text" placeholder="SVC">
+        <input type="number" name="expYear">
+        <input type="text" name="svc" placeholder="SVC">
       </div>
 
       <a class="continue-registration-button button-blue">Skip for now</a>
@@ -77,13 +78,13 @@
       <h1>Shipping</h1>
 
       <label>Address</label>
-      <input type="text">
+      <input type="text" name="address">
       <label>City</label>
-      <input type="text">
+      <input type="text" name="city">
       <label>State</label>
-      <input type="text">
+      <input type="text" name="state">
       <label>Zip Code</label>
-      <input type="text">
+      <input type="text" name="zip">
 
       <a class="continue-registration-button button-blue">Skip for now</a>
     </div>
