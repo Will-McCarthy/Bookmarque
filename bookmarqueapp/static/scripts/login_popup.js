@@ -112,9 +112,9 @@ function validateRegistration() {
       completeness = false;
       field.style.border = 'solid .15rem red';
 
-    //specialty cases for phone and email validation
-    } else if ((field.name == 'phone' && !field.value.match(phoneformat))
-            || (field.name =='email' && !field.value.match(emailformat))) {
+      //specialty cases for phone and email validation
+    } else if ((field.name == 'phone' && !field.value.match(phoneformat)) ||
+      (field.name == 'email' && !field.value.match(emailformat))) {
 
       completeness = false;
       field.style.border = 'solid .15rem red';
@@ -124,10 +124,42 @@ function validateRegistration() {
     } //else
   } //for
 
+  if (tab == 2) { //when on payment tab, validate it uniquley
+    completeness = validatePayment() && completeness;
+  }
+  if (tab == 3) { //when on shipping address tab, validate it
+    completeness = validateAddress() && completeness;
+  }
+
   return completeness;
 } //validateRegistration
 
 function validatePayment() {
+  let type = document.getElementsByName('cardType')[0];
+  let number = document.getElementsByName('cardNumber')[0];
+  let expMonth = document.getElementsByName('expMonth')[0];
+  let expYear = document.getElementsByName('expYear')[0];
+  let svc = document.getElementsByName('svc')[0];
+
+  if (!checkCreditCard(number.value, type.value)) { //method defined in creditcard.js
+    number.style.border = 'solid .15rem red';
+    type.style.border = 'solid .15rem red';
+    return false;
+  }
+  if (expMonth.value == "MM") {
+    expMonth.style.border = 'solid .15rem red';
+    return false;
+  }
+  if (expYear.value < 21 || expYear.value > 99) {
+    expMonth.style.border = 'solid .15rem red';
+    return false;
+  }
+  if (isNaN(parseInt(svc.value)) || parseInt(svc.value) > 999 || parseInt(svc.value) < 0) {
+    svc.style.border = 'solid .15rem red';
+    return false;
+  }
+
+
   return true;
 }
 
