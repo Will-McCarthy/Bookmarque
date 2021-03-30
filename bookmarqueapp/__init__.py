@@ -3,7 +3,8 @@ from flask import render_template # for file extends
 from flask import redirect
 from flask import request
 from flask import url_for
-from flask_mysqldb import MySQL
+from flask_mysqldb import MySQL #Mysql
+from flask_login import LoginManager #Logins
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 import smtplib, ssl, email
 from email import encoders  # email import for sending emails

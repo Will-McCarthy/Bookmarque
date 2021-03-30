@@ -53,6 +53,7 @@ To provide credentials to MySQL, enter configuration details into a `config.py` 
 ```
 pip install libsass
 pip install flask_mysqldb
+pip install flask_login
 export FLASK_APP=bookmarqueapp
 ```
 
