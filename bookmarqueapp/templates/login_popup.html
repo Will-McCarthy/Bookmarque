@@ -1,7 +1,8 @@
 <div class="popup-panel">
   <h1 class="main-logo">Bookmarqué</h1>
 
-  <form id="tab-0" class="popup-tab">
+<!--- Login Form --->
+  <form action="{{ url_for('login') }}" method="POST" id="tab-0" class="popup-tab">
 
       <strong class="close-popup-button clickable">x</strong>
 
@@ -20,7 +21,8 @@
   </form>
 
 <!--- Registration Form --->
-  <form id="registration">
+  <form action="{{ url_for('register_user') }}" method="POST" id="registration">
+    <input type="hidden" name="next" value="{{ request.path }}">
 
     <div id="tab-1" class="popup-tab">
       <h1>Create Account</h1>
@@ -87,12 +89,12 @@
     </div>
 
     <div id="tab-4" class="popup-tab">
-      <h1>Verficiation Sent</h1>
+      <h1>Verification</h1>
       <p>You’re all set up! Please verify your email to activate your account by clicking the link in your inbox.</p>
-      <p>If you don’t see a message from us, please check your junk folder.</p>
+      <p>If you don’t see a message from us, please check your junk folder. It may take a few moments.</p>
       <p>We look forward to helping you find your next perfect read!</p>
 
-      <a class="close-popup-button button-blue">Continue shopping</a>
+      <input type="submit" value="Send verification email" class="close-popup-button button-blue">
     </div>
   </form>
 </div>
