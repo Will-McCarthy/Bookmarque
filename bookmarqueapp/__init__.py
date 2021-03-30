@@ -69,6 +69,7 @@ def homepage():
     cursor.execute('''SELECT * FROM book, book_has_book_categories WHERE book.ISBN = book_has_book_categories.ISBN AND categoryID = '18' LIMIT 4;''')
     newly_released = cursor.fetchall()
     mysql.connection.commit()
+    print(str(current_user.id) + " " + current_user.lname)
     return render_template('index.html', featured=featured, newly_released=newly_released)
 
 @app.route('/search/')
@@ -354,6 +355,7 @@ def edit_profile():
 # registration and login #
 @app.route('/register', methods=['POST'])
 def register_user():
+    print("We're here")
     if request.method == 'POST':
 
         # get information from form
@@ -369,7 +371,27 @@ def register_user():
 
         # Check to see if email is taken
 
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT userID FROM users WHERE userEmail LIKE %s;''', [email])
+        userid = cursor.fetchall()
+        mysql.connection.commit()
+
+        # If this exists, then we know the above sql statement returned an object matching the email
+        try:
+            if information[0][0]: 
+                print("Email is already taken")
+        except:
+            cursor = mysql.connection.cursor()
+            #Lets assume that the database has users primary id to auto increment.
+            cursor.execute(''' INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone) VALUES(%s,%s,%s,%s,%s,%s,%s)''', [email, first_name, last_name, "Active", "Customer", password, phone])
+            userid = cursor.fetchall()
+            mysql.connection.commit()
+
+
+        
         #Add user to the database
+
+        
 
         # Redirect to login
 
@@ -391,35 +413,43 @@ def register_user():
         if next_url:
             return redirect(next_url)
 
-    return redirect('/') # if all else fails go to the homepage
+    return redirect('homepage') # if all else fails go to the homepage
 
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        # PULL IN Email and password from login form here and insert into sql statement below.
-        
-        user_email = None
+        # PULL In Email and password from login form here and insert into sql statement below.
+        user_email = request.form.get('email')
+        supplied_password = request.form.get('password')
+        print(user_email)
+        print(supplied_password)
         cursor = mysql.connection.cursor()
-        cursor.execute('''SELECT userID FROM users WHERE email = %s;''', (user_email))
+        cursor.execute('''SELECT userID FROM users WHERE userEmail LIKE %s;''', [user_email])
         information = cursor.fetchall()
-        print(information)
         mysql.connection.commit()
         user = load_user(user_id = information[0][0])
         # Use the user returned from load_user above to compare password from the form
-        #if successful -> login
-        #  if not user or !PASSWORD_COMPARISON:
-        login_user(user)
-        print('login')
+        #if user not found = email not found
+        #if password is incorrect = wrong password
+        if not user or supplied_password != user.password:
+            print("Email is already taken")
+            #Alert the user that the email is already taken w/ flash
+        
+        # The function below allows you to use current_user to reference the user's session variables.
+        login_user(user, force=True)
+        return redirect(url_for('homepage'))
+
     else:
         print('do not login')
 
-    return redirect('/')
+    return redirect('homepage')
 
 #This function shoud be called when a user is first logging in.
+#Also, it's inherently called for every single page, so when you access current_user.fname, it will always be what was in the DB when you first loaded the page
 @login_manager.user_loader
 def load_user(user_id):
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', (user_id))
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', (user_id,))
     information = cursor.fetchall()
     print(information)
     mysql.connection.commit()

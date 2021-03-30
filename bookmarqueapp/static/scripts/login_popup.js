@@ -50,6 +50,7 @@ function toggleOverlay() {
  * Check if the current user is logged in based on session cookies
  * in order to redirect to profile page. Else create login/registration popup.
  * @TODO implement cookie checking and validation
+
  */
 var checkUserLoginStatus = function() {
 
