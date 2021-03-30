@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import render_template # for file extends
+from flask import redirect
 from flask import request
+from flask import url_for
 from flask_mysqldb import MySQL
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 from . import config as cfg # for loading in db configurations
