@@ -12,7 +12,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from . import config as cfg # for loading in db configurations
-from .models import User
+from .models import User, UserStatus
 
 
 app = Flask(__name__)
@@ -69,7 +69,7 @@ def homepage():
     cursor.execute('''SELECT * FROM book, book_has_book_categories WHERE book.ISBN = book_has_book_categories.ISBN AND categoryID = '18' LIMIT 4;''')
     newly_released = cursor.fetchall()
     mysql.connection.commit()
-    print(str(current_user.id) + " " + current_user.lname)
+    #print(str(current_user.id) + " " + current_user.lname)
     return render_template('index.html', featured=featured, newly_released=newly_released)
 
 @app.route('/search/')
@@ -221,7 +221,7 @@ def profile():
             cursor.execute('''SELECT MONTH(cardExpDate) FROM card WHERE cardID = %s;''', [cID])
             monthList = cursor.fetchone()
             monthList = monthList[0]
-            
+
         yearList = request.form.get('yearList')
         if (yearList is None or yearList == ""):
             cursor.execute('''SELECT YEAR(cardExpDate) FROM card WHERE cardID = %s;''', [cID])
@@ -229,7 +229,7 @@ def profile():
             yearList = yearList[0]
 
         dateConcat = str(yearList) + str(monthList) + "01" #converts year and month into datetime format
-            
+
         SVC = request.form.get('SVC')
         if (SVC is None or SVC == ""):
             SVC = initCard[4]
@@ -378,7 +378,7 @@ def register_user():
 
         # If this exists, then we know the above sql statement returned an object matching the email
         try:
-            if information[0][0]: 
+            if information[0][0]:
                 print("Email is already taken")
         except:
             cursor = mysql.connection.cursor()
@@ -388,16 +388,21 @@ def register_user():
             mysql.connection.commit()
 
 
-        
-        #Add user to the database
-
-        
 
         # Redirect to login
 
-        # payment information
-        # cardType, cardNumber, expMonth, expYear
-        # address, city, state, zip
+        # # payment information
+        cardType = request.form.get('cardType')
+        cardNumber = request.form.get('cardNumber')
+        expMonth = request.form.get('expMonth')
+        expYear = request.form.get('expYear')
+        svc = request.form.get('svc')
+
+        # shipping information
+        address = request.form.get('address')
+        city = request.form.get('city')
+        state = request.form.get('state')
+        zip = request.form.get('zip')
 
         # add user to the database
         # cursor = mysql.connection.cursor()
@@ -434,7 +439,7 @@ def login():
         if not user or supplied_password != user.password:
             print("Email is already taken")
             #Alert the user that the email is already taken w/ flash
-        
+
         # The function below allows you to use current_user to reference the user's session variables.
         login_user(user, force=True)
         return redirect(url_for('homepage'))
