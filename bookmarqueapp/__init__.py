@@ -141,7 +141,7 @@ def profile():
     cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
     email = cursor.fetchone()
     email = email[0]
-    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     card = cursor.fetchall()
     initCard = card[0]
     initial = information[0]
