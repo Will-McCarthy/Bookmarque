@@ -71,7 +71,9 @@
         <input type="text" name="svc" placeholder="SVC">
       </div>
 
-      <a class="continue-registration-button button-blue">Skip for now</a>
+      <input type="hidden" id="payment-skipped" name="payment-skipped" value="false">
+      <a class="skip button-blue">Skip for now</a>
+      <a class="continue-registration-button button-gold">Save</a>
     </div>
 
     <div id="tab-3" class="popup-tab">
@@ -86,7 +88,9 @@
       <label>Zip Code</label>
       <input type="text" name="zip">
 
-      <a class="continue-registration-button button-blue">Skip for now</a>
+      <input type="hidden" id="shipping-skipped" name="shipping-skipped" value="false">
+      <a class="skip button-blue">Skip for now</a>
+      <a class="continue-registration-button button-gold">Save</a>
     </div>
 
     <div id="tab-4" class="popup-tab">

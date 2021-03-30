@@ -83,9 +83,38 @@ function switchTab(newTab) {
  * @return boolean for form status
  */
 function validateForm() {
+
+  switch (tab) {
+    case tabs.REGISTRATION:
+      break;
+    case tabs.PAYMENT:
+      return false;
+
+      // check if anything is filled in, if nothing then change button back to 'skip for now' and return true
+      //
+      // if something is filled in check that everything is
+      // change button to say save
+      break;
+    case tabs.ADDRESS:
+      break;
+  } //switch
+
   return true;
 } //validateForm
 
+/*
+ * Change value of hidden skip field for corresponding tab to true.
+ */
+function skip() {
+  switch (tab) {
+    case tabs.PAYMENT:
+      $('payment-skipped').value = true;
+      break;
+    case tabs.ADDRESS:
+      $('shipping-skipped').value = true;
+      break;
+  } //switch
+} //skip
 
 /*
  * Add event listeners to elements on window.
@@ -103,7 +132,7 @@ window.onload = function() {
   };
 
   //functionality for buttons to iterate through registration form
-  var continueBtns = document.getElementsByClassName("continue-registration-button");
+  var continueBtns = document.getElementsByClassName('continue-registration-button');
   for (i = 0; i < continueBtns.length; i++) {
     continueBtns[i].onclick = function() {
       if (validateForm()) {
@@ -112,8 +141,17 @@ window.onload = function() {
     };
   } //for
 
+  //skip buttons will not validate fields but instead clear them
+  var skipBtns = document.getElementsByClassName('skip');
+  for (i = 0; i < skipBtns.length; i++) {
+    skipBtns[i].onclick = function() {
+      skip();
+      switchTab(tab + 1);
+    };
+  } //for
+
   //close popup button functionality
-  var closeBtns = document.getElementsByClassName("close-popup-button");
+  var closeBtns = document.getElementsByClassName('close-popup-button');
   for (i = 0; i < closeBtns.length; i++) {
     closeBtns[i].onclick = function() {
       toggleOverlay();

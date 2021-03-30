@@ -369,6 +369,7 @@ def register_user():
         email = request.form.get('email')
         password = request.form.get('password')
 
+        print(request.form.get('shipping-skipped'))
         # Check to see if email is taken
 
         cursor = mysql.connection.cursor()
@@ -392,17 +393,19 @@ def register_user():
         # Redirect to login
 
         # # payment information
-        cardType = request.form.get('cardType')
-        cardNumber = request.form.get('cardNumber')
-        expMonth = request.form.get('expMonth')
-        expYear = request.form.get('expYear')
-        svc = request.form.get('svc')
+        # cardType = request.form.get('cardType')
+        # cardNumber = request.form.get('cardNumber')
+        # expMonth = request.form.get('expMonth')
+        # expYear = request.form.get('expYear')
+        # svc = request.form.get('svc')
+        #
+        # # shipping information
+        # address = request.form.get('address')
+        # city = request.form.get('city')
+        # state = request.form.get('state')
+        # zip = request.form.get('zip')
 
-        # shipping information
-        address = request.form.get('address')
-        city = request.form.get('city')
-        state = request.form.get('state')
-        zip = request.form.get('zip')
+
 
         # add user to the database
         # cursor = mysql.connection.cursor()
