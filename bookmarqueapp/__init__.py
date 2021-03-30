@@ -176,7 +176,6 @@ def profile():
         if (confirm is None):
             confirm = "Cancel"
         if (confirm == "Save"):
-            print("this should only print when updating but it is printing when creating new cards as well")
             cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], email))
 
         # ensures cards have unique ids
@@ -193,10 +192,9 @@ def profile():
         test = request.form.get("createCard")
         if (test is None):
             test = "Exit"
-        if (test == "Confirm" and maxCard <= 3):
-            print("-----------------------------------------")
+        if (test == "Confirm" and maxCard <= 2):
             cursor.execute('''INSERT INTO card (cardID, cardNumber, cardType, cardSVC) VALUES (%s, %s, %s, %s);''', ([cardValue], cardNumber, cardList, SVC))
-            cursor.execute('''INSERT INTO users_has_card (userEmail, cardID) VALUES (%s, %s);''', (email, [addressValue]))
+            cursor.execute('''INSERT INTO users_has_card (userEmail, cardID) VALUES (%s, %s);''', (email, [cardValue]))
             
         status = request.form.get('status')
         password = request.form.get('password')
@@ -284,7 +282,7 @@ def card_panel_2():
     cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('update_card.html', details=information[0], add=address[0], card=card[0])
+    return render_template('create_card.html', details=information[0], add=address[0], card=card[0])
 
 @app.route('/profile/edit')
 def edit_profile():
