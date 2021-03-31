@@ -36,6 +36,8 @@ var tab = tabs.NONE; //popup menu tab currently being rendered
 var emailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 var phoneformat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 var zipformat = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+var passwordformat = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
 /*
  * Abbreviated way to grab HTML elements by their ID.
  * @param   {String}  id  Element id in the HTML tag.
@@ -112,13 +114,18 @@ function validateRegistration() {
       completeness = false;
       field.style.border = 'solid .15rem red';
 
-      //specialty cases for phone and email validation
+    //specialty cases for phone and email validation
     } else if ((field.name == 'phone' && !field.value.match(phoneformat)) ||
       (field.name == 'email' && !field.value.match(emailformat))) {
 
       completeness = false;
       field.style.border = 'solid .15rem red';
       field.value = 'Please use a valid format';
+
+    //password validation
+    } else if (field.name == 'password' && !field.value.match(passwordformat)) {
+      completeness = false;
+      field.style.border = 'solid .15rem red';
     } else {
       field.style.border = '';
     } //else
