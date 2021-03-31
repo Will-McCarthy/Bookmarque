@@ -357,54 +357,67 @@ def edit_profile():
 # registration and login #
 @app.route('/register', methods=['POST'])
 def register_user():
-    print("We're here")
     if request.method == 'POST':
 
         # get information from form
         # pull hidden input value for url which called '/register'
         next_url = request.form.get('next')
-
-        # user information
-        first_name = request.form.get('fName')
-        last_name = request.form.get('lName')
-        phone = request.form.get('phone')
         email = request.form.get('email')
-        password = request.form.get('password')
-
-
-        # if we have payment information add to the database and associate with user
-        if (request.form.get('payment-skipped') == 'false'):
-            cardType = request.form.get('cardType')
-            cardNumber = request.form.get('cardNumber')
-            expMonth = request.form.get('expMonth')
-            expYear = request.form.get('expYear')
-            svc = request.form.get('svc')
-
-        # if we have shipping information add to the database and associate with user
-        if (request.form.get('shipping-skipped') == 'false'):
-            address = request.form.get('address')
-            city = request.form.get('city')
-            state = request.form.get('state')
-            zip = request.form.get('zip')
-
 
         # Check to see if email is taken
-
         cursor = mysql.connection.cursor()
         cursor.execute('''SELECT userID FROM users WHERE userEmail LIKE %s;''', [email])
         userid = cursor.fetchall()
         mysql.connection.commit()
 
         # If this exists, then we know the above sql statement returned an object matching the email
-        try:
-            if information[0][0]:
-                print("Email is already taken")
-        except:
-            cursor = mysql.connection.cursor()
-            #Lets assume that the database has users primary id to auto increment.
-            cursor.execute(''' INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone) VALUES(%s,%s,%s,%s,%s,%s,%s)''', [email, first_name, last_name, "Active", "Customer", password, phone])
-            userid = cursor.fetchall()
+        if not userid:
+            print(email + " is available")
+
+            # user information
+            first_name = request.form.get('fName')
+            last_name = request.form.get('lName')
+            phone = request.form.get('phone')
+            password = request.form.get('password')
+
+            # if we have payment information add to the database and associate with user
+            if (request.form.get('payment-skipped') == 'false'):
+                card_type = request.form.get('cardType')
+                card_number = request.form.get('cardNumber')
+                exp_month = request.form.get('expMonth')
+                exp_year = request.form.get('expYear')
+                svc = request.form.get('svc')
+
+                cursor.execute('''SELECT MAX(cardID) FROM card;''');
+                value = cursor.fetchone()
+                card_id = value[0]
+                card_id += 1
+
+                exp_date = str(exp_year) + str(exp_month) + "01" # into datetime format
+
+                cursor.execute('''INSERT INTO card (cardID, cardNumber, cardType, cardSVC, cardExpDate) VALUES (%s, %s, %s, %s, %s);''', ([card_id], card_number, card_type, svc, exp_date))
+                cursor.execute('''INSERT INTO users_has_card (userEmail, cardID) VALUES (%s, %s);''', (email, [card_id]))
+
+            # if we have shipping information add to the database and associate with user
+            if (request.form.get('shipping-skipped') == 'false'):
+                address = request.form.get('address')
+                city = request.form.get('city')
+                state = request.form.get('state')
+                zip = request.form.get('zip')
+
+                cursor.execute('''SELECT MAX(addressID) FROM address;''');
+                value = cursor.fetchone()
+                address_id = value[0]
+                address_id += 1
+
+                cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', ([address_id], address, city, state, zip))
+                cursor.execute('''INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone, addressID) VALUES(%s,%s,%s,%s,%s,%s,%s)''', [email, first_name, last_name, "Inactive", "Customer", password, phone, address_id])
+            else:
+                cursor.execute('''INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone) VALUES(%s,%s,%s,%s,%s,%s,%s)''', [email, first_name, last_name, "Inactive", "Customer", password, phone])
+
             mysql.connection.commit()
+        else:
+            print(email + " is taken")
 
 
         # if url exists redirect user to the page they were on
