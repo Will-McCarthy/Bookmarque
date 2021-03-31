@@ -30,7 +30,7 @@ $ pip install Flask
 
 ## Starting a Flask Server
 ```
-$ export FLASK_APP=hello.py
+$ export FLASK_APP=hello.py or set FLASK_APP=hello.py
 $ flask run
 ```
 Now just open the port Flask prints!
@@ -54,7 +54,8 @@ To provide credentials to MySQL, enter configuration details into a `config.py` 
 pip install libsass
 pip install flask_mysqldb
 pip install flask_login
-export FLASK_APP=bookmarqueapp
+export FLASK_APP=bookmarqueapp or set FLASK_APP=bookmarqueapp
+flask run
 ```
 
 To test if your MySQL connection is really working, you can go to the /mysqltest route in your web browser. This will make a query to the MySQL server for data. You can see if it succeeded by checking the terminal running your flask app.
