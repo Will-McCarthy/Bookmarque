@@ -472,12 +472,13 @@ def login():
 
         # The function below allows you to use current_user to reference the user's session variables.
         login_user(user, force=True)
-        return redirect(url_for('profile'))
+        user.is_authenticated = True
+        print(user.is_authenticated)
 
     else:
         print('do not login')
 
-    return redirect('homepage')
+    return redirect(url_for('homepage'))
 
 
 @app.route('/verify/<email_encrypted>')

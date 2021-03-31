@@ -48,7 +48,11 @@
           </form>
 
           <div id="nav-icons">
+            {% if not current_user.is_authenticated %}
             <img id="profile-button" class="icon clickable" src="{{ url_for('static', filename='assets/user.svg') }}">
+            {% else %}
+            <a href="{{ url_for('profile') }}"><img class="icon clickable" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
+            {% endif %}
             <a href="{{ url_for('shopping_cart') }}"><img class="icon" src="{{ url_for('static', filename='assets/shoppingcart.svg') }}"></a>
           </div>
         </div>

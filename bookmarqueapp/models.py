@@ -6,8 +6,9 @@ class User():
     password = None
     fname = None
     lname = None
-    is_authenticated = False
     is_active = True
+    logged_in = False
+    is_authenticated = False
 
 
     def __init__(self, id, email, password, fname, lname):
@@ -20,7 +21,8 @@ class User():
     def get_id(self):
         return self.id
 
-
+    def is_authenticated(self):
+        return self.is_authenticated
 
 
 
