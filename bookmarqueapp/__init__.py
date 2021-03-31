@@ -416,6 +416,17 @@ def register_user():
                 cursor.execute('''INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone) VALUES (%s, %s, %s, %s, %s, %s, %s)''', [email, first_name, last_name, "Inactive", "Customer", password, phone])
 
             mysql.connection.commit()
+
+            # send email with link in form of /verify/ + user_id
+            ### encrypt email ###
+            verification_link = url_for('verify_email', email_encrypted = email)
+            print(verification_link)
+            message = '''
+                <h1>Please Confirm Your Email</h1>
+                <span>Click this <a href="''' + verification_link + '''">link</a> or if this was not you, ignore this message.</span>
+            '''
+            send_email("projdeploy@gmail.com", "Confirm Email", message) # send email to test email with email confirmation link
+
         else:
             print(email + " is taken")
 
@@ -456,13 +467,13 @@ def login():
     return redirect('homepage')
 
 
-@app.route('/verify/<account_number>')
-def verify_email(account_number):
-
-    print(str(account_number))
-    user_id = account_number # definitely not secure but hopefully works
+@app.route('/verify/<email_encrypted>')
+def verify_email(email_encrypted):
+    #### unencrypt param here ####
+    print(str(email_encrypted))
+    email = email_encrypted # definitely not secure but hopefully works
     cursor = mysql.connection.cursor()
-    cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE userID=%s;''', [user_id])
+    cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE email=%s;''', [email])
     mysql.connection.commit()
     return render_template('email_confirmation.html')
 
@@ -478,3 +489,20 @@ def load_user(user_id):
     user = User(information[0][0], information[0][1], information[0][6], information[0][2], information[0][3])
     # SQL to return an instance of information pertaining to a user from DB
     return user;
+
+
+def send_email(address, subject, html_message):
+    message = MIMEMultipart()
+    message["From"] = gmail_server_user
+    #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
+    message["To"] = address
+    message["Subject"] = subject
+    msgAlternative = MIMEMultipart('alternative')
+    #Inline html, which could be replaced with larger template files if needed
+    msgText = MIMEText(html_message, 'html', 'utf-8')
+    msgAlternative.attach(msgText)
+    message.attach(msgAlternative)
+    print("Send out an email here")
+    text = message.as_string()
+    print(text)
+    server.sendmail(gmail_server_user, address, text)
