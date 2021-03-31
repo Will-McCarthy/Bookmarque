@@ -143,7 +143,7 @@ function validatePayment() {
     return false;
   }
   if (expYear.value < 21 || expYear.value > 99) {
-    expMonth.style.border = 'solid .15rem red';
+    expYear.style.border = 'solid .15rem red';
     return false;
   }
   if (isNaN(parseInt(svc.value)) || parseInt(svc.value) > 999 || parseInt(svc.value) < 0) {
@@ -151,7 +151,7 @@ function validatePayment() {
     return false;
   }
   return true;
-}
+} //validatePayment
 
 function validateAddress() {
   let completeness = true;
