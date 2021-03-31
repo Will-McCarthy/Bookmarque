@@ -411,9 +411,9 @@ def register_user():
                 address_id += 1
 
                 cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', ([address_id], address, city, state, zip))
-                cursor.execute('''INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone, addressID) VALUES(%s,%s,%s,%s,%s,%s,%s)''', [email, first_name, last_name, "Inactive", "Customer", password, phone, address_id])
+                cursor.execute('''INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone, addressID) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)''', [email, first_name, last_name, "Inactive", "Customer", password, phone, address_id])
             else:
-                cursor.execute('''INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone) VALUES(%s,%s,%s,%s,%s,%s,%s)''', [email, first_name, last_name, "Inactive", "Customer", password, phone])
+                cursor.execute('''INSERT INTO users (userEmail, userFName, userLName, userStatus, userType, userPassword, userPhone) VALUES (%s, %s, %s, %s, %s, %s, %s)''', [email, first_name, last_name, "Inactive", "Customer", password, phone])
 
             mysql.connection.commit()
         else:
