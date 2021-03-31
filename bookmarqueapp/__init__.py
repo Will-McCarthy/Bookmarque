@@ -471,25 +471,19 @@ def login():
         print(supplied_password)
         cursor = mysql.connection.cursor()
         cursor.execute('''SELECT userID FROM users WHERE userEmail LIKE %s;''', [user_email])
-        information = cursor.fetchall()
-        mysql.connection.commit()
-        user = load_user(user_id = information[0][0])
-        # Use the user returned from load_user above to compare password from the form
-        #if user not found = email not found
-        #if password is incorrect = wrong password
-        if not user or supplied_password != user.password:
-            print("Email is already taken")
-            #Alert the user that the email is already taken w/ flash
+        user_id = cursor.fetchone()
 
-        # The function below allows you to use current_user to reference the user's session variables.
-        login_user(user, force=True)
-        user.is_authenticated = True
-        print(user.is_authenticated)
-        return redirect(url_for('profile'))
-        #return redirect(url_for('homepage'))
-
-    else:
-        print('do not login')
+        if user_id: # if the query returns anything
+            user = load_user(user_id = user_id)
+            # Use the user returned from load_user above to compare password from the form
+            #if user not found = email not found
+            #if password is incorrect = wrong password
+            if user and supplied_password == user.password:
+                # The function below allows you to use current_user to reference the user's session variables.
+                login_user(user, force=True)
+                user.is_authenticated = True
+                print(user.is_authenticated)
+                return redirect(url_for('profile'))
 
     return redirect(url_for('homepage'))
 
