@@ -139,14 +139,18 @@ def profile():
     information = cursor.fetchall()
     cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
     address = cursor.fetchall()
+    addTest = cursor.rowcount;
     cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     card = cursor.fetchall()
-    initCard = card[0]
+    cardTest = cursor.rowcount
+    if (cardTest > 0):
+        initCard = card[0]
     initial = information[0]
-    initAdd = address[0]
+    if (addTest > 0):
+        initAdd = address[0]
     if request.method == 'POST':
 
         fName = request.form.get('fName')
@@ -158,7 +162,7 @@ def profile():
             lName = initial[3]
 
         address = request.form.get('address')
-        if (address is None or address == ""):
+        if ((address is None or address == "") and addTest > 0):
             address = initAdd[0]
 
         phone = request.form.get('phone')
@@ -166,15 +170,15 @@ def profile():
             phone = initial[7]
 
         city = request.form.get('city')
-        if (city is None or city == ""):
+        if ((city is None or city == "") and addTest > 0):
             city = initAdd[1]
 
         state = request.form.get('state')
-        if (state is None or state == ""):
+        if ((state is None or state == "") and addTest > 0):
             state = initAdd[2]
 
         zipCode = request.form.get('zip')
-        if (zipCode is None or zipCode == ""):
+        if ((zipCode is None or zipCode == "") and addTest > 0):
             zipCode = initAdd[3]
 
         # handles update_password form
@@ -208,22 +212,23 @@ def profile():
 
         # handles update_card form and create_card form
         cardList = request.form.get('cardList')
-        if (cardList is None or cardList == ""):
+        if ((cardList is None or cardList == "") and cardTest > 0):
             cardList = initCard[3]
 
         cardNumber = request.form.get('cardNumber')
-        if (cardNumber is None or cardNumber == ""):
+        if ((cardNumber is None or cardNumber == "") and cardTest > 0):
             cardNumber = initCard[1]
 
-        cID = initCard[0]
+        if (cardTest > 0):
+            cID = initCard[0]
         monthList = request.form.get('monthList')
-        if (monthList is None or monthList == ""):
+        if ((monthList is None or monthList == "") and cardTest > 0):
             cursor.execute('''SELECT MONTH(cardExpDate) FROM card WHERE cardID = %s;''', [cID])
             monthList = cursor.fetchone()
             monthList = monthList[0]
 
         yearList = request.form.get('yearList')
-        if (yearList is None or yearList == ""):
+        if ((yearList is None or yearList == "") and cardTest > 0):
             cursor.execute('''SELECT YEAR(cardExpDate) FROM card WHERE cardID = %s;''', [cID])
             yearList = cursor.fetchone()
             yearList = yearList[0]
@@ -231,15 +236,14 @@ def profile():
         dateConcat = str(yearList) + str(monthList) + "01" #converts year and month into datetime format
 
         SVC = request.form.get('SVC')
-        if (SVC is None or SVC == ""):
+        if ((SVC is None or SVC == "") and cardTest > 0):
             SVC = initCard[4]
 
         # confirm is for update card
         confirm = request.form.get("saveCard")
-        print(confirm)
         if (confirm is None):
             confirm = "Cancel"
-        if (confirm == "Save"):
+        if ((confirm == "Save") and cardTest > 0):
             cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], dateConcat, email))
 
         # ensures cards have unique ids
@@ -273,7 +277,6 @@ def profile():
         addressValue += 1
 
         if (status == "Active"): # subscription for promos is checked
-            print("This is triggered")
             cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = %s;''', (fName, lName, phone, status, [current_user.id]))
         else: # subcription for promos is not checked
             cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = %s;''', (fName, lName, phone, [current_user.id]))
@@ -282,8 +285,7 @@ def profile():
         checkValue = cursor.fetchone()
         check = checkValue[0]
         #print(check is None)
-        if (password is None and check is None): # not on update_password form and there is no existing address associated
-            print(addressValue)
+        if (password is None and check is None and cardList is None): # not on update_password form and there is no existing address associated
             cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', ([addressValue], address, city, state, zipCode))
             cursor.execute('''UPDATE users SET addressID = %s WHERE userID = %s;''', ([addressValue], current_user.id))
         else:
