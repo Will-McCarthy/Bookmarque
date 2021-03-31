@@ -35,7 +35,7 @@ var tab = tabs.NONE; //popup menu tab currently being rendered
 
 var emailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 var phoneformat = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-
+var zipformat = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
 /*
  * Abbreviated way to grab HTML elements by their ID.
  * @param   {String}  id  Element id in the HTML tag.
@@ -123,14 +123,6 @@ function validateRegistration() {
       field.style.border = '';
     } //else
   } //for
-
-  if (tab == 2) { //when on payment tab, validate it uniquley
-    completeness = validatePayment() && completeness;
-  }
-  if (tab == 3) { //when on shipping address tab, validate it
-    completeness = validateAddress() && completeness;
-  }
-
   return completeness;
 } //validateRegistration
 
@@ -158,13 +150,27 @@ function validatePayment() {
     svc.style.border = 'solid .15rem red';
     return false;
   }
-
-
   return true;
 }
 
 function validateAddress() {
-  return true;
+  let completeness = true;
+  let inputFields = $('tab-' + tab).getElementsByTagName('input');
+  //if any field is not filled in set completness to false and display error message
+  for (let i = 0; i < inputFields.length; i++) {
+    let field = inputFields[i];
+    if (field.value == '') {
+      completeness = false;
+      field.style.border = 'solid .15rem red';
+      //specialty cases for zipcode validation
+    } else if (field.name == 'zip' && !field.value.match(zipformat)) {
+      completeness = false;
+      field.style.border = 'solid .15rem red';
+    } else {
+      field.style.border = '';
+    } //else
+  } //for
+  return completeness;
 }
 
 /*
