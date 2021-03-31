@@ -427,7 +427,6 @@ def register_user():
             '''
 
             test_address = "projdeploy@gmail.com"
-
             message = MIMEMultipart()
             message["From"] = gmail_server_user
             #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
@@ -487,7 +486,7 @@ def verify_email(email_encrypted):
     print(str(email_encrypted))
     email = email_encrypted # definitely not secure but hopefully works
     cursor = mysql.connection.cursor()
-    cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE email=%s;''', [email])
+    cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE userEmail=%s;''', [email])
     mysql.connection.commit()
     return render_template('email_confirmation.html')
 
