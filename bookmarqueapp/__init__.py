@@ -502,3 +502,9 @@ def load_user(user_id):
     user = User(information[0][0], information[0][1], information[0][6], information[0][2], information[0][3])
     # SQL to return an instance of information pertaining to a user from DB
     return user;
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(somewhere)
