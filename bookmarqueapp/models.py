@@ -103,7 +103,7 @@ class UserStatus(enum.Enum):
 class CardType(enum.Enum):
     AMEX = 'American Express'
     DISCOVER = 'Discover'
-    MASTERCARD 'MasterCard'
+    MASTERCARD = 'MasterCard'
     VISA = 'Visa'
 
 class OrderStatus(enum.Enum):
