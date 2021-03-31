@@ -448,12 +448,23 @@ def login():
 
         # The function below allows you to use current_user to reference the user's session variables.
         login_user(user, force=True)
-        return redirect(url_for('homepage'))
+        return redirect(url_for('profile'))
 
     else:
         print('do not login')
 
     return redirect('homepage')
+
+
+@app.route('/verify/<account_number>')
+def verify_email(account_number):
+
+    print(str(account_number))
+    user_id = account_number # definitely not secure but hopefully works
+    cursor = mysql.connection.cursor()
+    cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE userID=%s;''', [user_id])
+    mysql.connection.commit()
+    return render_template('email_confirmation.html')
 
 #This function shoud be called when a user is first logging in.
 #Also, it's inherently called for every single page, so when you access current_user.fname, it will always be what was in the DB when you first loaded the page
