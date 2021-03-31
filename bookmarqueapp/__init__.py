@@ -4,7 +4,7 @@ from flask import redirect
 from flask import request
 from flask import url_for
 from flask_mysqldb import MySQL #Mysql
-from flask_login import LoginManager, current_user, login_user #Logins
+from flask_login import LoginManager, current_user, login_user, logout_user #Logins
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 import smtplib, ssl, email
 from email import encoders  # email import for sending emails
@@ -517,8 +517,7 @@ def load_user(user_id):
     # SQL to return an instance of information pertaining to a user from DB
     return user;
 
-# @app.route("/logout")
-# @login_required
-# def logout():
-#     logout_user()
-#     return redirect(somewhere)
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('homepage'))
