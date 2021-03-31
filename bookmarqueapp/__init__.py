@@ -185,7 +185,7 @@ def profile():
         submit = request.form.get('Save')
         if (submit is None):
             submit = "Cancel"
-        if (submit == "Save" and password == passConfirm):
+        if (submit == "Save" and password == passConfirm and len(password) >= 8):
             cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', [password])
             #Send out email to user
             #Email Generation
