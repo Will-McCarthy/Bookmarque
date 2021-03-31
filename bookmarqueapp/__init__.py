@@ -421,12 +421,26 @@ def register_user():
             ### encrypt email ###
             verification_link = url_for('verify_email', email_encrypted = email)
             print(verification_link)
-            message = '''
+            html_message = '''
                 <h1>Please Confirm Your Email</h1>
                 <span>Click this <a href="''' + verification_link + '''">link</a> or if this was not you, ignore this message.</span>
             '''
-            send_email("projdeploy@gmail.com", "Confirm Email", message) # send email to test email with email confirmation link
 
+            test_address = "projdeploy@gmail.com"
+
+            message = MIMEMultipart()
+            message["From"] = gmail_server_user
+            #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
+            message["To"] = test_address
+            message["Subject"] = "Confirm Email"
+            msgAlternative = MIMEMultipart('alternative')
+            #Inline html, which could be replaced with larger template files if needed
+            msgText = MIMEText(html_message, 'html', 'utf-8')
+            msgAlternative.attach(msgText)
+            message.attach(msgAlternative)
+            print("Send out an email here")
+            text = message.as_string()
+            print(text)
         else:
             print(email + " is taken")
 
@@ -489,20 +503,3 @@ def load_user(user_id):
     user = User(information[0][0], information[0][1], information[0][6], information[0][2], information[0][3])
     # SQL to return an instance of information pertaining to a user from DB
     return user;
-
-
-def send_email(address, subject, html_message):
-    message = MIMEMultipart()
-    message["From"] = gmail_server_user
-    #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
-    message["To"] = address
-    message["Subject"] = subject
-    msgAlternative = MIMEMultipart('alternative')
-    #Inline html, which could be replaced with larger template files if needed
-    msgText = MIMEText(html_message, 'html', 'utf-8')
-    msgAlternative.attach(msgText)
-    message.attach(msgAlternative)
-    print("Send out an email here")
-    text = message.as_string()
-    print(text)
-    server.sendmail(gmail_server_user, address, text)
