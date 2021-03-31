@@ -244,7 +244,8 @@ def profile():
         if (confirm is None):
             confirm = "Cancel"
         if ((confirm == "Save") and cardTest > 0):
-            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], dateConcat, email))
+            #cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], dateConcat, email))
+            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT cardID AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], dateConcat, email))
 
         # ensures cards have unique ids
         cursor.execute('''SELECT MAX(cardID) FROM card;''');
@@ -299,10 +300,15 @@ def profile():
     cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
-    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('profile.html', details=information[0], add=address[0], card=card[0])
+
+    print(information[0][0])
+    print(address)
+    print(card)
+    return render_template('profile.html', details=information[0], add=address, card=card)
     #return render_template('profile.html')
 
 @app.route('/profile/update-password')
@@ -315,10 +321,12 @@ def password_panel():
     cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
-    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+
     card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('update_password.html', details=information[0], add=address[0], card=card[0])
+    return render_template('update_password.html', details=information[0], add=address, card=card)
 
 @app.route('/profile/update-card')
 def card_panel():
@@ -330,10 +338,12 @@ def card_panel():
     cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
-    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+
     card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('update_card.html', details=information[0], add=address[0], card=card[0])
+    return render_template('update_card.html', details=information[0], add=address, card=card)
 
 @app.route('/profile/create-card')
 def card_panel_2():
@@ -345,10 +355,11 @@ def card_panel_2():
     cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
-    cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('create_card.html', details=information[0], add=address[0], card=card[0])
+    return render_template('create_card.html', details=information[0], add=address, card=card)
 
 @app.route('/profile/edit')
 def edit_profile():
@@ -474,6 +485,8 @@ def login():
         login_user(user, force=True)
         user.is_authenticated = True
         print(user.is_authenticated)
+        return redirect(url_for('profile'))
+        #return redirect(url_for('homepage'))
 
     else:
         print('do not login')
@@ -504,8 +517,8 @@ def load_user(user_id):
     # SQL to return an instance of information pertaining to a user from DB
     return user;
 
-@app.route("/logout")
-@login_required
-def logout():
-    logout_user()
-    return redirect(somewhere)
+# @app.route("/logout")
+# @login_required
+# def logout():
+#     logout_user()
+#     return redirect(somewhere)
