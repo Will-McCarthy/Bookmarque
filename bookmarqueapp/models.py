@@ -26,6 +26,12 @@ class User():
 
 
 
+class RegisteredUser:
+
+
+    def __init__(self):
+        print('registered user')
+
 class PaymentCard():
 
     id = None
@@ -61,6 +67,33 @@ class Address():
         return self.id
 
 
+class WebUser:
+
+    def __init__(self):
+        print('web user')
+
+class Admin:
+    def __init__(self):
+        print('web user')
+
+class ShoppingCart:
+    def __init__(self):
+        print('web user')
+
+class Promotion:
+    def __init__(self):
+        print('web user')
+
+class Order:
+    def __init__(self):
+        print('web user')
+
+class Book:
+
+    def __init__(self):
+        print('web user')
+
+
 # enumerations
 class UserStatus(enum.Enum):
     ACTIVE = 'Active'
@@ -68,8 +101,10 @@ class UserStatus(enum.Enum):
     SUSPENDED = 'Suspended'
 
 class CardType(enum.Enum):
-    DEBIT = 'Debit'
-    CREDIT = 'Credit'
+    AMEX = 'American Express'
+    DISCOVER = 'Discover'
+    MASTERCARD 'MasterCard'
+    VISA = 'Visa'
 
 class OrderStatus(enum.Enum):
     PENDING = 'Pending'
