@@ -135,11 +135,11 @@ def order_history():
 @app.route('/profile', methods = ['POST', 'GET'])
 def profile():
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -186,7 +186,7 @@ def profile():
         if (submit is None):
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm and len(password) >= 8):
-            cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = "101";''', [password])
+            cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = %s;''', ([password], current_user.id))
             #Send out email to user
             #Email Generation
             message = MIMEMultipart()
@@ -262,10 +262,9 @@ def profile():
 
         status = request.form.get('status')
         password = request.form.get('password')
-        if (status is None and password is None): #not on update_password and status is unchecked
+        cardList = request.form.get('cardList')
+        if (status is None and password is None and cardList is None): #not on update_password and status is unchecked
             status = "Deactive"
-        else:
-            status = initial[8]
 
         #ensures addresses have unique ids
         cursor.execute('''SELECT MAX(addressID) FROM address;''');
@@ -274,27 +273,28 @@ def profile():
         addressValue += 1
 
         if (status == "Active"): # subscription for promos is checked
-            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = "101";''', (fName, lName, phone, status))
+            print("This is triggered")
+            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = %s;''', (fName, lName, phone, status, [current_user.id]))
         else: # subcription for promos is not checked
-            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = "101";''', (fName, lName, phone))
+            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = %s;''', (fName, lName, phone, [current_user.id]))
 
-        cursor.execute('''SELECT addressID FROM users WHERE userID = "101";''')
+        cursor.execute('''SELECT addressID FROM users WHERE userID = %s;''', [current_user.id])
         checkValue = cursor.fetchone()
         check = checkValue[0]
         #print(check is None)
         if (password is None and check is None): # not on update_password form and there is no existing address associated
             print(addressValue)
             cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', ([addressValue], address, city, state, zipCode))
-            cursor.execute('''UPDATE users SET addressID = %s WHERE userID = "101";''', [addressValue])
+            cursor.execute('''UPDATE users SET addressID = %s WHERE userID = %s;''', ([addressValue], current_user.id))
         else:
-            cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = "101";''', (address, city, state, zipCode))
+            cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = %s;''', (address, city, state, zipCode, [current_user.id]))
         mysql.connection.commit()
 
-    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
     cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -306,11 +306,11 @@ def profile():
 @app.route('/profile/update-password')
 def password_panel():
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
     cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -321,11 +321,11 @@ def password_panel():
 @app.route('/profile/update-card')
 def card_panel():
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
     cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -336,11 +336,11 @@ def card_panel():
 @app.route('/profile/create-card')
 def card_panel_2():
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = '101';''')
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = "101";''')
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = "101";''')
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
     email = cursor.fetchone()
     email = email[0]
     cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
