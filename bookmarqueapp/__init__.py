@@ -309,7 +309,7 @@ def profile():
     cardDropdown = cursor.fetchall()
 
     if request.method == "POST":
-        # selectedCard contains the the card the user selects from dropdown
+        # select edCard contains the the card the user selects from dropdown
         selectedCard = request.form.get('cardSelected')
         if (selectedCard is None or selectedCard == ""):
             selectedCard = cardDropdown[0]
@@ -337,7 +337,7 @@ def password_panel():
 
     card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('update_password.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown)
+    return render_template('update_password.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/update-card')
 def card_panel():
@@ -354,7 +354,7 @@ def card_panel():
 
     card = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('update_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown)
+    return render_template('update_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/create-card')
 def card_panel_2():
@@ -370,7 +370,7 @@ def card_panel_2():
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cardList = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('create_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown)
+    return render_template('create_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/edit')
 def edit_profile():
