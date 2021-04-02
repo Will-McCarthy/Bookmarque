@@ -10,13 +10,28 @@
     <label class="profile-label">Last Name <span class="profile-asterisks">*</span></label>
     <span>{{ details[3] }}</span>
     <div>
-      <label class="profile-label">Card Information</label>
+      <label class="profile-label">Card Information</label><br>
+
+      <form id="cardSelectionForm" action="/profile" method="POST">
+        <select style="width: 50%;" name="cardOptions">
+            <option disabled="true">- Select Card -</option>
+            {% for eachCard in cardDropdown %}
+            <option value="{{ cardSelected }}">{{ eachCard[4] }}</option>
+            {% endfor %}
+        </select>
+      <input type="submit" value="Enter">
+      </form>
+
       <br><span class="profile-links"><a href="/profile/create-card">+ Add New Card</a></span>
       <br><span class="profile-links"><a href="/profile/update-card">Edit Card</a></span>
     </div>
-    <span>{{ card[3] }}
-      <br>{{ card[1] }}
-      <br>Expires on {{ card[2] }}
+
+    {% if selectedCard is defined %}
+      <span>{{ selectedCard[4] }}
+      <br>{{ selectedCard[2] }}
+      <br>Expires on {{ selectedCard[3] }}
+    {% endif %}
+
       <br><span class="profile-links"><a href="">Change Card</a></span>
     </span>
     <label class="profile-label">Phone Number (XXX) XXX-XXXX <span class="profile-asterisks">*</span></label>
