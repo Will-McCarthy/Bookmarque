@@ -3,9 +3,11 @@ from flask import render_template # for file extends
 from flask import redirect
 from flask import request
 from flask import url_for
+from flask import session
 from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
+from datetime import timedelta
 
 # custom imports
 from . import config as cfg # for loading in custom configuration information
@@ -32,6 +34,11 @@ mysql = MySQL(app)
 app.wsgi_app = SassMiddleware(app.wsgi_app, {
     'bookmarqueapp': ('static/sass', 'static/css', '/static/css')
 })
+
+@app.before_request
+def before_request():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(seconds=5) # mainly for testing remember me, session inactivity for 5 seconds will result in logout
 
 @app.route('/mysqltest')
 def test():
@@ -482,6 +489,8 @@ def login():
         # PULL In Email and password from login form here and insert into sql statement below.
         user_email = request.form.get('email')
         supplied_password = request.form.get('password')
+        remember = False if request.form.get('remember-me') is None else True
+        print('remember = ' + str(remember))
         print(user_email)
         print(supplied_password)
         cursor = mysql.connection.cursor()
@@ -495,7 +504,7 @@ def login():
             #if password is incorrect = wrong password
             if user and supplied_password == user.password:
                 # The function below allows you to use current_user to reference the user's session variables.
-                login_user(user, force=True)
+                login_user(user, force=True, remember=remember)
                 user.is_authenticated = True
                 print(user.is_authenticated)
                 return redirect(url_for('profile'))
