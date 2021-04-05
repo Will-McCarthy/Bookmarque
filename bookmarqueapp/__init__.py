@@ -36,10 +36,16 @@ app.wsgi_app = SassMiddleware(app.wsgi_app, {
 })
 
 # mainly for testing remember me, session inactivity for 5 seconds will result in logout
+# by default sessions are permenantly active for 31 days so need to manually adjust
 @app.before_request
 def before_request():
     session.permanent = True
     app.permanent_session_lifetime = timedelta(seconds=5)
+
+# action taken on trying to access a page that needs a login
+@login_manager.unauthorized_handler
+def unauthorized_callback():
+    return redirect(url_for('homepage'))
 
 @app.route('/mysqltest')
 def test():
