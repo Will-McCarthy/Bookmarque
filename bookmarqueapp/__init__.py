@@ -283,6 +283,8 @@ def profile():
         selectedCard = request.form.get('cardSelected')
         if (selectedCard is None or selectedCard == ""):
             selectedCard = cardDropdown[0]
+    else:
+        selectedCard = cardDropdown[0]
 
     mysql.connection.commit()
 
@@ -306,7 +308,24 @@ def password_panel():
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
 
+
+    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    cardDropdown = cursor.fetchall()
+
     card = cursor.fetchall()
+
+    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    cardDropdown = cursor.fetchall()
+
+    if request.method == "POST":
+        # select edCard contains the the card the user selects from dropdown
+        selectedCard = request.form.get('cardSelected')
+        if (selectedCard is None or selectedCard == ""):
+            selectedCard = cardDropdown[0]
+    else:
+        selectedCard = cardDropdown[0]
+
+
     mysql.connection.commit()
     return render_template('update_password.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
@@ -323,8 +342,20 @@ def card_panel():
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
-
     card = cursor.fetchall()
+
+    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    cardDropdown = cursor.fetchall()
+
+    if request.method == "POST":
+        # select edCard contains the the card the user selects from dropdown
+        selectedCard = request.form.get('cardSelected')
+        if (selectedCard is None or selectedCard == ""):
+            selectedCard = cardDropdown[0]
+    else:
+        selectedCard = cardDropdown[0]
+
+
     mysql.connection.commit()
     return render_template('update_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
@@ -341,7 +372,19 @@ def card_panel_2():
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
-    cardList = cursor.fetchall()
+    card = cursor.fetchall()
+
+    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    cardDropdown = cursor.fetchall()
+
+    if request.method == "POST":
+        # select edCard contains the the card the user selects from dropdown
+        selectedCard = request.form.get('cardSelected')
+        if (selectedCard is None or selectedCard == ""):
+            selectedCard = cardDropdown[0]
+    else:
+        selectedCard = cardDropdown[0]
+
     mysql.connection.commit()
     return render_template('create_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
