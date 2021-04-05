@@ -4,16 +4,15 @@ from flask import redirect
 from flask import request
 from flask import url_for
 from flask_mysqldb import MySQL #Mysql
-from flask_login import LoginManager, current_user, login_user, logout_user #Logins
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
-import smtplib, ssl, email
-from email import encoders  # email import for sending emails
-from email.mime.base import MIMEBase
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from . import config as cfg # for loading in db configurations
-from .models import User, UserStatus
 
+# custom imports
+from . import config as cfg # for loading in custom configuration information
+from . import email_server # setup of email server and associated functions
+from . models import User, UserStatus
+
+DEBUG_MODE = True # changes whether certain tests are run
 
 app = Flask(__name__)
 app.config['MYSQL_HOST'] = cfg.mysql["host"]
@@ -27,23 +26,6 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
-
-# Email Initialization
-try:
-    gmail_server_user = cfg.email['user']
-    gmail_server_password = cfg.email['password']
-    #SMTP initialization and setups
-    port = 465
-    # Create a secure SSL context
-    context = ssl.create_default_context()
-    #Server connection
-    server = smtplib.SMTP_SSL("smtp.gmail.com", port, context=context)
-    server.login(gmail_server_user, gmail_server_password)
-except Exception as ex:
-    print("Email couldn't start: " + str(ex))
-
-
-
 
 mysql = MySQL(app)
 # configure directory locations for Sass/SCSS
@@ -133,6 +115,7 @@ def order_history():
     return render_template('order_history.html')
 
 @app.route('/profile', methods = ['POST', 'GET'])
+@login_required
 def profile():
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
@@ -191,23 +174,10 @@ def profile():
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm and len(password) >= 8):
             cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = %s;''', ([password], current_user.id))
-            #Send out email to user
-            #Email Generation
-            message = MIMEMultipart()
-            message["From"] = gmail_server_user
-            #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
-            test_email = "projdeploy@gmail.com"
-            message["To"] = test_email
-            message["Subject"] = "Your password has been changed"
-            msgAlternative = MIMEMultipart('alternative')
-            #Inline html, which could be replaced with larger template files if needed
-            msgText = MIMEText("<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>", 'html', 'utf-8')
-            msgAlternative.attach(msgText)
-            message.attach(msgAlternative)
-            print("Send out an email here")
-            text = message.as_string()
-            print(text)
-            server.sendmail(gmail_server_user, test_email, text)
+
+            message = "<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>"
+            subject = "Your password has been changed"
+            email_server.send_email(message, subject, current_user.email, DEBUG_MODE)
 
 
         # handles update_card form and create_card form
@@ -323,6 +293,7 @@ def profile():
     #return render_template('profile.html')
 
 @app.route('/profile/update-password')
+@login_required
 def password_panel():
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
@@ -340,6 +311,7 @@ def password_panel():
     return render_template('update_password.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/update-card')
+@login_required
 def card_panel():
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
@@ -357,6 +329,7 @@ def card_panel():
     return render_template('update_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/create-card')
+@login_required
 def card_panel_2():
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
@@ -373,6 +346,7 @@ def card_panel_2():
     return render_template('create_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/edit')
+@login_required
 def edit_profile():
     return render_template('edit_profile.html')
 
@@ -442,26 +416,13 @@ def register_user():
             # send email with link in form of /verify/ + user_id
             ### encrypt email ###
             verification_link = url_for('verify_email', email_encrypted = email)
-            print(verification_link)
             html_message = '''
                 <h1>Please Confirm Your Email</h1>
-                <span>Click this <a href="''' + verification_link + '''">link</a> or if this was not you, ignore this message.</span>
+                <span>Click this <a href="''' + str(verification_link) + '''">link</a> or if this was not you, ignore this message.</span>
             '''
+            subject = "Confirm Email"
+            email_server.send_email(html_message, subject, email, DEBUG_MODE)
 
-            test_address = "projdeploy@gmail.com"
-            message = MIMEMultipart()
-            message["From"] = gmail_server_user
-            #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
-            message["To"] = test_address
-            message["Subject"] = "Confirm Email"
-            msgAlternative = MIMEMultipart('alternative')
-            #Inline html, which could be replaced with larger template files if needed
-            msgText = MIMEText(html_message, 'html', 'utf-8')
-            msgAlternative.attach(msgText)
-            message.attach(msgAlternative)
-            print("Send out an email here")
-            text = message.as_string()
-            print(text)
         else:
             print(email + " is taken")
 
