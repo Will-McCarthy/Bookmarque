@@ -32,7 +32,7 @@ def send_email(html_message, subject, recipient, test_mode):
         message["To"] = recipient
         message["Subject"] = subject
         msgAlternative = MIMEMultipart('alternative')
-        msgText = MIMEText(message, 'html', 'utf-8') # inline html, which could be replaced with larger template files if needed
+        msgText = MIMEText(html_message, 'html', 'utf-8') # inline html, which could be replaced with larger template files if needed
         msgAlternative.attach(msgText)
         message.attach(msgAlternative)
 
