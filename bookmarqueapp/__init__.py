@@ -35,10 +35,11 @@ app.wsgi_app = SassMiddleware(app.wsgi_app, {
     'bookmarqueapp': ('static/sass', 'static/css', '/static/css')
 })
 
+# mainly for testing remember me, session inactivity for 5 seconds will result in logout
 @app.before_request
 def before_request():
     session.permanent = True
-    app.permanent_session_lifetime = timedelta(seconds=5) # mainly for testing remember me, session inactivity for 5 seconds will result in logout
+    app.permanent_session_lifetime = timedelta(seconds=5)
 
 @app.route('/mysqltest')
 def test():
