@@ -45,7 +45,7 @@ def before_request():
 # action taken on trying to access a page that needs a login
 @login_manager.unauthorized_handler
 def unauthorized_callback():
-    return redirect(url_for('homepage'))
+    return render_template('login_message.html')
 
 @app.route('/mysqltest')
 def test():
