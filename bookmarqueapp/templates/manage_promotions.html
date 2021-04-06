@@ -1,0 +1,72 @@
+{% extends "user_layout.html" %}
+{% block content %}
+<div id="menu-bar" style="background-color:#c4c4c4; justify-content: center;">
+  <ul id="nav-bar" style="width: 90%; margin-right: 5%; margin-left: 5%; display: flex; justify-content: space-between;">
+    <li><a href="#">Manage Users</a></li>
+    <li><a href="#">Manage Orders</a></li>
+    <li><a href="#">Toggle User/Admin View</a></li>
+  </ul>
+</div>
+
+<div style="margin: 3%; width:96%; display: flex; justify-content: flex-end; align-items: flex-end;">
+  <label for="fname">Search:</label>
+  <input type="text" id="fname" name="fname">
+</div>
+
+<div>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Percentage</th>
+      <th>Start Date</th>
+      <th>Expiration Date</th>
+      <th>Emailed to Customers</th>
+    </tr>
+    <tr>
+      <td>black_friday_sale</td>
+      <td>20% off entire order</td>
+      <td>11/20/2020</td>
+      <td>11/25/2020</td>
+      <td>Yes</td>
+
+    </tr>
+    <tr>
+      <td>holiday_sale</td>
+      <td>25% off entire order</td>
+      <td>12/20/2020</td>
+      <td>1/25/2021</td>
+      <td>No</td>
+      </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input type="button" value="Add Promo Code"></input></td>
+    </tr>
+  </table>
+</div>
+
+<input id="edit_promo_codes" type="button" value="Edit Promo Codes"></input>
+{% endblock %}

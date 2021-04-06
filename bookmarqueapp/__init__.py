@@ -87,6 +87,10 @@ def book_details(ISBN):
 def admin():
     return render_template('admin_view.html')
 
+@app.route('/manage-promotions')
+def managePromotions():
+    return render_template('manage_promotions.html')
+
 @app.route('/manage-books')
 def manageBooks():
     return render_template('manage_books.html')
