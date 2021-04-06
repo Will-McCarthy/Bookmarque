@@ -8,6 +8,7 @@ from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 from datetime import timedelta
+import time
 
 # custom imports
 from . import config as cfg # for loading in custom configuration information
@@ -28,6 +29,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
+
 
 mysql = MySQL(app)
 # configure directory locations for Sass/SCSS
@@ -87,14 +89,31 @@ def book_details(ISBN):
 def admin():
     return render_template('admin_view.html')
 
-@app.route('/manage-promotions')
-def managePromotions():
-    return render_template('manage_promotions.html')
-
 @app.route('/manage-books')
 def manageBooks():
     return render_template('manage_books.html')
 
+@app.route('/manage-promotions', methods=['POST','GET'])
+def managePromotions():
+    print("Something triggered promotion route")
+    if request.method == 'POST':
+        print("We're in post!")
+        promo_name = request.form.get('name')
+        promo_discount = request.form.get('discount')
+        #promo_start and promo_end should come in as YYYY-MM-DD, maybe we use a calender html assistance.
+        promo_start = request.form['start']
+        promo_end = request.form['end']
+        cursor = mysql.connection.cursor()
+        cursor.execute('''INSERT INTO promotion(promoDiscount, promoStart, promoEnd, promoEmailStatus, promoUses, promoName) VALUES (%s,%s,%s,%s,%s,%s)''', (promo_discount, promo_start, promo_end, "Not Sent", 0, promo_name))
+        promotion_fetch = cursor.fetchall()
+        mysql.connection.commit()
+        return redirect(url_for('managePromotions'))
+    else:
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT * FROM promotion;''')
+        promotion_fetch = cursor.fetchall()
+        mysql.connection.commit()
+        return render_template('manage_promotions.html', promotions = promotion_fetch)
 
 @app.route('/checkout1')
 def checkout1():

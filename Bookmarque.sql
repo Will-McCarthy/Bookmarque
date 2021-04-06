@@ -222,14 +222,15 @@ DROP TABLE IF EXISTS `promotion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `promotion` (
-  `promoID` int NOT NULL,
+  `promoID` int NOT NULL AUTO_INCREMENT,
   `promoDiscount` double DEFAULT NULL,
   `promoStart` datetime DEFAULT NULL,
   `promoEnd` datetime DEFAULT NULL,
   `promoEmailStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Emailed or Not Sent.',
   `promoUses` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Keeps track of how many times a promotion was used.',
+  `promoName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`promoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +239,7 @@ CREATE TABLE `promotion` (
 
 LOCK TABLES `promotion` WRITE;
 /*!40000 ALTER TABLE `promotion` DISABLE KEYS */;
-INSERT INTO `promotion` VALUES (1,0.25,'2021-01-22 00:00:00','2021-04-22 00:00:00','Emailed','7'),(2,0.14,'2021-03-15 00:00:00','2021-03-30 00:00:00','Not Sent','0');
+INSERT INTO `promotion` VALUES (1,0.25,'2021-01-22 00:00:00','2021-04-22 00:00:00','Emailed','7','Weekend Sale'),(2,0.14,'2021-03-15 00:00:00','2021-03-30 00:00:00','Not Sent','0','UGA Student Discount'),(3,0.03,'2021-04-01 00:00:00','2021-04-02 00:00:00','Not Sent','0','Easter Discount'),(4,0.35,'2020-12-20 00:00:00','2020-12-26 00:00:00','Not Sent','0','Christmas Discount'),(5,0.15,'2021-07-01 00:00:00','2021-07-03 00:00:00','Not Sent','0','Independence Day Sale');
 /*!40000 ALTER TABLE `promotion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-03-30 14:53:29
+-- Dump completed on 2021-04-06 15:53:57
