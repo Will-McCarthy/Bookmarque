@@ -17,34 +17,30 @@
 <div>
   <table>
     <tr>
-      <th>IBSN</th>
-      <th>Book Title</th>
-      <th>Author</th>
-      <th>Subject</th>
-      <th>Total Coppies</th>
-      <th>Current Coppies</th>
+      <th>userID</th>
+      <th>userEmail</th>
+      <th>userStatus</th>
+      <th>userType</th>
+      <th>userSubStatus</th>
       <th></th>
     </tr>
     <tr>
-      <td>178-0-39397-283-2</td>
-      <td>Moby Dick</td>
-      <td>Herman Melville</td>
-      <td>Fantasy</td>
-      <td>100</td>
-      <td>50</td>
-      <td><a class="button-blue" href="{{ url_for('bookEntry') }}" style="padding: 0.5rem 0.1rem;">Edit Book</a></td>
+      <td>101</td>
+      <td>janedoe@gmail.com</td>
+      <td>Active</td>
+      <td>Customer</td>
+      <td>Active</td>
+      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">Edit User</a></td>
     </tr>
     <tr>
-      <td>978-1-61213-028-6</td>
-      <td>50 Shades of Gray</td>
-      <td>EL James</td>
-      <td>Erotic</td>
-      <td>420</td>
-      <td>69</td>
-      <td><a class="button-blue" href="{{ url_for('bookEntry') }}" style="padding: 0.5rem 0.1rem;">Edit Book</a></td>
+      <td>102</td>
+      <td>johndoe@gmail.com</td>
+      <td>Active</td>
+      <td>Cusotmer</td>
+      <td>Active</td>
+      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">Edit User</a></td>
     </tr>
     <tr>
-      <td></td>
       <td></td>
       <td></td>
       <td></td>
@@ -59,7 +55,6 @@
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
     </tr>
     <tr>
       <td></td>
@@ -68,7 +63,6 @@
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
     </tr>
     <tr>
       <td><input></input></td>
@@ -76,8 +70,7 @@
       <td><input></input></td>
       <td><input></input></td>
       <td><input></input></td>
-      <td><input></input></td>
-      <td><a type="button" href="{{ url_for('bookEntry') }}" value="Add Book"></a></td>
+      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">New User</a></td>
     </tr>
   </table>
 </div>

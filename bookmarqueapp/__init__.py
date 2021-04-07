@@ -95,6 +95,17 @@ def admin():
 def manageBooks():
     return render_template('manage_books.html')
 
+@app.route('/manage-books/book-entry')
+def bookEntry():
+    return render_template('book_entry.html')
+
+@app.route('/manage-users')
+def manageUsers():
+    return render_template('manage_users.html')
+
+@app.route('/manage-users/user-entry')
+def userEntry():
+    return render_template('user_entry.html')
 
 @app.route('/checkout1')
 def checkout1():
@@ -119,10 +130,6 @@ def checkout5():
 @app.route('/checkout6')
 def checkout6():
     return render_template('checkout6.html')
-
-@app.route('/manage-books/book-entry')
-def bookEntry():
-    return render_template('book_entry.html')
 
 @app.route('/cart')
 def shopping_cart():
@@ -487,6 +494,67 @@ def login():
 
     return redirect(url_for('homepage'))
 
+@app.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    if request.method == 'POST':
+        # PULL In Email and password from login form here and insert into sql statement below.
+        user_email = request.form.get('email')
+        print(user_email)
+        cursor = mysql.connection.cursor()
+        cursor.execute('''SELECT userEmail FROM users WHERE userEmail LIKE %s;''', [user_email])
+        confirmed_email = cursor.fetchone()
+        print("found email:")
+        print(confirmed_email)
+
+        if confirmed_email != None:
+            # send email with link in form of /verify/ + user_id
+            ### encrypt email ###
+            reset_password_link = url_for('reset_password', email_encrypted = user_email)
+            print(reset_password_link)
+            html_message = '''
+                <h1>Reset Password Here:</h1>
+                <span>Click this <a href="''' + reset_password_link + '''">link</a> to reset password. If this was not you, ignore this message.</span>
+            '''
+
+            message = MIMEMultipart()
+            message["From"] = gmail_server_user
+            #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
+            test_address = "projdeploy@gmail.com"
+            #replace test_address with user_email for deployment
+            message["To"] = test_address
+            message["Subject"] = "Reset Password"
+            msgAlternative = MIMEMultipart('alternative')
+            #Inline html, which could be replaced with larger template files if needed
+            msgText = MIMEText(html_message, 'html', 'utf-8')
+            msgAlternative.attach(msgText)
+            message.attach(msgAlternative)
+            print("Send out an email here")
+            text = message.as_string()
+            print(text)
+            server.sendmail(gmail_server_user, test_address, text)
+        return redirect('/')
+
+@app.route('/reset-password/<email_encrypted>')
+def reset_password(email_encrypted):
+    #### unencrypt param here ####
+    if request.method == 'POST':
+        print(str(email_encrypted))
+        email = email_encrypted # definitely not secure but hopefully works
+
+        password = request.form.get('password')
+        passConfirm = request.form.get('passConfirm') # used to check if password is same in both fields
+        submit = request.form.get('Save')
+        if (password is None or password == ""):
+            password = 'password'
+        if (submit is None):
+            submit = "Cancel"
+        if (submit == "Save" and password == passConfirm and len(password) >= 8):
+            cursor = mysql.connection.cursor()
+            cursor.execute('''UPDATE users SET userPassword = %s WHERE userEmail = %s;''', ([password], email))
+            mysql.connection.commit()
+        return render_template('reset_password.index')
+    if request.method == 'GET':
+        return render_template('reset_password.html')
 
 @app.route('/verify/<email_encrypted>')
 def verify_email(email_encrypted):
