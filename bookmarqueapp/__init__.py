@@ -437,7 +437,7 @@ def register_user():
 
             # send email with link in form of /verify/ + user_id
             ### encrypt email ###
-            verification_link = url_for('verify_email', email_encrypted = email)
+            verification_link = url_for('verify_email', email_encrypted = email, _external=True)
             print(verification_link)
             html_message = '''
                 <h1>Please Confirm Your Email</h1>
