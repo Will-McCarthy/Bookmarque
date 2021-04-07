@@ -17,23 +17,24 @@
 <div>
   <table>
     <tr>
-      <th>IBSN</th>
+      <th>ISBN</th>
       <th>Book Title</th>
       <th>Author</th>
       <th>Subject</th>
-      <th>Total Coppies</th>
-      <th>Current Coppies</th>
+      <th>Copies</th>
       <th></th>
     </tr>
+    {% for item in bookData %}
     <tr>
-      <td>178-0-39397-283-2</td>
-      <td>Moby Dick</td>
-      <td>Herman Melville</td>
-      <td>Fantasy</td>
-      <td>100</td>
-      <td>50</td>
+      <td>{{item[0]}}</td>
+      <td>{{item[1]}}</td>
+      <td>{{item[2]}}</td>
+      <td>{{item[3]}}</td>
+      <td>{{item[4]}}</td>
       <td><a class="button-blue" href="{{ url_for('bookEntry') }}" style="padding: 0.5rem 0.1rem;">Edit Book</a></td>
     </tr>
+    {% endfor %}
+    <!--
     <tr>
       <td>978-1-61213-028-6</td>
       <td>50 Shades of Gray</td>
@@ -69,7 +70,7 @@
       <td></td>
       <td></td>
       <td></td>
-    </tr>
+    </tr>-->
     <tr>
       <td><input></input></td>
       <td><input></input></td>

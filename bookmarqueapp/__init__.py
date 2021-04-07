@@ -93,7 +93,11 @@ def managePromotions():
 
 @app.route('/manage-books')
 def manageBooks():
-    return render_template('manage_books.html')
+    cursor = mysql.connection.cursor()
+    cursor.execute('''SELECT book.ISBN, bookTitle, CONCAT(authorFName, " ", authorLName) AS authorName, group_concat(categoryName) AS categories, bookQuantity FROM book JOIN book_has_book_categories ON book.ISBN = book_has_book_categories.ISBN JOIN book_categories ON book_has_book_categories.categoryID = book_categories.categoryID GROUP BY ISBN;''')
+    bookData = cursor.fetchall()
+    mysql.connection.commit()
+    return render_template('manage_books.html', bookData = bookData)
 
 
 @app.route('/checkout1')
