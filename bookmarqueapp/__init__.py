@@ -509,7 +509,7 @@ def forgot_password():
         if confirmed_email != None:
             # send email with link in form of /verify/ + user_id
             ### encrypt email ###
-            reset_password_link = url_for('reset_password', email_encrypted = user_email)
+            reset_password_link = url_for('reset_password', email_encrypted = user_email, _external=True)
             print(reset_password_link)
             html_message = '''
                 <h1>Reset Password Here:</h1>
@@ -534,7 +534,7 @@ def forgot_password():
             server.sendmail(gmail_server_user, test_address, text)
         return redirect('/')
 
-@app.route('/reset-password/<email_encrypted>')
+@app.route('/reset-password/<email_encrypted>', methods=['POST', 'GET'])
 def reset_password(email_encrypted):
     #### unencrypt param here ####
     if request.method == 'POST':
@@ -550,11 +550,11 @@ def reset_password(email_encrypted):
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm and len(password) >= 8):
             cursor = mysql.connection.cursor()
-            cursor.execute('''UPDATE users SET userPassword = %s WHERE userEmail = %s;''', ([password], email))
+            cursor.execute('''UPDATE users SET userPassword = %s WHERE userEmail = %s;''', ([password], [email]))
             mysql.connection.commit()
-        return render_template('reset_password.index')
+        return render_template('index.html')
     if request.method == 'GET':
-        return render_template('reset_password.html')
+        return render_template('reset_password.html', email_encrypted=email_encrypted)
 
 @app.route('/verify/<email_encrypted>')
 def verify_email(email_encrypted):

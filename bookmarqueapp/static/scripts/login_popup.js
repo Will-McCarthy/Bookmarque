@@ -182,19 +182,21 @@ function validateAddress() {
   return completeness;
 }
 
-// function validatePassword() {
-//   let password = $('passwordReset');
-//   let passConfirm = $('passConfirm');
-//   if(password.value != passConfirm.value){
-//     password.style.border = 'solid .15rem red';
-//     passConfirm.style.border = 'solid .15rem red';
-//     return false;
-//   }
-//   if(!password.value.match(passwordformat)){
-//     password.style.border = 'solid .15rem red';
-//     return false;
-//   }
-// }
+function validatePassword() {
+  let password = $('passwordReset');
+  let passConfirm = $('passConfirm');
+  if(password.value != passConfirm.value){
+    password.style.border = 'solid .15rem red';
+    passConfirm.style.border = 'solid .15rem red';
+    return false;
+  }
+  if(!password.value.match(passwordformat)){
+    password.style.border = 'solid .15rem red';
+    passConfirm.style.border = 'solid .15rem red';
+    return false;
+  }
+  return true;
+}
 
 /*
  * Change value of hidden skip field for corresponding tab to true.
@@ -230,10 +232,12 @@ window.onload = function() {
     switchTab(tabs.FORGOTPASSWORD);
   };
 
-  // let resetPassBtn = $('reset-password-button');
-  // resetPassBtn.onclick = function() {
-  //   validatePassword();
-  // };
+  let resetPassBtn = $('reset-password-button');
+  resetPassBtn.onclick = function() {
+    if(validatePassword()){
+
+    };
+  };
 
   //functionality for buttons to iterate through registration form
   let continueBtns = document.getElementsByClassName('continue-registration-button');
