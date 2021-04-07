@@ -437,7 +437,7 @@ def register_user():
 
             # send email with link in form of /verify/ + user_id
             ### encrypt email ###
-            verification_link = url_for('verify_email', email_encrypted = email)
+            verification_link = url_for('verify_email', email_encrypted = email, _external=True)
             print(verification_link)
             html_message = '''
                 <h1>Please Confirm Your Email</h1>
@@ -509,7 +509,7 @@ def forgot_password():
         if confirmed_email != None:
             # send email with link in form of /verify/ + user_id
             ### encrypt email ###
-            reset_password_link = url_for('reset_password', email_encrypted = user_email)
+            reset_password_link = url_for('reset_password', email_encrypted = user_email, _external=True)
             print(reset_password_link)
             html_message = '''
                 <h1>Reset Password Here:</h1>
