@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `order`
+--
+
+DROP TABLE IF EXISTS `order`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `order` (
+  `orderID` int NOT NULL,
+  `orderTime` datetime DEFAULT NULL,
+  `orderStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Pending, Placed, Shipped, or Arrived.',
+  `orderAmount` double DEFAULT NULL,
+  `promoID` int DEFAULT NULL,
+  `addressID` int NOT NULL,
+  `cardID` int NOT NULL,
+  `userID` int NOT NULL,
+  PRIMARY KEY (`orderID`),
+  KEY `fk_order_promotion1_idx` (`promoID`),
+  KEY `fk_order_address1_idx` (`addressID`),
+  KEY `fk_order_card1_idx` (`cardID`),
+  KEY `fk_order_users1_idx` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `order`
 --
 
@@ -33,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:13:17
+-- Dump completed on 2021-04-07 15:15:27

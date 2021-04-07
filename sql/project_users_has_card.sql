@@ -16,6 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `users_has_card`
+--
+
+DROP TABLE IF EXISTS `users_has_card`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `users_has_card` (
+  `userEmail` varchar(45) NOT NULL,
+  `cardID` int NOT NULL,
+  PRIMARY KEY (`userEmail`,`cardID`),
+  KEY `fk_users_has_card_card1_idx` (`cardID`),
+  KEY `fk_users_has_card_users_idx` (`userEmail`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `users_has_card`
 --
 
@@ -34,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:13:18
+-- Dump completed on 2021-04-07 15:15:28

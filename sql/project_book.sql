@@ -16,6 +16,30 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `book`
+--
+
+DROP TABLE IF EXISTS `book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book` (
+  `ISBN` char(13) NOT NULL,
+  `bookTitle` varchar(115) DEFAULT NULL,
+  `authorFName` varchar(45) DEFAULT NULL,
+  `authorLName` varchar(45) DEFAULT NULL,
+  `bookImage` varchar(50) DEFAULT NULL,
+  `bookPrice` double DEFAULT NULL,
+  `bookQuantity` int DEFAULT NULL,
+  `bookRating` int DEFAULT NULL,
+  `bookPublisher` varchar(45) DEFAULT NULL,
+  `bookPublicationDate` datetime DEFAULT NULL,
+  `bookDescription` varchar(1000) DEFAULT NULL,
+  PRIMARY KEY (`ISBN`),
+  UNIQUE KEY `ISBN-13_UNIQUE` (`ISBN`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `book`
 --
 
@@ -34,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:13:18
+-- Dump completed on 2021-04-07 15:15:28

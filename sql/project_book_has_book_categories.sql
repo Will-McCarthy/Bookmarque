@@ -16,6 +16,22 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `book_has_book_categories`
+--
+
+DROP TABLE IF EXISTS `book_has_book_categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `book_has_book_categories` (
+  `ISBN` char(13) NOT NULL,
+  `categoryID` int NOT NULL,
+  PRIMARY KEY (`ISBN`,`categoryID`),
+  KEY `fk_book_has_book_catagories_book_catagories1_idx` (`categoryID`),
+  KEY `fk_book_has_book_catagories_book1_idx` (`ISBN`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `book_has_book_categories`
 --
 
@@ -34,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:13:18
+-- Dump completed on 2021-04-07 15:15:28

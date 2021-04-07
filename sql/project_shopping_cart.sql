@@ -16,6 +16,21 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `shopping_cart`
+--
+
+DROP TABLE IF EXISTS `shopping_cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shopping_cart` (
+  `cartID` int NOT NULL,
+  `userID` int NOT NULL,
+  PRIMARY KEY (`cartID`,`userID`),
+  KEY `fk_shopping_cart_users1_idx` (`userID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `shopping_cart`
 --
 
@@ -34,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:13:18
+-- Dump completed on 2021-04-07 15:15:28

@@ -16,6 +16,23 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `shopping_cart_has_book`
+--
+
+DROP TABLE IF EXISTS `shopping_cart_has_book`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shopping_cart_has_book` (
+  `cartID` int NOT NULL,
+  `ISBN` char(13) NOT NULL,
+  `cartBookQuantity` int DEFAULT NULL,
+  PRIMARY KEY (`cartID`,`ISBN`),
+  KEY `fk_shopping_cart_has_book_book1_idx` (`ISBN`),
+  KEY `fk_shopping_cart_has_book_shopping_cart1_idx` (`cartID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Dumping data for table `shopping_cart_has_book`
 --
 
@@ -33,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:13:17
+-- Dump completed on 2021-04-07 15:15:28
