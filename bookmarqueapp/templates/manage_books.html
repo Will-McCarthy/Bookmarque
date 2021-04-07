@@ -72,13 +72,14 @@
       <td></td>
     </tr>-->
     <tr>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input type="button" value="Add Book"></input></td>
+      <form action="{{url_for('manageBooks')}}" method="POST">
+      <td><input type="text" name="ISBN"></input></td>
+      <td><input type="text" name="title"></input></td>
+      <td><input type="text" name="author"></input></td>
+      <td><input type="text" name="subject"></input></td>
+      <td><input type="number" name="copies"></input></td>
+      <td><input type="submit" value="Add Book"></input></td>
+      </form>
     </tr>
   </table>
 </div>
