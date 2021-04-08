@@ -104,7 +104,8 @@ def managePromotions():
         promo_start = request.form['start']
         promo_end = request.form['end']
         cursor = mysql.connection.cursor()
-        cursor.execute('''INSERT INTO promotion(promoDiscount, promoStart, promoEnd, promoEmailStatus, promoUses, promoName) VALUES (%s,%s,%s,%s,%s,%s)''', (promo_discount, promo_start, promo_end, "Not Sent", 0, promo_name))
+        promo_code = request.form['code']
+        cursor.execute('''INSERT INTO promotion(promoDiscount, promoStart, promoEnd, promoEmailStatus, promoUses, promoName,promoCode) VALUES (%s,%s,%s,%s,%s,%s,%s)''', (promo_discount, promo_start, promo_end, "Not Sent", 0, promo_name,promo_code))
         promotion_fetch = cursor.fetchall()
         mysql.connection.commit()
         return redirect(url_for('managePromotions'))

@@ -1,5 +1,7 @@
 {% extends "user_layout.html" %}
 {% block content %}
+
+
 <div id="menu-bar" style="background-color:#c4c4c4; justify-content: center;">
   <ul id="nav-bar" style="width: 90%; margin-right: 5%; margin-left: 5%; display: flex; justify-content: space-between;">
     <li><a href="#">Manage Users</a></li>
@@ -14,10 +16,11 @@
 </div>
 
 <div>
-  <form action="{{ url_for('managePromotions') }}" method="POST">
+  <form name="promotion_add" action="{{ url_for('managePromotions') }}" method="POST">
   <table>
     <tr>
       <th>Name</th>
+      <th>Code</th>
       <th>Percentage</th>
       <th>Start Date</th>
       <th>Expiration Date</th>
@@ -27,6 +30,7 @@
     {% for item in promotions %}
     <tr>
       <td>{{item[6]}}</td>
+      <td>{{item[7]}}</td>
       <td>{{item[1]}}</td>
       <td>{{item[2]}}</td>
       <td>{{item[3]}}</td>
@@ -36,10 +40,11 @@
     {% endfor %}
     
     <tr>
-      <td><input name="name" type="text" placeholder="Name here"></input></td>
-      <td><input name="discount" type="number" placeholder="25% off = 0.25" step="0.01" min="0" max="1"></input></td>
-      <td><input name="start" type="date" placeholder="YYYY-MM-DD"></input></td>
-      <td><input name="end" type="date" placeholder="YYYY-MM-DD"></input></td>
+      <td><input name="name" type="text" placeholder="Name here" required/></td>
+      <td><input name="code" type="text" placeholder="Code here" required/></td>
+      <td><input name="discount" type="number" placeholder="25% off = 0.25" step="0.01" min="0" max="1" required/></td>
+      <td><input name="start" type="date" placeholder="YYYY-MM-DD" required/></td>
+      <td><input name="end" type="date" placeholder="YYYY-MM-DD" required/></td>
       <td><input type="submit" value="Add Promo Code"></input></td>
     </tr>
     
