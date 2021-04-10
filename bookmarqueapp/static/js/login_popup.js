@@ -31,22 +31,6 @@ function toggleOverlay() {
 } //toggleOverlay
 
 /*
- * Check if the current user is logged in based on session cookies
- * in order to redirect to profile page. Else create login/registration popup.
- */
-var checkUserLoginStatus = function() {
-
-  let loggedIn = false; //FOR TESTING
-
-  if (loggedIn) {
-    //~redirect to users profile page~
-  } else {
-    switchTab(tabs.LOGIN); //update tab to login
-    toggleOverlay(); //blur background and remove access
-  } //if else
-} //checkuserLoginStatus
-
-/*
  * Switch current tab with parameter tab.
  */
 function switchTab(newTab) {
@@ -194,7 +178,10 @@ window.onload = function() {
 
   //button which either takes user to login/registration popup or to profile management
   let profileBtn = $('profile-button');
-  profileBtn.onclick = checkUserLoginStatus;
+  profileBtn.onclick = function() {
+    switchTab(tabs.LOGIN); //update tab to login
+    toggleOverlay(); //blur background and remove access
+  };
 
   //button which takes user to registration form
   let registrationBtn = $('registration-button');
@@ -207,12 +194,12 @@ window.onload = function() {
     switchTab(tabs.FORGOTPASSWORD);
   };
 
-  let resetPassBtn = $('reset-password-button');
-  resetPassBtn.onclick = function() {
-    if(validatePassword()){
-
-    };
-  };
+  // let resetPassBtn = $('reset-password-button');
+  // resetPassBtn.onclick = function() {
+  //   if(validatePassword()){
+  //
+  //   };
+  // };
 
   //functionality for buttons to iterate through registration form
   let continueBtns = document.getElementsByClassName('continue-registration-button');
@@ -241,8 +228,4 @@ window.onload = function() {
       switchTab(tabs.NONE);
     };
   } //for
-
-
-
-
 } //window.onload
