@@ -1,8 +1,9 @@
 <div id="admin-utilities" class="menu-bar">
   <ul class="nav-bar">
-    <li><a href="{{ url_for('admin')}}">Dashboard</a></li>
+    <li><a href="{{ url_for('admin')}}"><img src="{{ url_for('static', filename='assets/home.svg') }}">Dashboard</a></li>
     <li><a href="{{ url_for('manageBooks') }}">Manage Books</a></li>
     <li><a href="{{ url_for('manageUsers') }}">Manage Users</a></li>
     <li><a href="{{ url_for('managePromotions') }}">Manage Promotions</a></li>
+    <li><a href="{{ url_for('logout') }}">Logout</a></li>
   </ul>
 </div>
