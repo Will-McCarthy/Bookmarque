@@ -1,32 +1,29 @@
-{% extends "user_layout.html" %}
+{% extends "default_layout.html" %}
 {% block content %}
 
 <div id="checkout_body">
     <h1 id="checkout_title">Checkout</h1>
-    <img class="progbar_img" src="static/assets/checkout_ui_assets/prog2.png" alt="prog2_placeholder" style="padding-top:.4em;">
+    <img class="progbar_img" src="static/assets/checkout_ui_assets/prog2.png" alt="prog2_placeholder" style="padding-top:.4em; position:absolute">
     
-    <div>
+    <div id="promo-div" style="overflow: hidden;">
         <span style="display:block;">
-       
-        <a href="checkout4.html" alt="plus_img" style="margin-top: 10%; margin-left:20%; color:black; text-decoration: none;">Have a promotion code?</a>
-
+            <a href="templates/checkout4.html" alt="plus_img" id="promo-question">Have a promotion code?</a>
         </span>
-        <hr style="margin-left:20%; width: 110%;">
+        <hr style="margin-left:20%; width: 200%;">
     </div>
     
     <div>
-        <h1 id="payment-label" style="padding-left: 20%;">Payment</h1>
+        <h1 id="payment-label" style="margin-left: 20%;">Payment</h1>
     </div>
         
     <form class="payment-form" action="/filename.php">
         <label for="cardtype">Card Type</label>
-        <input class="shipping-input" type="text" placeholder="Required">
+        <input class="shipping-input" type="text"  value="Discover" style="background-color: rgb(173, 193, 230)">
         <label for="lname">Card Number</label>
-        <input class="shippng-input" type="text" placeholder="Required">
+        <input class="shipping-input" type="text" value="1234 5678 9012 3456" style="background-color: rgb(173, 193, 230)">
         <label for="street">Expires On</label>
         <div style="display:block;">
-            <select class="shipping-input" style="width: 40%;">
-                    <option>- Month -</option>
+            <select class="shipping-input" style="width: 40%; background-color: rgb(173, 193, 230)">
                     <option value="January">January</option>
                     <option value="Febuary">Febuary</option>
                     <option value="March">March</option>
@@ -41,8 +38,7 @@
                     <option value="December">December</option>
             </select>
 
-            <select class="shipping-input" style="width: 30%;">
-                    <option>- Year -</option>
+            <select class="shipping-input" style="width: 30%; background-color: rgb(173, 193, 230)">
                     <option value="2018">2028</option>
                     <option value="2017">2027</option>
                     <option value="2016">2026</option>
@@ -57,9 +53,7 @@
 
         
         <label for="cvv">Security Code (eg: 123)</label>
-        <span>
-            <input class="shipping-input" type="text" placeholder="Required" style="width: 30%;">
-        </span>
+        <input class="shipping-input" type="text" value="123" style="width: 30%; background-color: rgb(173, 193, 230)">
 </form>
     <input id="checkout3_button" type="submit" value="NEXT: REVIEW AND PLACE ORDER" onclick=next()>
 </div>
@@ -102,4 +96,5 @@
 
 
 <br><br><br><br><br><br><br><br><br><br><br><br>
+
 {% endblock %}

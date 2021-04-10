@@ -1,0 +1,18 @@
+{% extends "default_layout.html" %}
+{% block content %}
+{% include "admin/admin_utilities.html" %}
+<div class="row">
+  <div class="column">
+    <img src="{{ url_for('static', filename='assets/archLibrary.png') }}" alt="archLibrary"/>
+    <a class="button-gold" href="{{ url_for('manageBooks') }}">Manage Books</a>
+  </div>
+  <div class="column">
+    <img src="{{ url_for('static', filename='assets/coffeeGlasses.png') }}" alt="coffeeGlasses"/>
+    <a class="button-gold" href="{{ url_for('manageUsers') }}">Manage Users</a>
+  </div>
+  <div class="column">
+    <img src="{{ url_for('static', filename='assets/stairsLibrary.png') }}" alt="stairsLibrary"/>
+    <a class="button-gold" href=" {{ url_for('managePromotions') }}">Manage Promotions</a>
+  </div>
+</div>
+{% endblock %}

@@ -47,7 +47,7 @@ def before_request():
 # action taken on trying to access a page that needs a login
 @login_manager.unauthorized_handler
 def unauthorized_callback():
-    return render_template('login_message.html')
+    return render_template('login/login_message.html')
 
 @app.route('/mysqltest')
 def test():
@@ -72,7 +72,7 @@ def homepage():
 
 @app.route('/search/')
 def search():
-    return render_template('search_view.html')
+    return render_template('browse/search_view.html')
 
 @app.route('/view/<ISBN>')
 def book_details(ISBN):
@@ -83,15 +83,11 @@ def book_details(ISBN):
     cursor.execute('''SELECT book_categories.categoryName FROM book_has_book_categories, book_categories WHERE book_has_book_categories.ISBN = ''' + str(ISBN)+ ''' AND book_has_book_categories.categoryID = book_categories.categoryID;''')
     tag_fetch = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('book_details_example.html', data=fetch[0],tags=list(tag_fetch))
+    return render_template('browse/book_details_example.html', data=fetch[0],tags=list(tag_fetch))
 
 @app.route('/admin')
 def admin():
-    return render_template('admin_view.html')
-
-@app.route('/manage-promotions')
-def managePromotions():
-    return render_template('manage_promotions.html')
+    return render_template('admin/admin_view.html')
 
 @app.route('/manage-books', methods = ['POST', 'GET'])
 def manageBooks():
@@ -130,19 +126,19 @@ def manageBooks():
     cursor.execute('''SELECT book.ISBN, bookTitle, CONCAT(authorFName, " ", authorLName) AS authorName, group_concat(categoryName) AS categories, bookQuantity FROM book JOIN book_has_book_categories ON book.ISBN = book_has_book_categories.ISBN JOIN book_categories ON book_has_book_categories.categoryID = book_categories.categoryID GROUP BY ISBN;''')
     bookData = cursor.fetchall()
     mysql.connection.commit()
-    return render_template('manage_books.html', bookData = bookData)
+    return render_template('admin/manage_books.html', bookData = bookData)
 
 @app.route('/manage-books/book-entry')
 def bookEntry():
-    return render_template('book_entry.html')
+    return render_template('admin/book_entry.html')
 
 @app.route('/manage-users')
 def manageUsers():
-    return render_template('manage_users.html')
+    return render_template('admin/manage_users.html')
 
 @app.route('/manage-users/user-entry')
 def userEntry():
-    return render_template('user_entry.html')
+    return render_template('admin/user_entry.html')
 
 @app.route('/manage-promotions', methods=['POST','GET'])
 def managePromotions():
@@ -165,39 +161,39 @@ def managePromotions():
         cursor.execute('''SELECT * FROM promotion;''')
         promotion_fetch = cursor.fetchall()
         mysql.connection.commit()
-        return render_template('manage_promotions.html', promotions = promotion_fetch)
+        return render_template('admin/manage_promotions.html', promotions = promotion_fetch)
 
 @app.route('/checkout1')
 def checkout1():
-    return render_template('checkout1.html')
+    return render_template('checkout/checkout1.html')
 
 @app.route('/checkout2')
 def checkout2():
-    return render_template('checkout2.html')
+    return render_template('checkout/checkout2.html')
 
 @app.route('/checkout3')
 def checkout3():
-    return render_template('checkout3.html')
+    return render_template('checkout/checkout3.html')
 
 @app.route('/checkout4')
 def checkout4():
-    return render_template('checkout4.html')
+    return render_template('checkout/checkout4.html')
 
 @app.route('/checkout5')
 def checkout5():
-    return render_template('checkout5.html')
+    return render_template('checkout/checkout5.html')
 
 @app.route('/checkout6')
 def checkout6():
-    return render_template('checkout6.html')
+    return render_template('checkout/checkout6.html')
 
 @app.route('/cart')
 def shopping_cart():
-    return render_template('shopping_cart.html')
+    return render_template('checkout/shopping_cart.html')
 
 @app.route('/cart/history')
 def order_history():
-    return render_template('order_history.html')
+    return render_template('checkout/order_history.html')
 
 @app.route('/profile', methods = ['POST', 'GET'])
 @login_required
@@ -376,7 +372,7 @@ def profile():
     print(information[0][0])
     print(address)
     print(card)
-    return render_template('profile.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/profile.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
     #return render_template('profile.html')
 
 @app.route('/profile/update-password')
@@ -412,7 +408,7 @@ def password_panel():
 
 
     mysql.connection.commit()
-    return render_template('update_password.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/update_password.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/update-card')
 @login_required
@@ -442,7 +438,7 @@ def card_panel():
 
 
     mysql.connection.commit()
-    return render_template('update_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/update_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/create-card')
 @login_required
@@ -471,12 +467,12 @@ def card_panel_2():
         selectedCard = cardDropdown[0]
 
     mysql.connection.commit()
-    return render_template('create_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/create_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
 
 @app.route('/profile/edit')
 @login_required
 def edit_profile():
-    return render_template('edit_profile.html')
+    return render_template('profile/edit_profile.html')
 
 # registration and login #
 @app.route('/register', methods=['POST'])
@@ -650,7 +646,7 @@ def reset_password(email_encrypted):
             mysql.connection.commit()
         return render_template('index.html')
     if request.method == 'GET':
-        return render_template('reset_password.html', email_encrypted=email_encrypted)
+        return render_template('login/reset_password.html', email_encrypted=email_encrypted)
 
 @app.route('/verify/<email_encrypted>')
 def verify_email(email_encrypted):
@@ -660,7 +656,7 @@ def verify_email(email_encrypted):
     cursor = mysql.connection.cursor()
     cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE userEmail=%s;''', [email])
     mysql.connection.commit()
-    return render_template('email_confirmation.html')
+    return render_template('login/email_confirmation.html')
 
 #This function shoud be called when a user is first logging in.
 #Also, it's inherently called for every single page, so when you access current_user.fname, it will always be what was in the DB when you first loaded the page

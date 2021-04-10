@@ -1,13 +1,6 @@
-{% extends "user_layout.html" %}
+{% extends "default_layout.html" %}
 {% block content %}
-<div id="menu-bar" style="background-color:#c4c4c4; justify-content: center;">
-  <ul id="nav-bar" style="width: 90%; margin-right: 5%; margin-left: 5%; display: flex; justify-content: space-between;">
-    <li><a href="{{ url_for('manageBooks') }}">Manage Books</a></li>
-    <li><a href="#">Manage Users</a></li>
-    <li><a href="#">Manage Orders</a></li>
-    <li><a href="#">Toggle User/Admin View</a></li>
-  </ul>
-</div>
+{% include "admin/admin_utilities.html" %}
 
 <div style="margin: 3%; width:96%; display: flex; justify-content: flex-end; align-items: flex-end;">
   <label for="fname">Search:</label>

@@ -9,8 +9,8 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='assets/favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Text&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
-    <script src="{{ url_for('static', filename='scripts/login_popup.js') }}"></script>
-    <script src="{{ url_for('static', filename='scripts/creditcard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/login_popup.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/creditcard.js') }}"></script>
   </head>
 
   <body>
@@ -95,4 +95,4 @@
 </body>
 </html>
 
-<div id="overlay">{% include "login_popup.html" %}</div>
+<div id="overlay">{% include "login/login_popup.html" %}</div>
