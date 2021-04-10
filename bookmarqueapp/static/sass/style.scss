@@ -346,6 +346,21 @@ footer div {
   flex-direction: column;
 }
 
+#remember-me {
+  font-size: .75rem;
+}
+
+#forgot-password-button {
+  color: red;
+  font-size: .75rem;
+  padding: 0;
+  margin: 0;
+}
+
+#forgot-password-button:hover {
+  text-decoration: underline;
+}
+
 #card-details {
   display: grid;
   grid-auto-flow: column;
