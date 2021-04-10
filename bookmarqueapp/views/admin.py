@@ -1,16 +1,8 @@
-from flask import Flask
-from flask import render_template # for file extends
-from flask import redirect
-from flask import request
-from flask import url_for
-from flask import session
+from flask import Flask, redirect, request, render_template, url_for
 from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
-from sassutils.wsgi import SassMiddleware # for sass/scss compilation
-from datetime import timedelta
-import time
 
-from bookmarqueapp import app, mysql, login_manager
+from bookmarqueapp import app, mysql
 from bookmarqueapp.models.models import User
 
 @app.route('/admin')
