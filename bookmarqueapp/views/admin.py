@@ -1,30 +1,36 @@
 from flask import Flask, redirect, request, render_template, url_for
 from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
+from functools import wraps
 
 from bookmarqueapp import app, mysql
 from bookmarqueapp.models.users import User, UserType
 
 
-# # custom decorator for validating user is admin level
-# def admin_restricted(func):
-#     @wraps(func)
-#     def check_admin(*args, **kwargs):
-#         if current_user.type != UserType.ADMIN:
-#             flash("Restricted access. Administrators only.")
-#             return redirect(url_for('homepage'))
-#         flash("passed check")
-#         return func(*args, **kwargs)
-#
-#     return check_admin
+# custom decorator for validating user access level
+# takes a variadic number of UserType enums
+def restrict_access(*user_types):
+    def decorator(fn):
+        @wraps(fn)
+        def can_access(*args, **kwargs):
+            for type in user_types:
+                if current_user.type == type.value:
+                    print('access granted')
+                    return fn(*args, **kwargs)
+            print('access denied')
+            return redirect(url_for('homepage'))
+        return can_access
+    return decorator
 
 @app.route('/admin')
 @login_required
+@restrict_access(UserType.ADMIN)
 def admin():
     return render_template('admin/admin_view.html')
 
 @app.route('/admin/manage-books', methods = ['POST', 'GET'])
 @login_required
+@restrict_access(UserType.ADMIN)
 def manageBooks():
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
@@ -65,21 +71,25 @@ def manageBooks():
 
 @app.route('/admin/manage-books/book-entry')
 @login_required
+@restrict_access(UserType.ADMIN)
 def bookEntry():
     return render_template('admin/book_entry.html')
 
 @app.route('/admin/manage-users')
 @login_required
+@restrict_access(UserType.ADMIN)
 def manageUsers():
     return render_template('admin/manage_users.html')
 
 @app.route('/admin/manage-users/user-entry')
 @login_required
+@restrict_access(UserType.ADMIN)
 def userEntry():
     return render_template('admin/user_entry.html')
 
 @app.route('/admin/manage-promotions', methods=['POST','GET'])
 @login_required
+@restrict_access(UserType.ADMIN)
 def managePromotions():
     print("Something triggered promotion route")
     if request.method == 'POST':

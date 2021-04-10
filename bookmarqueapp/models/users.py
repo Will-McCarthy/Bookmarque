@@ -7,11 +7,8 @@ class UserFactory():
 
     def get_user(self, type):
         if type == UserType.ADMIN.value:
-            print('made admin')
             return Admin()
         elif type == UserType.CUSTOMER.value:
-            print('made customer')
-
             return Customer()
         elif type == UserType.WEB_USER.value:
             return WebUser()
@@ -82,10 +79,12 @@ class Admin(User):
     def __init__(self):
         super().__init__()
 
+
 class WebUser(User):
 
     def __init__(self):
         super().__init__()
+
 
 # enumerations
 class UserStatus(enum.Enum):
