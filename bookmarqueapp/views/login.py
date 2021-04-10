@@ -6,7 +6,7 @@ from datetime import timedelta
 import time
 
 from bookmarqueapp import app, mysql, login_manager, DEBUG_MODE, email_server
-from bookmarqueapp.models.users import User, UserType, UserFactory
+from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory
 
 # registration and login #
 @app.route('/register', methods=['POST'])
@@ -111,12 +111,18 @@ def login():
             # Use the user returned from load_user above to compare password from the form
             #if user not found = email not found
             #if password is incorrect = wrong password
-            if user and supplied_password == user.password:
-                # The function below allows you to use current_user to reference the user's session variables.
-                login_user(user, force=True, remember=remember)
+            if user and (supplied_password == user.password):
+                if user.status == UserStatus.SUSPENDED.value:
+                    return render_template('login/suspended_account.html')
+                elif user.status == UserStatus.INACTIVE.value:
+                    return render_template('login/inactive_account.html')
+                login_user(user, force=True, remember=remember) # allows current_user access to user session variables
                 user.is_authenticated = True
-                print(user.is_authenticated)
                 return redirect(url_for('profile'))
+            else:
+                return render_template('login/invalid_login.html')
+        else:
+            return render_template('login/invalid_login.html')
 
     return redirect(url_for('homepage'))
 
@@ -185,26 +191,20 @@ def load_user(user_id):
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = %s;''', (user_id,))
     information = cursor.fetchall()
-    print(information)
     mysql.connection.commit()
 
     type = information[0][5]
     uf = UserFactory()
     user = uf.get_user(information[0][5])
 
-    for x in range(9):
-        print(information[0][x])
-
     user.set(id=information[0][0], email=information[0][1], fname=information[0][2],
                 lname=information[0][3], status=information[0][4], type=information[0][5],
                 password=information[0][6], phone=information[0][7], subscription=information[0][8],
                 address=information[0][9], payments=None)
 
-
     print(user)
+    return user # SQL to return an instance of information pertaining to a user from DB
 
-    # SQL to return an instance of information pertaining to a user from DB
-    return user;
 
 @app.route("/logout")
 def logout():
