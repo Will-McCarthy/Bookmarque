@@ -1,0 +1,24 @@
+{% include "manage_users.html" %}
+<div class="popup-overlay">
+  <form class="popup-panel">
+    <h1 class="main-logo">Bookmarqué</h1>
+    <h1>User Entry</h1>
+
+    <label>UserID</label>
+    <input type="text">
+    <label>UserEmail</label>
+    <input type="text">
+    <label>UserStatus</label>
+    <input type="text">
+    <label>UserType</label>
+    <input type="text">
+    <label>userSubStatus</label>
+    <input type="text">
+    <span>Please fill out completley</span>
+
+    <a class="button-blue" href="{{ url_for('manageUsers') }}">Continue</a>
+    <span> </span>
+    <a class="button-gold" href="{{ url_for('manageUsers') }}">Cancel</a>
+
+  </form>
+</div>

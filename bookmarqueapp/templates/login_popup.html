@@ -17,6 +17,9 @@
     <span><input type="checkbox" name="remember-me" unchecked>Remember Me</span>
 
     <span class="center">-- or --</span>
+    <a id="forgot-password-button" class="button-blue">Forgot Password</a>
+
+    <span class="center">-- or --</span>
     <a id="registration-button" class="button-gold">Create a new account</a>
   </form>
 
@@ -41,7 +44,7 @@
 
       <a class="continue-registration-button button-gold">Continue</a>
     </div>
-
+    <!-- card entry registration -->
     <div id="tab-2" class="popup-tab">
       <h1>Payment Info</h1>
 
@@ -80,7 +83,7 @@
       <a class="skip button-blue">Skip for now</a>
       <a class="continue-registration-button button-gold">Save</a>
     </div>
-
+    <!-- address registration -->
     <div id="tab-3" class="popup-tab">
       <h1>Shipping</h1>
 
@@ -159,4 +162,27 @@
       <input type="submit" value="Send verification email" class="close-popup-button button-blue">
     </div>
   </form>
+
+
+  <!-- forgot password -->
+  <form action="{{ url_for('forgot_password') }}" method="POST" id="tab-5" class="popup-tab" >
+
+    <strong class="close-popup-button clickable">x</strong>
+
+    <h1>Forgot Password</h1>
+
+    <label>Email</label>
+    <input type="email" name="email">
+    <input class="continue-registration-button button-blue" type="submit" value="Reset Password">
+  </form>
+
+
+  <!-- reset email sent -->
+  <div id="tab-6" class="popup-tab">
+    <strong class="close-popup-button clickable">x</strong>
+
+    <h1>Check Your Email</h1>
+    <p>Thanks for giving us your email!</p>
+    <p>If there is an account with your email on it, we will send you a link to change your password.</p>
+  </div>
 </div>

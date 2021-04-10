@@ -1,0 +1,78 @@
+{% extends "user_layout.html" %}
+{% block content %}
+<div id="menu-bar" style="background-color:#c4c4c4; justify-content: center;">
+  <ul id="nav-bar" style="width: 90%; margin-right: 5%; margin-left: 5%; display: flex; justify-content: space-between;">
+    <li><a href="{{ url_for('manageBooks') }}">Manage Books</a></li>
+    <li><a href="#">Manage Users</a></li>
+    <li><a href="#">Manage Orders</a></li>
+    <li><a href="#">Toggle User/Admin View</a></li>
+  </ul>
+</div>
+
+<div style="margin: 3%; width:96%; display: flex; justify-content: flex-end; align-items: flex-end;">
+  <label for="fname">Search:</label>
+  <input type="text" id="fname" name="fname">
+</div>
+
+<div>
+  <table>
+    <tr>
+      <th>userID</th>
+      <th>userEmail</th>
+      <th>userStatus</th>
+      <th>userType</th>
+      <th>userSubStatus</th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>janedoe@gmail.com</td>
+      <td>Active</td>
+      <td>Customer</td>
+      <td>Active</td>
+      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">Edit User</a></td>
+    </tr>
+    <tr>
+      <td>102</td>
+      <td>johndoe@gmail.com</td>
+      <td>Active</td>
+      <td>Cusotmer</td>
+      <td>Active</td>
+      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">Edit User</a></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><input></input></td>
+      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">New User</a></td>
+    </tr>
+  </table>
+</div>
+</table>-->
+{% endblock %}

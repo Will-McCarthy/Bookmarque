@@ -5,7 +5,9 @@ const tabs = {
   REGISTRATION: 1,
   PAYMENT: 2,
   ADDRESS: 3,
-  CONFIRMATION: 4
+  CONFIRMATION: 4,
+  FORGOTPASSWORD: 5,
+  EMAILSENT: 6
 }
 
 var tab = tabs.NONE; //popup menu tab currently being rendered
@@ -155,6 +157,22 @@ function validateAddress() {
   return completeness;
 }
 
+function validatePassword() {
+  let password = $('passwordReset');
+  let passConfirm = $('passConfirm');
+  if(password.value != passConfirm.value){
+    password.style.border = 'solid .15rem red';
+    passConfirm.style.border = 'solid .15rem red';
+    return false;
+  }
+  if(!password.value.match(passwordformat)){
+    password.style.border = 'solid .15rem red';
+    passConfirm.style.border = 'solid .15rem red';
+    return false;
+  }
+  return true;
+}
+
 /*
  * Change value of hidden skip field for corresponding tab to true.
  */
@@ -184,6 +202,18 @@ window.onload = function() {
     switchTab(tabs.REGISTRATION);
   };
 
+  let forgotPassBtn = $('forgot-password-button');
+  forgotPassBtn.onclick = function() {
+    switchTab(tabs.FORGOTPASSWORD);
+  };
+
+  let resetPassBtn = $('reset-password-button');
+  resetPassBtn.onclick = function() {
+    if(validatePassword()){
+
+    };
+  };
+
   //functionality for buttons to iterate through registration form
   let continueBtns = document.getElementsByClassName('continue-registration-button');
   for (let i = 0; i < continueBtns.length; i++) {
@@ -211,6 +241,8 @@ window.onload = function() {
       switchTab(tabs.NONE);
     };
   } //for
+
+
 
 
 } //window.onload
