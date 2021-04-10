@@ -44,7 +44,7 @@ header {
   text-align: center;
 }
 
-#menu-bar {
+.menu-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -66,23 +66,23 @@ header {
   padding: 0 0 0 0.5rem;
 }
 
-#nav-bar {
+.nav-bar {
   font-family: $font-serif;
   list-style: none;
 }
 
-#nav-bar li {
+.nav-bar li {
   padding-right: 1rem;
   float: left;
 }
 
-#nav-bar a,
-#nav_bar a:visited {
+.nav-bar a,
+.nav_bar a:visited {
   color: black;
   text-decoration: none;
 }
 
-#nav-bar a:hover {
+.nav-bar a:hover {
   color: $gold;
   text-decoration: underline;
 }
@@ -95,6 +95,21 @@ header {
   width: 1.75rem;
   height: 1.75rem;
 }
+
+/* admin utility bar */
+#admin-utilities {
+  background-color:#c4c4c4;
+  justify-content: center;
+}
+
+#admin-utilities .nav-bar {
+  width: 90%;
+  margin-right: 5%; 
+  margin-left: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
 /* search bar */
 .search-bar {
   display: flex;

@@ -6,10 +6,11 @@ from bookmarqueapp import app, mysql
 from bookmarqueapp.models.models import User
 
 @app.route('/admin')
+@login_required
 def admin():
     return render_template('admin/admin_view.html')
 
-@app.route('/manage-books', methods = ['POST', 'GET'])
+@app.route('/admin/manage-books', methods = ['POST', 'GET'])
 def manageBooks():
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
@@ -48,19 +49,23 @@ def manageBooks():
     mysql.connection.commit()
     return render_template('admin/manage_books.html', bookData = bookData)
 
-@app.route('/manage-books/book-entry')
+@app.route('/admin/manage-books/book-entry')
+@login_required
 def bookEntry():
     return render_template('admin/book_entry.html')
 
-@app.route('/manage-users')
+@app.route('/admin/manage-users')
+@login_required
 def manageUsers():
     return render_template('admin/manage_users.html')
 
-@app.route('/manage-users/user-entry')
+@app.route('/admin/manage-users/user-entry')
+@login_required
 def userEntry():
     return render_template('admin/user_entry.html')
 
-@app.route('/manage-promotions', methods=['POST','GET'])
+@app.route('/admin/manage-promotions', methods=['POST','GET'])
+@login_required
 def managePromotions():
     print("Something triggered promotion route")
     if request.method == 'POST':
