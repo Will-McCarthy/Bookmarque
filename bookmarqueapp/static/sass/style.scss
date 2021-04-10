@@ -200,6 +200,12 @@ footer div {
 .footer-column a:hover {
   font-weight: bold;
 }
+
+#copyright {
+  margin-left: 2rem;
+  font-size: .5rem;
+}
+
 /* home page */
 #home-banner {
   display: flex;
@@ -353,8 +359,6 @@ footer div {
 #forgot-password-button {
   color: red;
   font-size: .75rem;
-  padding: 0;
-  margin: 0;
 }
 
 #forgot-password-button:hover {

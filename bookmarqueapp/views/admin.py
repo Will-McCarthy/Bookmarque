@@ -3,7 +3,20 @@ from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 
 from bookmarqueapp import app, mysql
-from bookmarqueapp.models.models import User
+from bookmarqueapp.models.users import User, UserType
+
+
+# # custom decorator for validating user is admin level
+# def admin_restricted(func):
+#     @wraps(func)
+#     def check_admin(*args, **kwargs):
+#         if current_user.type != UserType.ADMIN:
+#             flash("Restricted access. Administrators only.")
+#             return redirect(url_for('homepage'))
+#         flash("passed check")
+#         return func(*args, **kwargs)
+#
+#     return check_admin
 
 @app.route('/admin')
 @login_required
@@ -11,6 +24,7 @@ def admin():
     return render_template('admin/admin_view.html')
 
 @app.route('/admin/manage-books', methods = ['POST', 'GET'])
+@login_required
 def manageBooks():
     cursor = mysql.connection.cursor()
     if request.method == 'POST':

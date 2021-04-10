@@ -5,8 +5,8 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from datetime import timedelta
 import time
 
-from bookmarqueapp import app, mysql, login_manager
-from bookmarqueapp.models.models import User
+from bookmarqueapp import app, mysql, login_manager, DEBUG_MODE
+from bookmarqueapp.models.users import User, UserType, UserFactory
 
 # registration and login #
 @app.route('/register', methods=['POST'])
@@ -141,23 +141,9 @@ def forgot_password():
                 <h1>Reset Password Here:</h1>
                 <span>Click this <a href="''' + reset_password_link + '''">link</a> to reset password. If this was not you, ignore this message.</span>
             '''
+            subject = "Reset Password"
+            email_server.send_email(html_message, subject, confirmed_email, DEBUG_MODE)
 
-            message = MIMEMultipart()
-            message["From"] = gmail_server_user
-            #For testing emails, I am sending emails to our email account, this should be changed to a variable which contains our user's email.
-            test_address = "projdeploy@gmail.com"
-            #replace test_address with user_email for deployment
-            message["To"] = test_address
-            message["Subject"] = "Reset Password"
-            msgAlternative = MIMEMultipart('alternative')
-            #Inline html, which could be replaced with larger template files if needed
-            msgText = MIMEText(html_message, 'html', 'utf-8')
-            msgAlternative.attach(msgText)
-            message.attach(msgAlternative)
-            print("Send out an email here")
-            text = message.as_string()
-            print(text)
-            server.sendmail(gmail_server_user, test_address, text)
         return redirect('/')
 
 @app.route('/reset-password/<email_encrypted>', methods=['POST', 'GET'])
@@ -201,7 +187,22 @@ def load_user(user_id):
     information = cursor.fetchall()
     print(information)
     mysql.connection.commit()
-    user = User(information[0][0], information[0][1], information[0][6], information[0][2], information[0][3])
+
+    type = information[0][5]
+    uf = UserFactory()
+    user = uf.get_user(information[0][5])
+
+    for x in range(9):
+        print(information[0][x])
+
+    user.set(id=information[0][0], email=information[0][1], fname=information[0][2],
+                lname=information[0][3], status=information[0][4], type=information[0][5],
+                password=information[0][6], phone=information[0][7], subscription=information[0][8],
+                address=information[0][9], payments=None)
+
+
+    print(user)
+
     # SQL to return an instance of information pertaining to a user from DB
     return user;
 

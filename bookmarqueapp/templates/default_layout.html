@@ -58,10 +58,9 @@
         </div>
       </header>
 
-      {% if current_user.is_authenticated %}
+      {% if current_user.is_authenticated and (current_user.type == 'Admin') %}
         {% include "admin/admin_utilities.html" %}
       {% endif %}
-
 
       <main>
         {% block content %}{% endblock %}
@@ -94,7 +93,7 @@
         </ul>
     </div>
 
-    <span>&copy 2021 Bookmarque. All Rights Reserved.</span>
+    <span id="copyright">&copy 2021 Bookmarque. All Rights Reserved.</span>
 
   </footer>
 </body>

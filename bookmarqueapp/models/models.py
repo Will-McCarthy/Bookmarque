@@ -60,54 +60,6 @@ class BookCategory(enum.Enum):
     NEWLY_RELEASED = 18
 
 
-class User():
-
-    # global vars for login management
-    is_authenticated = False
-    logged_in = False
-
-    def __init__(self, id, email, password, fname, lname):
-        self.id = id
-        self.email = email
-        self.fname = fname
-        self.lname = lname
-
-        # class attributes
-        self.user_status = None
-        self.user_type = None
-        self.password = password
-        self.phone = None
-        self.sub_status = None
-
-        self.payment_cards = []
-        self.address = None
-
-    def get_id(self):
-        return self.id
-
-    def is_authenticated(self):
-        return self.is_authenticated
-
-
-
-class RegisteredUser(User):
-
-    def __init__(self):
-        print('registered user')
-
-class WebUser(User):
-
-    def __init__(self):
-        print('web user')
-
-class Admin(User):
-    def __init__(self):
-        print('web user')
-
-class Employee(User):
-    def __init__(self):
-        print('emloyee')
-
 class PaymentCard():
 
     def __init__(self, cardNumber, cardType, expirationDate, svc):
@@ -142,18 +94,6 @@ class Order():
     def __init__(self):
         print('web user')
 
-
-# enumerations
-class UserStatus(enum.Enum):
-    ACTIVE = 1
-    INACTIVE = 2
-    SUSPENDED = 3
-
-# inheritance here?
-class UserType(enum.Enum):
-    ADMIN = 1
-    CUSTOMER = 2
-    WEB_USER = 3
 
 class CardType(enum.Enum):
     AMEX = 1

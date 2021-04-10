@@ -20,7 +20,7 @@ except Exception as ex:
     print("Email couldn't start: " + str(ex))
 
 # send out param message with subject to either recipient or a dummy email if test_mode is True
-def send_email(html_message, subject, recipient, test_mode):
+def send_email(html_message, subject, recipient, test_mode=False):
     try:
         # Email Generation
         message = MIMEMultipart()

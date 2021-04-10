@@ -4,7 +4,7 @@ from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 
 from bookmarqueapp import app, mysql, login_manager
-from bookmarqueapp.models.models import User
+from bookmarqueapp.models.users import User
 
 @app.route('/')
 def homepage():
