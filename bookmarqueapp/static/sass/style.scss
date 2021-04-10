@@ -98,9 +98,10 @@ header {
 
 /* admin utility bar */
 #admin-utilities {
-  background-image: linear-gradient(black, #222222, black);
+  background-image: linear-gradient($dark-blue, $blue, $dark-blue);
+  opacity: 90%;
   justify-content: center;
-  box-shadow: 0px 2px 2px 0px black;
+  box-shadow: 0px 2px 2px 0px $dark-blue;
   width: 100%;
   position: sticky;
   top: 0;
