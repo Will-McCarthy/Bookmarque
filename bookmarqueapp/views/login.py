@@ -5,7 +5,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from datetime import timedelta
 import time
 
-from bookmarqueapp import app, mysql, login_manager, DEBUG_MODE
+from bookmarqueapp import app, mysql, login_manager, DEBUG_MODE, email_server
 from bookmarqueapp.models.users import User, UserType, UserFactory
 
 # registration and login #
