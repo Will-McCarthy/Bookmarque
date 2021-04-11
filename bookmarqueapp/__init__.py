@@ -31,21 +31,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql://' + cfg.mysql["user"] + ':'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-
-from bookmarqueapp.models.books import Book, BookCategory, Categories
-#query(FooBar).join(Bar).join(Foo).filter(Foo.name == "blah")
-# session.query(BlogPost).\
-# ...             filter(BlogPost.keywords.any(keyword='firstpost')).\
-# ...             all()
-
-
-results = Book.query.all()
-results = Book.query.filter(Book.categories.any(BookCategory.categoryID == Categories.FEATURED.value))
-for result in results:
-    print(result)
-print(results[1])
-
-
 #Login initialization
 #Example secret key, probably should be changed.
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -53,23 +38,11 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
-
 mysql = MySQL(app)
 # configure directory locations for Sass/SCSS
 app.wsgi_app = SassMiddleware(app.wsgi_app, {
     'bookmarqueapp': ('static/sass', 'static/css', '/static/css')
 })
-
-@app.route('/mysqltest')
-def test():
-    cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM book;''')
-    rv = cursor.fetchall()
-    print(rv)
-    #cursor.execute(''' INSERT INTO info_table VALUES(%s,%s)''',(name,age))
-    mysql.connection.commit()
-    return render_template('index.html')
-
 
 ####
 # while not usually standard practice to include import statements at the bottom
