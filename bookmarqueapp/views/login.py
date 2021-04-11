@@ -113,16 +113,16 @@ def login():
             #if password is incorrect = wrong password
             if user and (supplied_password == user.password):
                 if user.status == UserStatus.SUSPENDED.value:
-                    return render_template('login/suspended_account.html')
+                    return render_template('login/messages/suspended_account.html')
                 elif user.status == UserStatus.INACTIVE.value:
-                    return render_template('login/inactive_account.html')
+                    return render_template('login/messages/inactive_account.html')
                 login_user(user, force=True, remember=remember) # allows current_user access to user session variables
                 user.is_authenticated = True
                 return redirect(url_for('profile'))
             else:
-                return render_template('login/invalid_login.html')
+                return render_template('login/messages/invalid_login.html')
         else:
-            return render_template('login/invalid_login.html')
+            return render_template('login/messages/invalid_login.html')
 
     return redirect(url_for('homepage'))
 
@@ -172,7 +172,7 @@ def reset_password(email_encrypted):
             mysql.connection.commit()
         return render_template('index.html')
     if request.method == 'GET':
-        return render_template('login/reset_password.html', email_encrypted=email_encrypted)
+        return render_template('login/messages/reset_password.html', email_encrypted=email_encrypted)
 
 @app.route('/verify/<email_encrypted>')
 def verify_email(email_encrypted):
@@ -182,7 +182,7 @@ def verify_email(email_encrypted):
     cursor = mysql.connection.cursor()
     cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE userEmail=%s;''', [email])
     mysql.connection.commit()
-    return render_template('login/email_confirmation.html')
+    return render_template('login/messages/email_confirmation.html')
 
 #This function shoud be called when a user is first logging in.
 #Also, it's inherently called for every single page, so when you access current_user.fname, it will always be what was in the DB when you first loaded the page
@@ -214,7 +214,7 @@ def logout():
 # action taken on trying to access a page that needs a login
 @login_manager.unauthorized_handler
 def unauthorized_callback():
-    return render_template('login/login_message.html')
+    return render_template('login/messages/login_message.html')
 
 
 # mainly for testing remember me, session inactivity for 5 seconds will result in logout

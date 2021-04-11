@@ -2,69 +2,43 @@
 {% block content %}
 
 <div style="margin: 3%; width:96%; display: flex; justify-content: flex-end; align-items: flex-end;">
-  <label for="fname">Search:</label>
-  <input type="text" id="fname" name="fname">
+  <label>Search:</label>
+  <input type="text">
 </div>
 
 <div>
   <table>
     <tr>
-      <th>userID</th>
-      <th>userEmail</th>
-      <th>userStatus</th>
-      <th>userType</th>
-      <th>userSubStatus</th>
-      <th></th>
+      <th>ID#</th>
+      <th>Email</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Subscription</th>
+      <th>Status</th>
     </tr>
+    {% for user in users %}
     <tr>
-      <td>101</td>
-      <td>janedoe@gmail.com</td>
-      <td>Active</td>
-      <td>Customer</td>
-      <td>Active</td>
-      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">Edit User</a></td>
+      <td>{{ user[0] }}</td>
+      <td>{{ user[1] }}</td>
+      <td>{{ user[2] ~ " " ~ user[3] }}</td>
+      <td>{{ user[5] }}</td>
+      <td>
+        {% if user[4] == "Active" %}
+        ✓
+        {% else %}
+        ✗
+        {% endif %}
+      <td>
+      {% if user[4] == "Inactive" %}
+        Unverified
+      {% else %}
+        <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+      {% endif %}
+      </td>
     </tr>
-    <tr>
-      <td>102</td>
-      <td>johndoe@gmail.com</td>
-      <td>Active</td>
-      <td>Cusotmer</td>
-      <td>Active</td>
-      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">Edit User</a></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><input></input></td>
-      <td><a class="button-blue" href="{{ url_for('userEntry') }}" style="padding: 0.5rem 0.1rem;">New User</a></td>
-    </tr>
+
+  {% endfor %}
   </table>
 </div>
-</table>-->
+
 {% endblock %}

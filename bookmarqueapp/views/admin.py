@@ -79,7 +79,10 @@ def bookEntry():
 @login_required
 @restrict_access(UserType.ADMIN)
 def manageUsers():
-    return render_template('admin/manage_users.html')
+    cursor = mysql.connection.cursor()
+    cursor.execute('SELECT * FROM users')
+    user_fetch = cursor.fetchall()
+    return render_template('admin/manage_users.html', users = user_fetch)
 
 @app.route('/admin/manage-users/user-entry')
 @login_required
