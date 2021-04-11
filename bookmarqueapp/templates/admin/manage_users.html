@@ -1,11 +1,6 @@
 {% extends "default_layout.html" %}
 {% block content %}
 
-<div style="margin: 3%; width:96%; display: flex; justify-content: flex-end; align-items: flex-end;">
-  <label>Search:</label>
-  <input type="text">
-</div>
-
 <div>
   <table>
     <tr>
@@ -13,7 +8,7 @@
       <th>Email</th>
       <th>Name</th>
       <th>Type</th>
-      <th>Subscription</th>
+      <th>Promo Subscription</th>
       <th>Status</th>
     </tr>
     {% for user in users %}
@@ -23,16 +18,17 @@
       <td>{{ user[2] ~ " " ~ user[3] }}</td>
       <td>{{ user[5] }}</td>
       <td>
-        {% if user[4] == "Active" %}
-        ✓
-        {% else %}
-        ✗
-        {% endif %}
-      <td>
-      {% if user[4] == "Inactive" %}
-        Unverified
-      {% else %}
-        <input type="checkbox" id="switch" /><label for="switch">Toggle</label>
+        {% if user[8] == "Active" %} ✓ {% else %} ✗ {% endif %}
+      <td class="toggle-status">
+      {% if user[4] == "Inactive" %} Unverified {% else %}
+        <form action="/admin/manage-users" method="POST">
+          <span>{{ user[4] }}</span>
+          <input type="hidden" name="id" value="{{ user[0] }}">
+          <input type="hidden" name="status" value="{{ user[4] }}">
+          <button type="submit">
+            <img class="toggle-arrow clickable" src="{{ url_for('static', filename='assets/icons/toggle-arrow.svg')}}">
+          </button>
+        </form>
       {% endif %}
       </td>
     </tr>

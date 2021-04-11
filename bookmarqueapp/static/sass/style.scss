@@ -135,6 +135,32 @@ header {
   padding-right: .25rem;
 }
 
+/* manage users */
+.toggle-status {
+  position: relative;
+}
+
+.toggle-status button {
+  background: none;
+  border: none;
+  padding: 0;
+  outline: inherit;
+}
+
+.toggle-status .toggle-arrow {
+  opacity: 50%;
+  height: 1rem;
+  width: auto;
+
+  position: absolute;
+  top: 0px;
+  right: 2px;
+}
+
+.toggle-status .toggle-arrow:hover {
+  opacity: 100%;
+}
+
 /* search bar */
 .search-bar {
   display: flex;
@@ -149,6 +175,7 @@ header {
   border: none;
   height: 1rem;
   font-family: $font-sans;
+  outline: none;
 }
 
 .search-bar button {
@@ -156,6 +183,8 @@ header {
   width: 2rem;
   background: $blue;
   border: none;
+  outline: inherit;
+  cursor: pointer;
 }
 
 .search-bar select {
@@ -164,6 +193,8 @@ header {
   color: $dark-blue;
   height: 2rem;
   border: none;
+  outline: none;
+  cursor: pointer;
 }
 
 .search-bar img {

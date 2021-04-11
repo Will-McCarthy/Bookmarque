@@ -21,7 +21,7 @@
         <div class="menu-bar">
           <a id="title" href="{{ url_for('homepage') }}">
             <h1 class="main-logo">
-              <img class="icon" src="{{ url_for('static', filename='assets/bookcase.svg') }}"/>
+              <img class="icon" src="{{ url_for('static', filename='assets/icons/bookcase.svg') }}"/>
               Bookmarqué
             </h1>
           </a>
@@ -44,16 +44,16 @@
               <option>Other Optionz</option>
             </select>
             <input type="text">
-            <button type="submit"><img src="{{ url_for('static', filename='assets/search.svg') }}"></button>
+            <button type="submit"><img src="{{ url_for('static', filename='assets/icons/search.svg') }}"></button>
           </form>
 
           <div id="nav-icons">
             {% if not current_user.is_authenticated %}
-              <img id="profile-button" class="icon clickable" src="{{ url_for('static', filename='assets/user.svg') }}">
+              <img id="profile-button" class="icon clickable" src="{{ url_for('static', filename='assets/icons/user.svg') }}">
             {% else %}
-              <a href="{{ url_for('profile') }}"><img class="icon clickable" src="{{ url_for('static', filename='assets/user.svg') }}"></a>
+              <a href="{{ url_for('profile') }}"><img class="icon clickable" src="{{ url_for('static', filename='assets/icons/user-filled.svg') }}"></a>
             {% endif %}
-            <a href="{{ url_for('shopping_cart') }}"><img class="icon" src="{{ url_for('static', filename='assets/shoppingcart.svg') }}"></a>
+            <a href="{{ url_for('shopping_cart') }}"><img class="icon" src="{{ url_for('static', filename='assets/icons/shoppingcart.svg') }}"></a>
           </div>
         </div>
       </header>

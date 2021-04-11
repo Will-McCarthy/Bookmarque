@@ -23,46 +23,9 @@
       <td>{{item[2]}}</td>
       <td>{{item[3]}}</td>
       <td>{{item[4]}}</td>
-      <td><a class="button-blue" href="{{ url_for('bookEntry') }}" style="padding: 0.5rem 0.1rem;">Edit Book</a></td>
+      <td><a href="{{ url_for('bookEntry') }}" style="padding: 0.5rem 0.1rem;"><button>Edit Book</button></a></td>
     </tr>
     {% endfor %}
-    <!--
-    <tr>
-      <td>978-1-61213-028-6</td>
-      <td>50 Shades of Gray</td>
-      <td>EL James</td>
-      <td>Erotic</td>
-      <td>420</td>
-      <td>69</td>
-      <td><a class="button-blue" href="{{ url_for('bookEntry') }}" style="padding: 0.5rem 0.1rem;">Edit Book</a></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>-->
     <tr>
       <form action="{{url_for('manageBooks')}}" method="POST">
       <td><input type="text" name="ISBN"></input></td>
@@ -75,5 +38,4 @@
     </tr>
   </table>
 </div>
-</table>-->
 {% endblock %}
