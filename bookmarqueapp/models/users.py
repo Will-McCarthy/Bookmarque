@@ -71,19 +71,19 @@ class User():
 
 class Customer(User):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super(Customer, self).__init__(**kwargs)
 
 class Admin(User):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super(Admin, self).__init__(**kwargs)
 
 
 class WebUser(User):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, **kwargs):
+        super(WebUser, self).__init__(**kwargs)
 
 
 # enumerations
