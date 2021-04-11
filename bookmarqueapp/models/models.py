@@ -1,9 +1,20 @@
 import enum
-from flask_mysqldb import MySQL #Mysql
-from bookmarqueapp import app, mysql
+from bookmarqueapp import app, db
 
+class Book(db.Model):
 
-class Book():
+    __tablename__ = 'book'
+    ISBN = db.Column(db.String(13), primary_key=True) # char(13) PK
+    bookTitle = db.Column(db.String(115)) # varchar(115)
+    authorFName = db.Column(db.String(45))
+    authorLName = db.Column(db.String(45))
+    bookImage = db.Column(db.String(50))
+    bookPrice = db.Column(db.Float)
+    bookQuantity = db.Column(db.Integer)
+    bookRating = db.Column(db.Integer)
+    bookPublisher = db.Column(db.String(45))
+    bookPublicationDate = db.Column(db.DateTime)
+    bookDescription = db.Column(db.String(1000))
 
     # constructor using all data
     def __init__(self, ISBN, title, author_fname, author_lname, image, price,
@@ -23,20 +34,8 @@ class Book():
         self.description = descriptionn
         self.category = category
 
-
     def add_to_db(self):
         print('adding to database')
-
-
-class DataAccess():
-    def __init__(self):
-        print('da')
-
-
-class BookDataAccess(DataAccess):
-    def __init__(self):
-        print('bda')
-
 
 class BookCategory(enum.Enum):
 
