@@ -28,10 +28,23 @@ app.config['MYSQL_DB'] = cfg.mysql["db"]
 app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql://' + cfg.mysql["user"] + ':'
                 + cfg.mysql["password"] + '@' + cfg.mysql["host"] + '/'
                 + cfg.mysql["db"])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-from bookmarqueapp.models.models import Book
-print(Book.query.all())
+
+from bookmarqueapp.models.books import Book, BookCategory, Categories
+#query(FooBar).join(Bar).join(Foo).filter(Foo.name == "blah")
+# session.query(BlogPost).\
+# ...             filter(BlogPost.keywords.any(keyword='firstpost')).\
+# ...             all()
+
+
+results = Book.query.all()
+results = Book.query.filter(Book.categories.any(BookCategory.categoryID == Categories.FEATURED.value))
+for result in results:
+    print(result)
+print(results[1])
+
 
 #Login initialization
 #Example secret key, probably should be changed.
