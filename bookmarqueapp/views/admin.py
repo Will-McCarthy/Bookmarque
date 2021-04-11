@@ -6,7 +6,6 @@ from functools import wraps
 from bookmarqueapp import app, mysql
 from bookmarqueapp.models.users import User, UserType
 
-
 # custom decorator for validating user access level
 # takes a variadic number of UserType enums
 def restrict_access(*user_types):
@@ -93,10 +92,6 @@ def manageUsers():
     cursor.execute('SELECT * FROM users')
     user_fetch = cursor.fetchall()
     return render_template('admin/manage_users.html', users = user_fetch)
-
-
-
-
 
 # @app.route('/admin/manage-users/user-entry')
 # @login_required
