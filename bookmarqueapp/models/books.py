@@ -24,9 +24,6 @@ class Book(db.Model):
 
     categories = db.relationship('BookCategory', secondary='book_has_book_categories', back_populates='books')
 
-    # def __repr__(self):
-    #     return()
-
 class BookCategory(db.Model):
     __tablename__ = 'book_categories'
     categoryID = db.Column(db.Integer, primary_key=True)
