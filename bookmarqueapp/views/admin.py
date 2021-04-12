@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 from functools import wraps
 
-from bookmarqueapp import app, mysql
+from bookmarqueapp import app, mysql, email_server
 from bookmarqueapp.models.users import User, UserType
 
 # custom decorator for validating user access level
@@ -100,26 +100,43 @@ def manageUsers():
 #     return render_template('admin/user_entry.html')
 
 @app.route('/admin/manage-promotions', methods=['POST','GET'])
-@login_required
-@restrict_access(UserType.ADMIN)
+#@login_required
+#@restrict_access(UserType.ADMIN)
 def managePromotions():
-    print("Something triggered promotion route")
     if request.method == 'POST':
-        print("We're in post!")
-        promo_name = request.form.get('name')
-        promo_discount = request.form.get('discount')
-        #promo_start and promo_end should come in as YYYY-MM-DD, maybe we use a calender html assistance.
-        promo_start = request.form['start']
-        promo_end = request.form['end']
-        cursor = mysql.connection.cursor()
-        promo_code = request.form['code']
-        cursor.execute('''INSERT INTO promotion(promoDiscount, promoStart, promoEnd, promoEmailStatus, promoUses, promoName,promoCode) VALUES (%s,%s,%s,%s,%s,%s,%s)''', (promo_discount, promo_start, promo_end, "Not Sent", 0, promo_name,promo_code))
-        promotion_fetch = cursor.fetchall()
-        mysql.connection.commit()
-        return redirect(url_for('managePromotions'))
+        if request.form.get('promoID'):
+            #DELETE PROMO BUTTON PRESSED
+            promo_ID = request.form.get('promoID')
+            print(promo_ID)
+            cursor = mysql.connection.cursor()
+            cursor.execute('''DELETE FROM promotion WHERE promoID = '''+promo_ID)
+            mysql.connection.commit()
+            return redirect(url_for('managePromotions'))
+        elif request.form.get('name'):
+            #ADD PROMO BUTTON PRESSED
+            promo_name = request.form.get('name')
+            promo_discount = request.form.get('discount')
+            #promo_start and promo_end should come in as YYYY-MM-DD, maybe we use a calender html assistance.
+            promo_start = request.form['start']
+            promo_end = request.form['end']
+            cursor = mysql.connection.cursor()
+            promo_code = request.form['code']
+            cursor.execute('''INSERT INTO promotion(promoDiscount, promoStart, promoEnd, promoEmailStatus, promoUses, promoName,promoCode) VALUES (%s,%s,%s,%s,%s,%s,%s)''', (promo_discount, promo_start, promo_end, "Not Sent", 0, promo_name,promo_code))
+            promotion_fetch = cursor.fetchall()
+            mysql.connection.commit()
+            #TEST EMAIL, CREATE A PROMOTION/DOESN
+            #send_promo_email(promo_name, promo_code, promo_end,promo_discount)
+            return redirect(url_for('managePromotions'))
     else:
         cursor = mysql.connection.cursor()
         cursor.execute('''SELECT * FROM promotion;''')
         promotion_fetch = cursor.fetchall()
         mysql.connection.commit()
         return render_template('admin/manage_promotions.html', promotions = promotion_fetch)
+
+
+def send_promo_email(promo_name, promo_code, promo_end,promo_discount):
+    subject = "Save " + str(float(promo_discount)*100) + "% at Bookmarque today for our " + promo_name
+    message = " <h2> Bookmarque discount </h2><hr><p> For a limited time, you can save " + str(float(promo_discount)*100) + "%. This promotion expires on " + promo_end + "</p><br><br><p>Use " + promo_code + " at checkout to save today!"
+    email_server.send_email(message, subject, "projdeploy@gmail.com", test_mode=False)
+
