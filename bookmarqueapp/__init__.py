@@ -31,6 +31,17 @@ app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql://' + cfg.mysql["user"] + ':'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
+# from bookmarqueapp.models.users import User
+# users = User.query.all()
+# for x in users:
+#     print(x)
+#     if x.address:
+#         print(x.address.addressStreet)
+#
+#     for card in x.cards:
+#         print(card.cardNumber)
+
+
 #Login initialization
 #Example secret key, probably should be changed.
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'

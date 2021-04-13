@@ -22,7 +22,7 @@ class Book(db.Model):
     bookPublicationDate = db.Column(db.DateTime)
     bookDescription = db.Column(db.String(1000))
 
-    categories = db.relationship('BookCategory', secondary='book_has_book_categories', back_populates='books')
+    categories = db.relationship('BookCategory', secondary='book_has_book_categories', back_populates='books', lazy=True)
 
 class BookCategory(db.Model):
     __tablename__ = 'book_categories'
