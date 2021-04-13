@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 from functools import wraps
 
-from bookmarqueapp import app, mysql
+from bookmarqueapp import app, mysql, db
 from bookmarqueapp.models.users import User, UserType
 
 # custom decorator for validating user access level
@@ -13,10 +13,8 @@ def restrict_access(*user_types):
         @wraps(fn)
         def can_access(*args, **kwargs):
             for type in user_types:
-                if current_user.type == type.value:
-                    print('access granted')
+                if current_user.userType == type.value:
                     return fn(*args, **kwargs)
-            print('access denied')
             return redirect(url_for('homepage'))
         return can_access
     return decorator
@@ -79,25 +77,15 @@ def bookEntry():
 @restrict_access(UserType.ADMIN)
 def manageUsers():
     if request.method == 'POST':
-        #user_id = request.form.get('id')
-        print('posted here')
         id = request.form.get('id')
         status = request.form.get('status')
         status = 'Active' if (status == 'Suspended') else 'Suspended'
-        cursor = mysql.connection.cursor()
-        cursor.execute('UPDATE users SET userStatus="' + status + '" WHERE userID=' + id)
-        mysql.connection.commit()
 
-    cursor = mysql.connection.cursor()
-    cursor.execute('SELECT * FROM users')
-    user_fetch = cursor.fetchall()
-    return render_template('admin/manage_users.html', users = user_fetch)
+        User.query.filter_by(userID=id).one().userStatus = status
+        db.session.commit()
 
-# @app.route('/admin/manage-users/user-entry')
-# @login_required
-# @restrict_access(UserType.ADMIN)
-# def userEntry():
-#     return render_template('admin/user_entry.html')
+    users = User.query.all()
+    return render_template('admin/manage_users.html', users = users)
 
 @app.route('/admin/manage-promotions', methods=['POST','GET'])
 @login_required
