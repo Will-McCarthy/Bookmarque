@@ -33,16 +33,44 @@ def admin():
 def manageBooks():
     cursor = mysql.connection.cursor()
     if request.method == 'POST':
+        check = True
         ISBN = request.form.get('ISBN')
-
+        if (ISBN is None or ISBN == "" or len(ISBN) > 13 or len(ISBN) < 13):
+            check = False
         bookTitle = request.form.get('title')
+        if (bookTitle == ""):
+            check = False
 
         author = request.form.get('author')
-        if (author != None):
+        if (author != ""):
             author = author.split();
+            for x in author:
+                if (x is None):
+                    x = ""
+        else:
+            check = False
 
+        publisher = request.form.get('publisher')
+        if (publisher is None):
+            publisher = ""
+        
+        pubDate = request.form.get('pubDate')
+        if (pubDate is None):
+            pubDate = "1971-01-01"
+        
+        price = request.form.get('price')
+        if (price == ""):
+            check = False
+
+        copies = request.form.get('copies')
+        if (copies == "" or copies is None):
+            copies = 1
+            
         subject = request.form.get('subject')
-        if (subject != None):
+        if (subject == ""):
+            check = False
+        
+        if check and subject is not None:
             if (',' in subject):
                 subject = subject.split(',')
                 for x in subject:
@@ -53,17 +81,19 @@ def manageBooks():
             else:
                 cursor.execute('''SELECT categoryID FROM book_categories WHERE categoryName = %s;''', [subject]);
                 subject = cursor.fetchone()
-                subject = subject[0]
-                cursor.execute('''INSERT INTO book_has_book_categories (ISBN, categoryID) VALUES (%s, %s);''', (ISBN, [subject]))
+                if (subject is not None):
+                    subject = subject[0]
+                    cursor.execute('''INSERT INTO book_has_book_categories (ISBN, categoryID) VALUES (%s, %s);''', (ISBN, [subject]))
 
-        copies = request.form.get('copies')
-
-        cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorFName, authorLName, bookQuantity) VALUES (%s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], author[1], [copies]))
+        if check and len(author) > 1:
+            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorFName, authorLName, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], author[1], [copies], publisher, pubDate, [price]))
+        elif check:
+            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorLName, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], [copies], publisher, pubDate, [price]))
 
         mysql.connection.commit()
         return redirect(url_for('manageBooks'))
 
-    cursor.execute('''SELECT book.ISBN, bookTitle, CONCAT(authorFName, " ", authorLName) AS authorName, group_concat(categoryName) AS categories, bookQuantity FROM book JOIN book_has_book_categories ON book.ISBN = book_has_book_categories.ISBN JOIN book_categories ON book_has_book_categories.categoryID = book_categories.categoryID GROUP BY ISBN;''')
+    cursor.execute('''SELECT book.ISBN, bookTitle, CONCAT(authorFName, " ", authorLName) AS authorName, bookPublisher, bookPublicationDate, group_concat(categoryName) AS categories, bookPrice, bookQuantity FROM book JOIN book_has_book_categories ON book.ISBN = book_has_book_categories.ISBN JOIN book_categories ON book_has_book_categories.categoryID = book_categories.categoryID GROUP BY ISBN;''')
     bookData = cursor.fetchall()
     mysql.connection.commit()
     return render_template('admin/manage_books.html', bookData = bookData)

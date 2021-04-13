@@ -12,7 +12,10 @@
       <th>ISBN</th>
       <th>Book Title</th>
       <th>Author</th>
+      <th>Publisher</th>
+      <th>Publication Date</th>
       <th>Subject</th>
+      <th>Price</th>
       <th>Copies</th>
       <th></th>
     </tr>
@@ -23,6 +26,9 @@
       <td>{{item[2]}}</td>
       <td>{{item[3]}}</td>
       <td>{{item[4]}}</td>
+      <td>{{item[5]}}</td>
+      <td>{{item[6]}}</td>
+      <td>{{item[7]}}</td>
       <td><a href="{{ url_for('bookEntry') }}" style="padding: 0.5rem 0.1rem;"><button>Edit Book</button></a></td>
     </tr>
     {% endfor %}
@@ -31,7 +37,10 @@
       <td><input type="text" name="ISBN"></input></td>
       <td><input type="text" name="title"></input></td>
       <td><input type="text" name="author"></input></td>
+      <td><input type="text" name="publisher"></input></td>
+      <td><input type="date" name="pubDate"></input></td>
       <td><input type="text" name="subject"></input></td>
+      <td><input type="number" step="0.01" name="price"></input></td>
       <td><input type="number" name="copies"></input></td>
       <td><input type="submit" value="Add Book"></input></td>
       </form>
