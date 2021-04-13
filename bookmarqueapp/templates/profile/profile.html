@@ -16,8 +16,8 @@
       <label class="profile-label">Card Information</label><br>
       <select id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
           <option disabled="true">- Select Card -</option>
-          {% for card in cardDropdown %}
-            <option value="{{ card[1] }}">{{ card[4] }}</option>
+          {% for card in cards %}
+            <option value="{{ card[0] }}">{{ card[3] }}</option>
           {% endfor %}
         </select>
 
@@ -25,16 +25,16 @@
       <br><span class="profile-links"><a href="/profile/update-card">Edit Card</a></span>
     </div>
 
-    {% if cardDropdown[0] %}
-      {% for card in cardDropdown %}
+    {% if cards[0] %}
+      {% for card in cards %}
         {% if (loop.index == 1) %}
-          <span class="card-information" id="{{ card[1] }}" style="display: block">
+          <span class="card-information" id="{{ card[0] }}" style="display: block">
         {% else %}
-          <span class="card-information" id="{{ card[1] }}" style="display: none">
+          <span class="card-information" id="{{ card[0] }}" style="display: none">
         {% endif %}
-        <p>{{ card[4] }}</p>
-        <p>{{ card[2] }}</p>
-        <p>Expires on {{ card[3].month ~ "/" ~ card[3].year }}</p>
+        <p>{{ card[3] }}</p>
+        <p>{{ card[1] }}</p>
+        <p>Expires on {{ card[2].month ~ "/" ~ card[2].year }}</p>
       </span>
       {% endfor %}
       {% else %}
