@@ -100,8 +100,8 @@ def manageUsers():
 #     return render_template('admin/user_entry.html')
 
 @app.route('/admin/manage-promotions', methods=['POST','GET'])
-#@login_required
-#@restrict_access(UserType.ADMIN)
+@login_required
+@restrict_access(UserType.ADMIN)
 def managePromotions():
     if request.method == 'POST':
         if request.form.get('promoID'):
