@@ -397,6 +397,11 @@ footer div {
   text-decoration: underline;
 }
 
+#password-match-error {
+  color: red;
+  font-weight: bold;
+}
+
 #card-details {
   display: grid;
   grid-auto-flow: column;
@@ -1092,6 +1097,10 @@ td a { //need to make a's in td's with this padding
     color: $red;
 }
 
+#card-selector {
+  width: 50%;
+}
+
 .edit-fields {
     input {
 	size: 20;
@@ -1127,6 +1136,7 @@ td a { //need to make a's in td's with this padding
     text-align: center;
     /*box-shadow: */
     padding: 0.45rem 2rem;
+    cursor: pointer;
 }
 
 .button-grey {
@@ -1140,6 +1150,12 @@ td a { //need to make a's in td's with this padding
     text-align: center;
     /*box-shadow: */
     padding: 0.5rem 2rem;
+    cursor: pointer;
+}
+
+.button-blue-adjusted:hover, .button-grey:hover {
+  filter: brightness(120%);
+  box-shadow: 0rem .05rem .15rem $dark-blue;
 }
 
 .card-details-edit {

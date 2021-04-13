@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Crimson+Text&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/login_popup.js') }}"></script>
     <script src="{{ url_for('static', filename='js/creditcard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/profile.js') }}"></script>
   </head>
 
   <body>
@@ -58,7 +59,7 @@
         </div>
       </header>
 
-      {% if current_user.is_authenticated and (current_user.type == 'Admin') %}
+      {% if current_user.is_authenticated and (current_user.userType == 'Admin') %}
         {% include "admin/admin_utilities.html" %}
       {% endif %}
 
