@@ -1,7 +1,10 @@
 {% extends "default_layout.html" %}
 {% block content %}
 <div class="center">
-  <h1>My Profile</h1>
+  <h1>
+    My Profile
+    <a href="{{ url_for('edit_profile') }}"><img id="edit-gear" src="{{ url_for('static', filename='assets/icons/gear.svg') }}"></a>
+  </h1>
   <div class="profile-format">
     <label class="profile-label">First Name <span class="profile-asterisks">*</span></label>
     <span>{{ details[2] }}</span>
@@ -11,26 +14,32 @@
     <span>{{ details[3] }}</span>
     <div>
       <label class="profile-label">Card Information</label><br>
-
-      <form id="cardSelectionForm" action="/profile" method="POST">
-        <select style="width: 50%;" name="cardOptions">
-            <option disabled="true">- Select Card -</option>
-            {% for eachCard in cardDropdown %}
-            <option value="{{ cardSelected }}">{{ eachCard[4] }}</option>
-            {% endfor %}
+      <select id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
+          <option disabled="true">- Select Card -</option>
+          {% for card in cardDropdown %}
+            <option value="{{ card[1] }}">{{ card[4] }}</option>
+          {% endfor %}
         </select>
-      <input type="submit" value="Enter">
-      </form>
 
       <br><span class="profile-links"><a href="/profile/create-card">+ Add New Card</a></span>
       <br><span class="profile-links"><a href="/profile/update-card">Edit Card</a></span>
     </div>
 
-    {% if selectedCard is defined %}
-      <span>{{ selectedCard[4] }}
-      <br>{{ selectedCard[2] }}
-      <br>Expires on {{ selectedCard[3] }}
-    {% endif %}
+    {% if cardDropdown[0] %}
+      {% for card in cardDropdown %}
+        {% if (loop.index == 1) %}
+          <span class="card-information" id="{{ card[1] }}" style="display: block">
+        {% else %}
+          <span class="card-information" id="{{ card[1] }}" style="display: none">
+        {% endif %}
+        <p>{{ card[4] }}</p>
+        <p>{{ card[2] }}</p>
+        <p>Expires on {{ card[3].month ~ "/" ~ card[3].year }}</p>
+      </span>
+      {% endfor %}
+      {% else %}
+        <span>No payment in system</span>
+      {% endif %}
 
       <br><span class="profile-links"><a href="">Change Card</a></span>
     </span>
@@ -50,7 +59,6 @@
   </div>
   <div class="profile-submit">
     <span class="profile-required">*Required</span><br>
-    <a class="button-blue-adjusted" href="/profile/edit">Update Profile</a>
   </div>
 
   <a href="{{ url_for('logout') }}" class="button-gold">Logout</a>

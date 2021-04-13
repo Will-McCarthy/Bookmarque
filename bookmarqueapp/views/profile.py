@@ -170,20 +170,12 @@ def profile():
     cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
     cardDropdown = cursor.fetchall()
 
-    if request.method == "POST":
-        # select edCard contains the the card the user selects from dropdown
-        selectedCard = request.form.get('cardSelected')
-        if (selectedCard is None or selectedCard == ""):
-            selectedCard = cardDropdown[0]
-    else:
-        selectedCard = cardDropdown[0]
-
     mysql.connection.commit()
 
     print(information[0][0])
     print(address)
     print(card)
-    return render_template('profile/profile.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/profile.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown)
     #return render_template('profile.html')
 
 @app.route('/profile/update-password')
