@@ -1,7 +1,8 @@
 {% extends "default_layout.html" %}
 {% block content %}
 <div class="center">
-  <h1>My Profile</h1>
+  <h1>My Profile<a href="{{ url_for('edit_profile') }}"><img id="edit-gear" src="{{ url_for('static', filename='assets/icons/gear.svg') }}"></a>
+</a></h1>
   <div class="profile-format">
     <label class="profile-label">First Name <span class="profile-asterisks">*</span></label>
     <span>{{ current_user.userFName }}</span>
@@ -54,7 +55,6 @@
   </div>
   <div class="profile-submit">
     <span class="profile-required">*Required</span><br>
-    <a class="button-blue-adjusted" href="/profile/edit">Update Profile</a>
   </div>
 
   <a href="{{ url_for('logout') }}" class="button-gold">Logout</a>

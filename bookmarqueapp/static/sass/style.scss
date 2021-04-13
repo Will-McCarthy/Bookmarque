@@ -1107,6 +1107,18 @@ td a { //need to make a's in td's with this padding
     }
 }
 
+#edit-gear {
+  opacity: 50%;
+  width: 1rem;
+  height: auto;
+  vertical-align: middle;
+  padding-left: .25rem;
+}
+
+#edit-gear:hover {
+  opacity: 100%;
+}
+
 .password-req {
     minlength: 8;
 }
