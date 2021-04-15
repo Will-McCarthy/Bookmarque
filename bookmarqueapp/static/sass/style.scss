@@ -397,6 +397,11 @@ footer div {
   text-decoration: underline;
 }
 
+#password-match-error {
+  color: red;
+  font-weight: bold;
+}
+
 #card-details {
   display: grid;
   grid-auto-flow: column;

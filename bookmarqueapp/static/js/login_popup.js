@@ -94,6 +94,31 @@ function validateRegistration() {
   return completeness;
 } //validateRegistration
 
+/*
+ * Check password and display error for fields with two passwords
+ * for a password update.
+ */
+function validatePasswordChange() {
+  let password = $('passwordReset');
+  let confirmPassword = $('passConfirm');
+  let completeness = true;
+  if (password.value != confirmPassword.value) {
+    $('password-match-error').innerHTML = 'Both fields must match';
+    completeness = false;
+  } else {
+    $('password-match-error').innerHTML = '';
+  }
+
+  if (!password.value.match(passwordformat)) {
+    password.style.border = 'solid .15rem red';
+    completeness = false;
+  } else {
+    password.style.border = '';
+  } //else
+
+  return completeness;
+}
+
 function validatePayment() {
   let type = document.getElementsByName('cardType')[0];
   let number = document.getElementsByName('cardNumber')[0];

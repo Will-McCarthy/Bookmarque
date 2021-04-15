@@ -158,21 +158,16 @@ def reset_password(email_encrypted):
     if request.method == 'POST':
         print(str(email_encrypted))
         email = email_encrypted # definitely not secure but hopefully works
-
         password = request.form.get('password')
         passConfirm = request.form.get('passConfirm') # used to check if password is same in both fields
-        submit = request.form.get('Save')
-        if (password is None or password == ""):
-            password = 'password'
-        if (submit is None):
-            submit = "Cancel"
-        if (submit == "Save" and password == passConfirm and len(password) >= 8):
+
+        if password:
             cursor = mysql.connection.cursor()
             cursor.execute('''UPDATE users SET userPassword = %s WHERE userEmail = %s;''', ([password], [email]))
             mysql.connection.commit()
         return render_template('index.html')
     if request.method == 'GET':
-        return render_template('login/messages/reset_password.html', email_encrypted=email_encrypted)
+        return render_template('login/reset_password.html', email_encrypted=email_encrypted)
 
 @app.route('/verify/<email_encrypted>')
 def verify_email(email_encrypted):
