@@ -167,7 +167,17 @@ def reset_password(email_encrypted):
             mysql.connection.commit()
         return render_template('index.html')
     if request.method == 'GET':
-        return render_template('login/reset_password.html', email_encrypted=email_encrypted)
+
+        # check link is valid by seeing if email is real
+        email = email_encrypted
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM users WHERE userEmail=%s;''', [email])
+        user = cursor.fetchall()
+
+        if user: # if query returned someone with that email
+            return render_template('login/reset_password.html', email_encrypted=email_encrypted)
+        else:
+            return redirect(url_for('homepage'))
 
 @app.route('/verify/<email_encrypted>')
 def verify_email(email_encrypted):
