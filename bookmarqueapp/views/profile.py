@@ -3,7 +3,7 @@ from flask import session
 from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 
-from bookmarqueapp import app, mysql, login_manager
+from bookmarqueapp import app, mysql, login_manager, email_server
 from bookmarqueapp.models.users import User
 
 @app.route('/profile', methods = ['POST', 'GET'])
