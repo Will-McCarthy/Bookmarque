@@ -17,8 +17,22 @@ function changeCard() {
 /*
  * Toggle whether password is hidden behind dots.
  */
-// function togglePassword() {
-//   if passwordHidden {
-//     $('password').
-//   }
-// }
+function togglePassword() {
+
+  let password = $('password-visible');
+  let placeholder = $('password-hidden');
+  let toggle = $('toggle-password');
+
+
+  if (password.style.display == "none") {
+    placeholder.style.display = "none";
+    password.style.display = "inline";
+    toggle.innerHTML = "Hide Password";
+  } else {
+    password.style.display = "none";
+    placeholder.style.display = "inline";
+    toggle.innerHTML = "Display Password";
+  }
+
+
+}
