@@ -167,15 +167,15 @@ def profile():
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cards = cursor.fetchall()
 
-    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
-    cardDropdown = cursor.fetchall()
+    #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    #cardDropdown = cursor.fetchall()
 
     mysql.connection.commit()
 
-    print(information[0][0])
-    print(address)
-    print(card)
-    return render_template('profile/profile.html', details=information[0], add=address, cards=cards)
+    #print(information[0][0])
+    #print(address)
+    #print(card)
+    return render_template('profile/profile.html', details=information[0], add=address[0], cards=cards)
     #return render_template('profile.html')
 
 @app.route('/profile/update-password')
@@ -191,27 +191,27 @@ def password_panel():
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
+    cards = cursor.fetchall()
 
+    #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    #cardDropdown = cursor.fetchall()
 
-    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
-    cardDropdown = cursor.fetchall()
+    #card = cursor.fetchall()
 
-    card = cursor.fetchall()
+    #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    #cardDropdown = cursor.fetchall()
 
-    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
-    cardDropdown = cursor.fetchall()
-
-    if request.method == "POST":
+    #if request.method == "POST":
         # select edCard contains the the card the user selects from dropdown
-        selectedCard = request.form.get('cardSelected')
-        if (selectedCard is None or selectedCard == ""):
-            selectedCard = cardDropdown[0]
-    else:
-        selectedCard = cardDropdown[0]
+    #    selectedCard = request.form.get('cardSelected')
+    #    if (selectedCard is None or selectedCard == ""):
+    #        selectedCard = cardDropdown[0]
+    #else:
+    #    selectedCard = cardDropdown[0]
 
 
     mysql.connection.commit()
-    return render_template('profile/update_password.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/update_password.html', details=information[0], add=address[0], cards=cards)
 
 @app.route('/profile/update-card')
 @login_required
@@ -226,22 +226,22 @@ def card_panel():
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
-    card = cursor.fetchall()
+    cards = cursor.fetchall()
 
-    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
-    cardDropdown = cursor.fetchall()
+    #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    #cardDropdown = cursor.fetchall()
 
-    if request.method == "POST":
+    #if request.method == "POST":
         # select edCard contains the the card the user selects from dropdown
-        selectedCard = request.form.get('cardSelected')
-        if (selectedCard is None or selectedCard == ""):
-            selectedCard = cardDropdown[0]
-    else:
-        selectedCard = cardDropdown[0]
+    #    selectedCard = request.form.get('cardSelected')
+    #    if (selectedCard is None or selectedCard == ""):
+    #        selectedCard = cardDropdown[0]
+    #else:
+    #    selectedCard = cardDropdown[0]
 
 
     mysql.connection.commit()
-    return render_template('profile/update_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/update_card.html', details=information[0], add=address[0], cards=cards)
 
 @app.route('/profile/create-card')
 @login_required
@@ -256,21 +256,21 @@ def card_panel_2():
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
-    card = cursor.fetchall()
+    cards = cursor.fetchall()
 
-    cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
-    cardDropdown = cursor.fetchall()
+    #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
+    #cardDropdown = cursor.fetchall()
 
-    if request.method == "POST":
+    #if request.method == "POST":
         # select edCard contains the the card the user selects from dropdown
-        selectedCard = request.form.get('cardSelected')
-        if (selectedCard is None or selectedCard == ""):
-            selectedCard = cardDropdown[0]
-    else:
-        selectedCard = cardDropdown[0]
+    #    selectedCard = request.form.get('cardSelected')
+    #    if (selectedCard is None or selectedCard == ""):
+    #        selectedCard = cardDropdown[0]
+    #else:
+    #    selectedCard = cardDropdown[0]
 
     mysql.connection.commit()
-    return render_template('profile/create_card.html', details=information[0], add=address, card=card, cardDropdown=cardDropdown, selectedCard=selectedCard)
+    return render_template('profile/create_card.html', details=information[0], add=address[0], cards=cards)
 
 @app.route('/profile/edit')
 @login_required
