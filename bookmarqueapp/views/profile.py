@@ -69,7 +69,7 @@ def profile():
 
             message = "<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>"
             subject = "Your password has been changed"
-            #email_server.send_email(message, subject, current_user.email, DEBUG_MODE)
+            email_server.send_email(message, subject, 'projdeploy@gmail.com', DEBUG_MODE)
 
 
         # handles update_card form and create_card form
