@@ -47,8 +47,10 @@
       <label class="profile-label">Password <span class="profile-asterisks">*</span></label>
       <br><span class="profile-links"><a href="/profile/update-password">Update Password</a></span>
     </div>
-    <span>{{ details[6] }}
-      <br><span class="profile-links"><a href="">Display Password</a></span>
+    <span>
+      <span id="password-visible" style="display: none">{{ details[6] }}</span>
+      <span id="password-hidden">•••••••••••</span>
+      <br><span class="profile-links clickable" id="toggle-password" onclick="togglePassword()" style="color: blue; text-decoration: underline;">Display Password</span>
     </span>
     <label class="profile-label">Email Address <span class="profile-asterisks">*</span></label>
     <span>{{ details[1] }}</span>
