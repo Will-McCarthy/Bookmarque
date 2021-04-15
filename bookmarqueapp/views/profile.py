@@ -69,7 +69,7 @@ def profile():
 
             message = "<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>"
             subject = "Your password has been changed"
-            email_server.send_email(message, subject, current_user.email, DEBUG_MODE)
+            #email_server.send_email(message, subject, current_user.email, DEBUG_MODE)
 
 
         # handles update_card form and create_card form
@@ -170,12 +170,19 @@ def profile():
     #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
     #cardDropdown = cursor.fetchall()
 
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    addressCheck = cursor.fetchone()
+    addressCheck = addressCheck[0]
+    
     mysql.connection.commit()
 
     #print(information[0][0])
     #print(address)
     #print(card)
-    return render_template('profile/profile.html', details=information[0], add=address[0], cards=cards)
+    if (addressCheck == 0):
+        return render_template('profile/profile.html', details=information[0], add=address, cards=cards)
+    else:
+        return render_template('profile/profile.html', details=information[0], add=address[0], cards=cards)
     #return render_template('profile.html')
 
 @app.route('/profile/update-password')
@@ -208,10 +215,16 @@ def password_panel():
     #        selectedCard = cardDropdown[0]
     #else:
     #    selectedCard = cardDropdown[0]
-
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    addressCheck = cursor.fetchone()
+    addressCheck = addressCheck[0]
 
     mysql.connection.commit()
-    return render_template('profile/update_password.html', details=information[0], add=address[0], cards=cards)
+
+    if (addressCheck == 0):
+        return render_template('profile/update_password.html', details=information[0], add=address, cards=cards)
+    else:
+        return render_template('profile/update_password.html', details=information[0], add=address[0], cards=cards)
 
 @app.route('/profile/update-card')
 @login_required
@@ -238,10 +251,15 @@ def card_panel():
     #        selectedCard = cardDropdown[0]
     #else:
     #    selectedCard = cardDropdown[0]
-
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    addressCheck = cursor.fetchone()
+    addressCheck = addressCheck[0]
 
     mysql.connection.commit()
-    return render_template('profile/update_card.html', details=information[0], add=address[0], cards=cards)
+    if (addressCheck == 0):
+        return render_template('profile/update_card.html', details=information[0], add=address, cards=cards)
+    else:
+        return render_template('profile/update_card.html', details=information[0], add=address[0], cards=cards)
 
 @app.route('/profile/create-card')
 @login_required
@@ -268,9 +286,16 @@ def card_panel_2():
     #        selectedCard = cardDropdown[0]
     #else:
     #    selectedCard = cardDropdown[0]
-
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    addressCheck = cursor.fetchone()
+    addressCheck = addressCheck[0]
+    
     mysql.connection.commit()
-    return render_template('profile/create_card.html', details=information[0], add=address[0], cards=cards)
+
+    if (addressCheck == 0):
+        return render_template('profile/create_card.html', details=information[0], add=address, cards=cards)
+    else:
+        return render_template('profile/create_card.html', details=information[0], add=address[0], cards=cards)
 
 @app.route('/profile/edit')
 @login_required
