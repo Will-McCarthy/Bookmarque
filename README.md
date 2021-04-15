@@ -49,11 +49,17 @@ To start, you'll have to have an active mysql server on your computer. This can 
 
 To provide credentials to MySQL, enter configuration details into a `config.py` file using template.
 
+## Splinter Setup
+- Currently testing the use of splinter to retrieve currently selected card from webpage
+- pip install splinter
+- pip install splinter[flask]
 
 ```
 pip install libsass
 pip install flask_mysqldb
 pip install flask_login
+pip install splinter
+pip install splinter[flask]
 export FLASK_APP=bookmarqueapp or set FLASK_APP=bookmarqueapp
 flask run
 ```

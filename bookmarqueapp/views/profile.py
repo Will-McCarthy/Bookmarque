@@ -1,7 +1,9 @@
 from flask import Flask, redirect, request, render_template, url_for
 from flask import session
 from flask_mysqldb import MySQL #Mysql
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Login
+#from bs4 import BeautifulSoup
+from splinter import Browser
 
 from bookmarqueapp import app, mysql, login_manager
 from bookmarqueapp.models.users import User
@@ -69,7 +71,7 @@ def profile():
 
             message = "<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>"
             subject = "Your password has been changed"
-            email_server.send_email(message, subject, current_user.email, DEBUG_MODE)
+            email_server.send_email(message, subject, current_user.email, DEBUG_MODE) #----------
 
 
         # handles update_card form and create_card form
@@ -106,8 +108,21 @@ def profile():
         if (confirm is None):
             confirm = "Cancel"
         if ((confirm == "Save") and cardTest > 0):
+            browser = Browser('flask', app=app)
+            browser.visit('http://127.0.0.1:5000/profile')
+            
+            chosenCard = browser.find_by_css('option[id="cTest"]').first # !--------------------- current error is that it cannot find the element
+            chosenCard = chosenCard.value
+            #profile = driver.page_source
+            #bSoup = BeautifulSoup(html)
+            
+            #element = '<option id="cTest" value="{{ card[0] }}">{{ card[3] }}</option>'
+            #bSoup = bs.BeautifulSoup(element, 'lxml')
+            #chosenCard = bSoup.find("option", {"id": "cTest"})
+            #chosenCard = chosenCard.get('value')
+            print("this is chosen card: " + chosenCard)
             #cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], dateConcat, email))
-            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT cardID AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], dateConcat, email))
+            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT cardID AS min FROM users_has_card WHERE cardID = %s) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', ([chosenCard], cardList, cardNumber, [SVC], dateConcat, email))
 
         # ensures cards have unique ids
         cursor.execute('''SELECT MAX(cardID) FROM card;''');

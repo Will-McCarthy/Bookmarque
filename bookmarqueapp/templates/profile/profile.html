@@ -17,7 +17,7 @@
       <select id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
           <option disabled="true">- Select Card -</option>
           {% for card in cards %}
-            <option value="{{ card[0] }}">{{ card[3] }}</option>
+            <option id="cTest" value="{{ card[0] }}">{{ card[3] }}</option>
           {% endfor %}
         </select>
 
