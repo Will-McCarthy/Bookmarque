@@ -1,13 +1,15 @@
 {% extends "default_layout.html" %}
 {% block content %}
 
+<!--
 <div style="margin: 3%; width:96%; display: flex; justify-content: flex-end; align-items: flex-end;">
   <label for="fname">Search:</label>
   <input type="text" id="fname" name="fname">
 </div>
+-->
 
 <div>
-  <form name="promotion_add" action="{{ url_for('managePromotions') }}" method="POST">
+  
   <table>
     <tr>
       <th>Name</th>
@@ -27,21 +29,53 @@
       <td>{{item[3]}}</td>
       <td>{{item[4]}}</td>
       <td>{{item[5]}}</td>
+      <td>
+        <form method="POST" action="{{ url_for('managePromotions') }}">
+          <input type="hidden" value={{item[0]}} name="promoID">
+          {% if item[4] == 'Emailed' %}
+            <button type="submit" disabled>Delete</button>
+          {% else %}
+            <button type="submit">Delete</button>
+          {% endif %}
+        </form> 
+    </td>
     </tr>
     {% endfor %}
+    
 
+    <form id="promotion_add" onsubmit="return dateCompare()" name="promotion_add" action="{{ url_for('managePromotions') }}" method="POST">
     <tr>
-      <td><input name="name" type="text" placeholder="Name here" required/></td>
-      <td><input name="code" type="text" placeholder="Code here" required/></td>
-      <td><input name="discount" type="number" placeholder="25% off = 0.25" step="0.01" min="0" max="1" required/></td>
-      <td><input name="start" type="date" placeholder="YYYY-MM-DD" required/></td>
-      <td><input name="end" type="date" placeholder="YYYY-MM-DD" required/></td>
-      <td><input type="submit" value="Add Promo Code"></input></td>
+      <td><input form="promotion_add" name="name" type="text" placeholder="Name here" required/></td>
+      <td><input form="promotion_add" name="code" type="text" placeholder="Code here" required/></td>
+      <td><input form="promotion_add" name="discount" type="number" placeholder="25% off = 0.25" step="0.01" min="0" max="1" required/></td>
+      <td><input form="promotion_add" id="start" name="start" type="date" placeholder="YYYY-MM-DD" required/></td>
+      <td><input form="promotion_add" id="end" name="end" type="date" placeholder="YYYY-MM-DD" required/></td>
+      <td><input form="promotion_add" type="submit" value="Add Promo Code"></input></td>
     </tr>
+  </form>
 
   </table>
-  </form>
+  
+  
 </div>
 
-<input id="edit_promo_codes" type="button" value="Edit Promo Codes"></input>
+<p name="dateAlert" id="dateAlert" style="text-align: center; display: none; width: 50%; background-color: red; padding: 1em; color: white; margin-left: auto; margin-right: auto;"> Please make sure that your start date is before your end date</p>
+
+<script>
+  function dateCompare(){
+    console.log("In compare");
+    var start = document.getElementById("start").value;
+    console.log(start);
+    var end = document.getElementById("end").value;
+    console.log(end);
+    if(new Date(end) > new Date(start)){
+      console.log("GOOD");
+      return true;
+    }else{
+      document.getElementById('dateAlert').style.display = "block";
+      return false;
+    }
+  }
+  </script>
+
 {% endblock %}
