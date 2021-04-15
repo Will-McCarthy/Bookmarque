@@ -12,19 +12,20 @@
     <span>{{ add[0] }}<br>{{ add[1] }}, {{ add[2] }} {{ add[3] }}</span>
     <label class="profile-label">Last Name <span class="profile-asterisks">*</span></label>
     <span>{{ details[3] }}</span>
+    <form action="/profile/update-card" method="POST">
     <div>
       <label class="profile-label">Card Information</label><br>
-      <select id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
+      <select form="cardOptions" id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
           <option disabled="true">- Select Card -</option>
           {% for card in cards %}
-            <option id="cTest" value="{{ card[0] }}">{{ card[3] }}</option>
+            <option value="{{ card[0] }}">{{ card[3] }}</option>
           {% endfor %}
         </select>
 
       <br><span class="profile-links"><a href="/profile/create-card">+ Add New Card</a></span>
-      <br><span class="profile-links"><a href="/profile/update-card">Edit Card</a></span>
+      <br><input class="profile-link-imitation" type="submit" value="Edit Card">
     </div>
-
+    </form>
     {% if cards[0] %}
       {% for card in cards %}
         {% if (loop.index == 1) %}

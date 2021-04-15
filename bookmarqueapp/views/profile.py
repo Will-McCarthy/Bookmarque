@@ -75,6 +75,10 @@ def profile():
 
 
         # handles update_card form and create_card form
+        idCard = request.form.get('IdCard')
+        if (idCard is None):
+            idCard = "none"
+        
         cardList = request.form.get('cardList')
         if ((cardList is None or cardList == "") and cardTest > 0):
             cardList = initCard[3]
@@ -107,12 +111,12 @@ def profile():
         confirm = request.form.get("saveCard")
         if (confirm is None):
             confirm = "Cancel"
-        if ((confirm == "Save") and cardTest > 0):
-            browser = Browser('flask', app=app)
-            browser.visit('http://127.0.0.1:5000/profile')
+        if ((confirm == "Save") and cardTest > 0 and idCard != "none"):
+            #browser = Browser('flask', app=app)
+            #browser.visit('http://127.0.0.1:5000/profile')
             
-            chosenCard = browser.find_by_css('option[id="cTest"]').first # !--------------------- current error is that it cannot find the element
-            chosenCard = chosenCard.value
+            #chosenCard = browser.find_by_css('option[id="cTest"]').first # !--------------------- current error is that it cannot find the element
+            #chosenCard = chosenCard.value
             #profile = driver.page_source
             #bSoup = BeautifulSoup(html)
             
@@ -120,9 +124,9 @@ def profile():
             #bSoup = bs.BeautifulSoup(element, 'lxml')
             #chosenCard = bSoup.find("option", {"id": "cTest"})
             #chosenCard = chosenCard.get('value')
-            print("this is chosen card: " + chosenCard)
+            #print("this is chosen card: " + chosenCard)
             #cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT MIN(cardID) AS min FROM users_has_card ) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', (cardList, cardNumber, [SVC], dateConcat, email))
-            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT cardID AS min FROM users_has_card WHERE cardID = %s) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', ([chosenCard], cardList, cardNumber, [SVC], dateConcat, email))
+            cursor.execute('''UPDATE card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail JOIN (SELECT cardID AS min FROM users_has_card WHERE cardID = %s) AS min ON min.min = users_has_card.cardID SET cardType = %s, cardNumber = %s, cardSVC = %s, cardExpDate = %s WHERE users_has_card.userEmail = %s;''', ([idCard], cardList, cardNumber, [SVC], dateConcat, email))
 
         # ensures cards have unique ids
         cursor.execute('''SELECT MAX(cardID) FROM card;''');
@@ -228,10 +232,14 @@ def password_panel():
     mysql.connection.commit()
     return render_template('profile/update_password.html', details=information[0], add=address[0], cards=cards)
 
-@app.route('/profile/update-card')
+@app.route('/profile/update-card', methods = ['POST', 'GET'])
 @login_required
 def card_panel():
     cursor = mysql.connection.cursor()
+    if request.method == 'POST':
+        cardId = request.form.get('cardOptions')
+        print(cardId)
+        print('---------------------------------')
     cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
     information = cursor.fetchall()
     cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
@@ -256,7 +264,7 @@ def card_panel():
 
 
     mysql.connection.commit()
-    return render_template('profile/update_card.html', details=information[0], add=address[0], cards=cards)
+    return render_template('profile/update_card.html', details=information[0], add=address[0], cards=cards, cardId=cardId)
 
 @app.route('/profile/create-card')
 @login_required
