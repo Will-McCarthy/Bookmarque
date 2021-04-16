@@ -1238,3 +1238,13 @@ td a { //need to make a's in td's with this padding
   padding: 1em;
 
 }
+
+.profile-link-imitation{
+  background: none;
+  border: none;
+  padding: 0;
+  color:dark $blue;
+  font-size: x-small;
+  text-decoration: underline;
+  cursor: pointer;
+}
