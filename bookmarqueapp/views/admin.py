@@ -51,8 +51,9 @@ def manageBooks():
             check = False
 
         publisher = request.form.get('publisher')
-        if (publisher is None):
+        if (publisher is None or publisher == ""):
             publisher = ""
+            check = False
         
         pubDate = request.form.get('pubDate')
         if (pubDate is None):
