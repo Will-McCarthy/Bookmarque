@@ -161,6 +161,11 @@ header {
   opacity: 100%;
 }
 
+/* manage books */
+#manage-books-table {
+  overflow-x: scroll;
+}
+
 /* search bar */
 .search-bar {
   display: flex;
