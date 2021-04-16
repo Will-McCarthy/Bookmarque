@@ -7,49 +7,37 @@
 
     <label>Card Type</label>
     <select form="cardForm" name="cardList">
-      <option value="">Card Type</option>
-      <option value="American Express">American Express</option>
-      <option value="Discover">Discover</option>
-      <option value="MasterCard">MasterCard</option>
-      <option value="Visa">Visa</option>
+      <option disabled>Card Type</option>
+      <option value="American Express" {% if current_card[0][2] == "American Express" %} selected="selected" {% endif %}>American Express</option>
+      <option value="Discover" {% if current_card[0][2] == "Discover" %} selected="selected"{% endif %} >Discover</option>
+      <option value="MasterCard" {% if current_card[0][2] == "MasterCard" %} selected="selected" {% endif %}>MasterCard</option>
+      <option value="Visa" {% if current_card[0][2] == "Visa" %} selected="selected" {% endif %}>Visa</option>
     </select>
+
     <label>Card Number</label>
-    <input type="text" name="cardNumber">
+    <input type="text" name="cardNumber" value="{{ current_card[0][0] }}">
+
     <label>Expiration Date</label>
     <div class="card-details-edit">
       <select form="cardForm" name="monthList">
-	<option disabled="true" value="">Month</option>
-	<option value="01">01</option>
-	<option value="02">02</option>
-	<option value="03">03</option>
-	<option value="04">04</option>
-	<option value="05">05</option>
-	<option value="06">06</option>
-	<option value="07">07</option>
-	<option value="08">08</option>
-	<option value="09">09</option>
-	<option value="10">10</option>
-	<option value="11">11</option>
-	<option value="12">12</option>
+      	<option disabled="true" value="">Month</option>
+        {% for month in range(12) %}
+          <option value="{{ "{:02d}".format(month + 1) }}" {% if (month + 1) == current_card[0][1].month %} selected="selected" {% endif %}>{{ "{:02d}".format(month + 1) }}</option>
+        {% endfor %}
+
       </select>
       <select form="cardForm" name="yearList">
-	<option disabled="true" value="">Year</option>
-	<option value="2021">2021</option>
-	<option value="2022">2022</option>
-	<option value="2023">2023</option>
-	<option value="2024">2024</option>
-	<option value="2025">2025</option>
-	<option value="2026">2026</option>
-	<option value="2027">2027</option>
-	<option value="2028">2028</option>
-	<option value="2029">2029</option>
-	<option value="2030">2030</option>
+      	<option disabled="true" value="">Year</option>
+        {% for year in range(2021, 2031) %}
+          <option value="{{ year }}" {% if year == current_card[0][1].year %} selected="selected" {% endif %}>{{ year }}</option>
+        {% endfor %}
       </select>
-      <input type="text" placeholder="SVC" name="SVC">
+
+      <input type="text" placeholder="SVC" name="SVC" value="{{ current_card[0][3] }}">
     </div>
     <input name="IdCard" type="hidden" value={{ cardId }}>
     <div class="submit-options">
-      <input type="submit" class="button-grey" name="cancelCard" value="Cancel">
+      <input type="submit" class="button-grey clickable" name="cancelCard" value="Cancel">
       <input type="submit" class="button-blue" name="saveCard" value="Save">
     </div>
   </form>

@@ -7,10 +7,12 @@ from splinter import Browser
 
 from bookmarqueapp import app, mysql, login_manager
 from bookmarqueapp.models.users import User
+from bookmarqueapp.models.models import CardType
 
 @app.route('/profile', methods = ['POST', 'GET'])
 @login_required
 def profile():
+
     cursor = mysql.connection.cursor()
     cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
     information = cursor.fetchall()
@@ -78,7 +80,7 @@ def profile():
         idCard = request.form.get('IdCard')
         if (idCard is None):
             idCard = "none"
-        
+
         cardList = request.form.get('cardList')
         if ((cardList is None or cardList == "") and cardTest > 0):
             cardList = initCard[3]
@@ -114,12 +116,12 @@ def profile():
         if ((confirm == "Save") and cardTest > 0 and idCard != "none"):
             #browser = Browser('flask', app=app)
             #browser.visit('http://127.0.0.1:5000/profile')
-            
+
             #chosenCard = browser.find_by_css('option[id="cTest"]').first # !--------------------- current error is that it cannot find the element
             #chosenCard = chosenCard.value
             #profile = driver.page_source
             #bSoup = BeautifulSoup(html)
-            
+
             #element = '<option id="cTest" value="{{ card[0] }}">{{ card[3] }}</option>'
             #bSoup = bs.BeautifulSoup(element, 'lxml')
             #chosenCard = bSoup.find("option", {"id": "cTest"})
@@ -251,6 +253,10 @@ def card_panel():
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
     cards = cursor.fetchall()
 
+    cursor.execute('''SELECT cardNumber, cardExpDate, cardType, cardSVC FROM card WHERE cardID = %s;''', [cardId])
+    current_card = cursor.fetchall()
+    print(current_card)
+
     #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
     #cardDropdown = cursor.fetchall()
 
@@ -264,7 +270,7 @@ def card_panel():
 
 
     mysql.connection.commit()
-    return render_template('profile/update_card.html', details=information[0], add=address[0], cards=cards, cardId=cardId)
+    return render_template('profile/update_card.html', details=information[0], add=address[0], cards=cards, cardId=cardId, current_card=current_card)
 
 @app.route('/profile/create-card')
 @login_required
