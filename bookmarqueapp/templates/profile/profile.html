@@ -24,7 +24,7 @@
             {% endfor %}
         </select>
 
-        <br><span class="profile-links"><a href="/profile/create-card">+ Add New Card</a></span>
+        {% if cards|length < 3 %}<br><span class="profile-links"><a href="/profile/create-card">+ Add New Card</a></span>{% endif %}
         <br><input class="profile-link-imitation" type="submit" value="Edit Card">
       </div>
     </form>
