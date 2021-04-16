@@ -37,6 +37,13 @@ def manageBooks():
         ISBN = request.form.get('ISBN')
         if (ISBN is None or ISBN == "" or len(ISBN) > 13 or len(ISBN) < 13):
             check = False
+
+        cursor.execute('''SELECT COUNT(ISBN) FROM book WHERE ISBN = %s;''', [ISBN])
+        uniqueBook = cursor.fetchone()
+        uniqueBook = uniqueBook[0]
+        if (uniqueBook != 0):
+            check = False
+            
         bookTitle = request.form.get('title')
         if (bookTitle == ""):
             check = False
