@@ -13,7 +13,7 @@ def restrict_access(*user_types):
         @wraps(fn)
         def can_access(*args, **kwargs):
             for type in user_types:
-                if current_user.type == type.value:
+                if current_user.userType == type.value:
                     print('access granted')
                     return fn(*args, **kwargs)
             print('access denied')
@@ -43,7 +43,7 @@ def manageBooks():
         uniqueBook = uniqueBook[0]
         if (uniqueBook != 0):
             check = False
-            
+
         bookTitle = request.form.get('title')
         if (bookTitle == ""):
             check = False
@@ -61,11 +61,11 @@ def manageBooks():
         if (publisher is None or publisher == ""):
             publisher = ""
             check = False
-        
+
         pubDate = request.form.get('pubDate')
         if (pubDate is None):
             pubDate = "1971-01-01"
-        
+
         price = request.form.get('price')
         if (price == ""):
             check = False
@@ -73,11 +73,11 @@ def manageBooks():
         copies = request.form.get('copies')
         if (copies == "" or copies is None):
             copies = 1
-            
+
         subject = request.form.get('subject')
         if (subject == ""):
             check = False
-        
+
         if check and subject is not None:
             if (',' in subject):
                 subject = subject.split(',')
@@ -177,4 +177,3 @@ def send_promo_email(promo_name, promo_code, promo_end,promo_discount):
     subject = "Save " + str(float(promo_discount)*100) + "% at Bookmarque today for our " + promo_name
     message = " <h2> Bookmarque discount </h2><hr><p> For a limited time, you can save " + str(float(promo_discount)*100) + "%. This promotion expires on " + promo_end + "</p><br><br><p>Use " + promo_code + " at checkout to save today!"
     email_server.send_email(message, subject, "projdeploy@gmail.com", test_mode=False)
-

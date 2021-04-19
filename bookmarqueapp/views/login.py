@@ -5,7 +5,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from datetime import timedelta
 import time
 
-from bookmarqueapp import app, mysql, login_manager, DEBUG_MODE, email_server
+from bookmarqueapp import app, mysql, db, login_manager, DEBUG_MODE, email_server
 from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory
 
 # registration and login #
@@ -99,22 +99,16 @@ def login():
         user_email = request.form.get('email')
         supplied_password = request.form.get('password')
         remember = False if request.form.get('remember-me') is None else True
-        print('remember = ' + str(remember))
-        print(user_email)
-        print(supplied_password)
-        cursor = mysql.connection.cursor()
-        cursor.execute('''SELECT userID FROM users WHERE userEmail LIKE %s;''', [user_email])
-        user_id = cursor.fetchone()
 
-        if user_id: # if the query returns anything
-            user = load_user(user_id = user_id)
-            # Use the user returned from load_user above to compare password from the form
-            #if user not found = email not found
-            #if password is incorrect = wrong password
-            if user and (supplied_password == user.password):
-                if user.status == UserStatus.SUSPENDED.value:
+        # attempt to query user with email from database
+        user = User.query.filter_by(userEmail=user_email).first()
+
+        if user: # if the query returns anything
+            if (supplied_password == user.userPassword): # verify password
+                # verify status is active
+                if user.userStatus == UserStatus.SUSPENDED.value:
                     return render_template('login/messages/suspended_account.html')
-                elif user.status == UserStatus.INACTIVE.value:
+                elif user.userStatus == UserStatus.INACTIVE.value:
                     return render_template('login/messages/inactive_account.html')
                 login_user(user, force=True, remember=remember) # allows current_user access to user session variables
                 user.is_authenticated = True
@@ -193,23 +187,11 @@ def verify_email(email_encrypted):
 #Also, it's inherently called for every single page, so when you access current_user.fname, it will always be what was in the DB when you first loaded the page
 @login_manager.user_loader
 def load_user(user_id):
-    cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', (user_id,))
-    information = cursor.fetchall()
-    mysql.connection.commit()
 
-    type = information[0][5]
-    uf = UserFactory()
-    user = uf.get_user(information[0][5])
-
-    user.set(id=information[0][0], email=information[0][1], fname=information[0][2],
-                lname=information[0][3], status=information[0][4], type=information[0][5],
-                password=information[0][6], phone=information[0][7], subscription=information[0][8],
-                address=information[0][9], payments=None)
-
-    print(user)
+    uf = UserFactory() # uf allows for getting different user types with separate classes
+    user = uf.get_user(user_id)
+    print(user.userEmail)
     return user # SQL to return an instance of information pertaining to a user from DB
-
 
 @app.route("/logout")
 def logout():

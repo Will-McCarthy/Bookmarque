@@ -14,12 +14,12 @@ from bookmarqueapp.models.models import CardType
 def profile():
 
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.userID])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     address = cursor.fetchall()
     addTest = cursor.rowcount;
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.userID])
     email = cursor.fetchone()
     email = email[0]
     cursor.execute('''SELECT users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -69,11 +69,11 @@ def profile():
         if (submit is None):
             submit = "Cancel"
         if (submit == "Save" and password == passConfirm and len(password) >= 8):
-            cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = %s;''', ([password], current_user.id))
+            cursor.execute('''UPDATE users SET userPassword = %s WHERE userID = %s;''', ([password], current_user.userID))
 
             message = "<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>"
             subject = "Your password has been changed"
-            
+
             email_server.send_email(message, subject, current_user.email, DEBUG_MODE) #----------
 
         # handles update_card form and create_card form
@@ -161,27 +161,27 @@ def profile():
         addressValue += 1
 
         if (status == "Active"): # subscription for promos is checked
-            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = %s;''', (fName, lName, phone, status, [current_user.id]))
+            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = %s WHERE userID = %s;''', (fName, lName, phone, status, [current_user.userID]))
         else: # subcription for promos is not checked
-            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = %s;''', (fName, lName, phone, [current_user.id]))
+            cursor.execute('''UPDATE users SET userFName = %s, userLName = %s, userPhone = %s, userSubStatus = "Deactive" WHERE userID = %s;''', (fName, lName, phone, [current_user.userID]))
 
-        cursor.execute('''SELECT addressID FROM users WHERE userID = %s;''', [current_user.id])
+        cursor.execute('''SELECT addressID FROM users WHERE userID = %s;''', [current_user.userID])
         checkValue = cursor.fetchone()
         check = checkValue[0]
         #print(check is None)
         if (password is None and check is None and cardList is None): # not on update_password form and there is no existing address associated
             cursor.execute('''INSERT INTO address (addressID, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s);''', ([addressValue], address, city, state, zipCode))
-            cursor.execute('''UPDATE users SET addressID = %s WHERE userID = %s;''', ([addressValue], current_user.id))
+            cursor.execute('''UPDATE users SET addressID = %s WHERE userID = %s;''', ([addressValue], current_user.userID))
         else:
-            cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = %s;''', (address, city, state, zipCode, [current_user.id]))
+            cursor.execute('''UPDATE address JOIN users ON users.addressID = address.addressID SET addressStreet = %s, addressCity = %s, addressState = %s, addressZip = %s WHERE users.userID = %s;''', (address, city, state, zipCode, [current_user.userID]))
         mysql.connection.commit()
 
 
-    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.userID])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.userID])
     email = cursor.fetchone()
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -191,7 +191,7 @@ def profile():
     #cursor.execute('''SELECT users_has_card.userEmail, users_has_card.cardID, cardNumber, cardExpDate, cardType, cardSVC FROM card JOIN users_has_card ON card.cardID = users_has_card.cardID JOIN users ON users.userEmail = users_has_card.userEmail;''')
     #cardDropdown = cursor.fetchall()
 
-    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     addressCheck = cursor.fetchone()
     addressCheck = addressCheck[0]
 
@@ -210,11 +210,11 @@ def profile():
 @login_required
 def password_panel():
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.userID])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.userID])
     email = cursor.fetchone()
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -236,7 +236,7 @@ def password_panel():
     #        selectedCard = cardDropdown[0]
     #else:
     #    selectedCard = cardDropdown[0]
-    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     addressCheck = cursor.fetchone()
     addressCheck = addressCheck[0]
 
@@ -255,11 +255,11 @@ def card_panel():
         cardId = request.form.get('cardOptions')
         print(cardId)
         print('---------------------------------')
-    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.userID])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.userID])
     email = cursor.fetchone()
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -280,7 +280,7 @@ def card_panel():
     #        selectedCard = cardDropdown[0]
     #else:
     #    selectedCard = cardDropdown[0]
-    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     addressCheck = cursor.fetchone()
     addressCheck = addressCheck[0]
 
@@ -291,11 +291,11 @@ def card_panel():
 @login_required
 def card_panel_2():
     cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT * FROM users WHERE userID = %s;''', [current_user.userID])
     information = cursor.fetchall()
-    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT addressStreet, addressCity, addressState, addressZip FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     address = cursor.fetchall()
-    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT userEmail FROM users WHERE userID = %s;''', [current_user.userID])
     email = cursor.fetchone()
     email = email[0]
     #cursor.execute('''SELECT MIN(users_has_card.cardID), cardNumber, cardExpDate, cardType, cardSVC FROM users_has_card JOIN card ON card.cardID = users_has_card.cardID WHERE userEmail = %s;''', [email])
@@ -312,7 +312,7 @@ def card_panel_2():
     #        selectedCard = cardDropdown[0]
     #else:
     #    selectedCard = cardDropdown[0]
-    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.id])
+    cursor.execute('''SELECT COUNT(addressStreet) FROM users JOIN address ON users.addressID = address.addressID WHERE userID = %s;''', [current_user.userID])
     addressCheck = cursor.fetchone()
     addressCheck = addressCheck[0]
 

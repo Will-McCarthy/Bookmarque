@@ -1,21 +1,16 @@
-from flask import Flask, redirect, request, render_template, url_for
-from flask import session
-from flask_mysqldb import MySQL #Mysql
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
-
-from bookmarqueapp import app, mysql, login_manager
-from bookmarqueapp.models.users import User
+from flask import Flask, render_template, url_for
+from bookmarqueapp import app, db
+from bookmarqueapp.models.books import Book, BookCategory, Categories
 
 @app.route('/')
 def homepage():
-    cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM book, book_has_book_categories WHERE book.ISBN = book_has_book_categories.ISBN AND categoryID = '1' LIMIT 4;''')
-    featured = cursor.fetchall()
-    cursor.execute('''SELECT * FROM book, book_has_book_categories WHERE book.ISBN = book_has_book_categories.ISBN AND categoryID = '18' LIMIT 4;''')
-    newly_released = cursor.fetchall()
-    mysql.connection.commit()
-    #print(str(current_user.id) + " " + current_user.lname)
-    return render_template('index.html', featured=featured, newly_released=newly_released)
+
+    featured = Book.query.filter(Book.categories.any(BookCategory.categoryID
+        == Categories.FEATURED.value))
+    new = Book.query.filter(Book.categories.any(BookCategory.categoryID
+        == Categories.NEWLY_RELEASED.value))
+
+    return render_template('index.html', featured=featured, newly_released=new)
 
 @app.route('/search/')
 def search():
@@ -23,11 +18,5 @@ def search():
 
 @app.route('/view/<ISBN>')
 def book_details(ISBN):
-    print(str(ISBN))
-    cursor = mysql.connection.cursor()
-    cursor.execute('''SELECT * FROM book WHERE book.ISBN = ''' + str(ISBN)+ ''';''')
-    fetch = cursor.fetchall()
-    cursor.execute('''SELECT book_categories.categoryName FROM book_has_book_categories, book_categories WHERE book_has_book_categories.ISBN = ''' + str(ISBN)+ ''' AND book_has_book_categories.categoryID = book_categories.categoryID;''')
-    tag_fetch = cursor.fetchall()
-    mysql.connection.commit()
-    return render_template('browse/book_details_example.html', data=fetch[0],tags=list(tag_fetch))
+    current_book = Book.query.filter(Book.ISBN == ISBN).one()
+    return render_template('browse/book_details.html', book=current_book)

@@ -10,6 +10,8 @@ from sassutils.wsgi import SassMiddleware # for sass/scss compilation
 from datetime import timedelta
 import time
 
+from flask_sqlalchemy import SQLAlchemy
+
 # custom imports
 from . import config as cfg # for loading in custom configuration information
 from . import email_server # setup of email server and associated functions
@@ -22,6 +24,14 @@ app.config['MYSQL_HOST'] = cfg.mysql["host"]
 app.config['MYSQL_USER'] = cfg.mysql["user"]
 app.config['MYSQL_PASSWORD'] = cfg.mysql["password"]
 app.config['MYSQL_DB'] = cfg.mysql["db"]
+
+
+# sql alchemy setup
+app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql://' + cfg.mysql["user"] + ':'
+                + cfg.mysql["password"] + '@' + cfg.mysql["host"] + '/'
+                + cfg.mysql["db"])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
 #Login initialization
 #Example secret key, probably should be changed.

@@ -59,7 +59,7 @@
         </div>
       </header>
 
-      {% if current_user.is_authenticated and (current_user.type == 'Admin') %}
+      {% if current_user.is_authenticated and (current_user.userType == 'Admin') %}
         {% include "admin/admin_utilities.html" %}
       {% endif %}
 

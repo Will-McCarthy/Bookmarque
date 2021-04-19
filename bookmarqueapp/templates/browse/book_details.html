@@ -4,23 +4,24 @@
 <div id="book-listing">
   <div id="cover">
     <span class="circle"></span>
-    <img src="{{ url_for('static', filename='assets/covers/'+  data[4]  ) }}" alt="{{data[1]}}"/>
+    <img src="{{ url_for('static', filename='assets/covers/' + book.bookImage) }}" alt="{{ book.bookTitle }}"/>
   </div>
   <div id="book-details">
-    <h1>{{ data[1] }} </h1>
-    <h3>{{ data[2] }} {{ data[3] }}</h3>
-    <p>{{ data[8] }}</p>
+    <h1>{{ book.bookTitle }} </h1>
+    <h3>{{ book.authorFName }} {{ book.authorLName }}</h3>
+    <p>{{ book.bookPublisher }}</p>
     <p><i>
-    {% for item in tags %}
-       {{item[0]}}, 
+    {% for tag in book.categories %}
+      {{ tag.categoryName }}
+      {% if not loop.last %}, {% endif %}
     {% endfor %}
     </i></p>
 
     <div class="star-rating">
-    {% for i in range(data[7]) %}
+    {% for i in range(book.bookRating) %}
     ★
     {% endfor %}
-    {% for i in range(5-data[7]) %}
+    {% for i in range(5 - book.bookRating) %}
     ☆
     {% endfor %}
     </div>
@@ -30,7 +31,7 @@
       <input class="button-blue" type="submit" value="Add to Cart">
       <input type="number" placeholder="1">
     </form>
-    <h1>{{ data[5] }} USD</h1>
+    <h1>{{ book.bookPrice }} USD</h1>
     <span>In Stock</span>
     <!-- <span> data[6] left </span>-->
   </div>
@@ -38,7 +39,7 @@
 
 <div id="book-summary">
   <p>
-    {{data[10]}}
+    {{ book.bookDescription }}
   </p>
 </div>
 
