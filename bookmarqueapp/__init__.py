@@ -59,12 +59,13 @@ def test():
 # of a file, the Flask documentation discusses this practice being necessary
 ####
 #from bookmarqueapp.views import views, admin, checkout, login, profile
-
 from bookmarqueapp.models.users import User
+# user = User(userEmail='email@gmail.com', userFName='craig', userLName='jake', userPhone='8888888888')
+# user.password = "banana"
+# print(user.password)
 
-cur = User.query.filter_by(userEmail="janedoe@gmail.com").first()
-print(cur)
-cur.password = "password1"
-print('done')
-print(cur.password)
-db.session.commit()
+jane = User.query.filter_by(userEmail="janedoe@gmail.com").one()
+print(jane)
+#jane.password = "password3"
+#db.session.commit()
+print(jane.password)

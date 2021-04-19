@@ -30,7 +30,7 @@ class User(db.Model):
     userLName = db.Column(db.String(45))
     userStatus = db.Column(db.String(45))
     userType = db.Column(db.String(45))
-    userPassword = db.Column(db.String(64))
+    userPassword = db.Column(db.String(250))
     userPhone = db.Column(db.String(45))
     userSubStatus = db.Column(db.String(45))
 
@@ -61,17 +61,18 @@ class User(db.Model):
     # encryption/decryption methods
     @hybrid_property
     def password(self):
-        return fernet.decrypt(self.userPassword).decode()
+        return fernet.decrypt(self.userPassword.encode()).decode()
 
+    # must commit to database before using value
     @password.setter
     def password(self, plaintext):
         self.userPassword = fernet.encrypt(plaintext.encode())
 
-
-
+    # return true if encrypted password matches attempted_password
+    def check_password(self, attempted_password):
+        return (self.password == attempted_password)
 
 # inheritance classes #
-
 class Customer(User):
 
     def __init__(self, **kwargs):

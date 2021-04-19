@@ -64,7 +64,6 @@ pip install cryptography
 # not used #
 pip install splinter
 pip install splinter[flask]
-pip install flask-bcrypt
 
 export FLASK_APP=bookmarqueapp or set FLASK_APP=bookmarqueapp
 flask run
