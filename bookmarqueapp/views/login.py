@@ -189,7 +189,10 @@ def verify_email(email_encrypted):
 def load_user(user_id):
 
     uf = UserFactory() # uf allows for getting different user types with separate classes
-    user = uf.get_user(user_id)
+    try:
+        user = uf.get_user(user_id)
+    except:
+        return redirect(url_for('logout'))
     print(user.userEmail)
     return user # SQL to return an instance of information pertaining to a user from DB
 

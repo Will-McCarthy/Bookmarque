@@ -1,6 +1,6 @@
 import enum
 from sqlalchemy.ext.hybrid import hybrid_property
-from bookmarqueapp import app, db, bcrypt
+from bookmarqueapp import app, db, fernet
 
 
 # factory design pattern object generator
@@ -30,9 +30,10 @@ class User(db.Model):
     userLName = db.Column(db.String(45))
     userStatus = db.Column(db.String(45))
     userType = db.Column(db.String(45))
-    userPassword = db.Column(db.String(45))
+    userPassword = db.Column(db.String(64))
     userPhone = db.Column(db.String(45))
     userSubStatus = db.Column(db.String(45))
+
 
     addressID = db.Column(db.Integer, db.ForeignKey('address.addressID'))
     address = db.relationship('Address', lazy=True)
@@ -59,15 +60,15 @@ class User(db.Model):
 
     # encryption/decryption methods
     @hybrid_property
-    def userPassword(self):
-        return self.userPassword
+    def password(self):
+        return fernet.decrypt(self.userPassword).decode()
 
-    @userPassword.setter
-    def userPassword(self, plaintext):
-        # self.userPassword = bcrypt.generate_password_hash(plaintext)
-        x = bcrypt.generate_password_hash(plaintext)
-        print(x)
-        self.userPassword = x
+    @password.setter
+    def password(self, plaintext):
+        self.userPassword = fernet.encrypt(plaintext.encode())
+
+
+
 
 # inheritance classes #
 

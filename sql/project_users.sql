@@ -29,7 +29,7 @@ CREATE TABLE `users` (
   `userLName` varchar(45) DEFAULT NULL,
   `userStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Active, Inactive, or Suspended.',
   `userType` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Web User, Customer, or Admin.',
-  `userPassword` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `userPassword` varchar(250) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `userPhone` varchar(45) DEFAULT NULL,
   `userSubStatus` varchar(45) DEFAULT NULL,
   `addressID` int DEFAULT NULL COMMENT 'Can be null to account for the optional address field.',

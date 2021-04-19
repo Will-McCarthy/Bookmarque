@@ -59,11 +59,12 @@ pip install libsass
 pip install flask_mysqldb
 pip install flask_login
 pip install flask-sqlalchemy
-pip install flask-bcrypt
+pip install cryptography
 
 # not used #
 pip install splinter
 pip install splinter[flask]
+pip install flask-bcrypt
 
 export FLASK_APP=bookmarqueapp or set FLASK_APP=bookmarqueapp
 flask run
