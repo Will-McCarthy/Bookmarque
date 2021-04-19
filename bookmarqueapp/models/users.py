@@ -69,6 +69,16 @@ class User():
     # def is_anonymous(self):
     #     return self.is_anonymous
 
+    def get_password():
+        return 'password unencrypted'
+
+    def change_password(updated_pass):
+        password = updated_pass
+
+    def validate_password(input_password):
+        return True
+
+
 class Customer(User):
 
     def __init__(self):
