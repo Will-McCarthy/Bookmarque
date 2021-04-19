@@ -58,8 +58,13 @@ To provide credentials to MySQL, enter configuration details into a `config.py` 
 pip install libsass
 pip install flask_mysqldb
 pip install flask_login
+pip install flask-security
+pip install flask-sqlalchemy
+
+# not used #
 pip install splinter
 pip install splinter[flask]
+
 export FLASK_APP=bookmarqueapp or set FLASK_APP=bookmarqueapp
 flask run
 ```
