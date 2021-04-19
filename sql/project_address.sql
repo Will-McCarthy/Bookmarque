@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `address`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `address` (
-  `addressID` int NOT NULL COMMENT 'Identifies customer addresses.',
+  `addressID` int NOT NULL AUTO_INCREMENT COMMENT 'Identifies customer addresses.',
   `addressStreet` varchar(45) DEFAULT NULL,
   `addressCity` varchar(45) DEFAULT NULL,
   `addressState` varchar(45) DEFAULT NULL,

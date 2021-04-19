@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `card`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `card` (
-  `cardID` int NOT NULL,
+  `cardID` int NOT NULL AUTO_INCREMENT,
   `cardNumber` varchar(45) DEFAULT NULL,
   `cardExpDate` datetime DEFAULT NULL COMMENT 'Only Month and Year fields are relevant for records.',
   `cardType` varchar(45) DEFAULT NULL,
