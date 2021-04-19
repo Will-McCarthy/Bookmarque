@@ -16,7 +16,7 @@ class PaymentCard(db.Model):
     def __init__(self, cardNumber, cardExpDate, cardType, cardSVC, **kwargs):
 
         super(PaymentCard, self).__init__(**kwargs)
-        self.cardType = cardType.value
+        self.cardType = cardType
         self.cardExpDate = cardExpDate
 
         self.number = cardNumber
