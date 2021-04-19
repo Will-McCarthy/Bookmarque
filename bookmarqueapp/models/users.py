@@ -1,5 +1,7 @@
 import enum
-from bookmarqueapp import app, db
+from sqlalchemy.ext.hybrid import hybrid_property
+from bookmarqueapp import app, db, bcrypt
+
 
 # factory design pattern object generator
 class UserFactory():
@@ -49,14 +51,6 @@ class User(db.Model):
     def get_id(self):
         return str(self.userID)
 
-    def __str__(self):
-            return (str(self.id) + ', ' + self.email + ', ' + self.fname + ', ' + self.lname
-            + ', ' + self.status + ', ' + self.type)
-
-    # specific for flask_login
-    def is_authenticated(self):
-        return self.is_authenticated
-
     # def is_active(self):
     #     return self.is_active
     #
@@ -64,17 +58,16 @@ class User(db.Model):
     #     return self.is_anonymous
 
     # encryption/decryption methods
-    def get_password():
-        return 'password unencrypted'
+    @hybrid_property
+    def userPassword(self):
+        return self.userPassword
 
-    def change_password(updated_pass):
-        password = updated_pass
-
-    def validate_password(input_password):
-        return True
-
-    def get_card():
-        return 'payment card unencrypted'
+    @userPassword.setter
+    def userPassword(self, plaintext):
+        # self.userPassword = bcrypt.generate_password_hash(plaintext)
+        x = bcrypt.generate_password_hash(plaintext)
+        print(x)
+        self.userPassword = x
 
 # inheritance classes #
 

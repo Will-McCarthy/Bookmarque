@@ -14,7 +14,7 @@ app = Flask(__name__)
 
 # general
 app.config['DEBUG'] = True # changes whether certain tests are run and emails are sent
-app.config['SECRET_KEY'] = b'_5#y2L"F4Q8z\n\xec]/'
+# app.config['SECRET_KEY'] = b'_5#y2L"F4Q8z\n\xec]/'
 
 # mysqldb setup
 app.config['MYSQL_HOST'] = cfg.mysql["host"]
@@ -31,6 +31,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # bcrypt setup
+app.config['BCRYPT_LOG_ROUNDS'] = 4 # reduce security for speed boost (default was 12)
 bcrypt = Bcrypt(app)
 
 # login initialization
@@ -58,4 +59,16 @@ def test():
 # while not usually standard practice to include import statements at the bottom
 # of a file, the Flask documentation discusses this practice being necessary
 ####
-from bookmarqueapp.views import views, admin, checkout, login, profile
+#from bookmarqueapp.views import views, admin, checkout, login, profile
+
+from bookmarqueapp.models.users import User
+
+cur = User.query.filter_by(userEmail="admin@gmail.com").first()
+print(cur)
+cur.userPassword = "admin"
+print('done')
+# db.session.commit()
+
+
+# pw_hash = bcrypt.generate_password_hash('hunter2')
+# print(bcrypt.check_password_hash(pw_hash, 'hunter2')) # returns True
