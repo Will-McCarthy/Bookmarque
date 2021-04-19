@@ -30,7 +30,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql://' + cfg.mysql["user"] + ':'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-# fernet setup
+# fernet (encryption algorithm) setup
 fernet = Fernet(cfg.encryption["key"])
 
 # login initialization
@@ -58,14 +58,12 @@ def test():
 # while not usually standard practice to include import statements at the bottom
 # of a file, the Flask documentation discusses this practice being necessary
 ####
-#from bookmarqueapp.views import views, admin, checkout, login, profile
-from bookmarqueapp.models.users import User
-# user = User(userEmail='email@gmail.com', userFName='craig', userLName='jake', userPhone='8888888888')
-# user.password = "banana"
-# print(user.password)
+from bookmarqueapp.views import views, admin, checkout, login, profile
 
-jane = User.query.filter_by(userEmail="janedoe@gmail.com").one()
-print(jane)
-#jane.password = "password3"
-#db.session.commit()
-print(jane.password)
+
+# from bookmarqueapp.models.users import User
+# jane = User.query.filter_by(userEmail="admin@gmail.com").one()
+# print(jane)
+# jane.password = "admin"
+# db.session.commit()
+# print(jane.password)

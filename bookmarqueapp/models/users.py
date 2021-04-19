@@ -52,11 +52,15 @@ class User(db.Model):
     def get_id(self):
         return str(self.userID)
 
-    # def is_active(self):
-    #     return self.is_active
-    #
-    # def is_anonymous(self):
-    #     return self.is_anonymous
+    def set_status(self, status):
+        self.userStatus = status.value
+
+    def set_type(self, type):
+        self.userType = type.value
+
+    # set to value of boolean
+    def set_subscription(self, active):
+        self.userSubStatus = 'Active' if active else 'Deactive'
 
     # encryption/decryption methods
     @hybrid_property
@@ -71,6 +75,8 @@ class User(db.Model):
     # return true if encrypted password matches attempted_password
     def check_password(self, attempted_password):
         return (self.password == attempted_password)
+
+
 
 # inheritance classes #
 class Customer(User):

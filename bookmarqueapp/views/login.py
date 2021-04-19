@@ -7,6 +7,7 @@ import time
 
 from bookmarqueapp import app, mysql, db, login_manager, email_server
 from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory
+from bookmarqueapp.models.users import PaymentCard, CardType, Address
 
 # registration and login #
 @app.route('/register', methods=['POST'])
@@ -27,13 +28,15 @@ def register_user():
             password = request.form.get('password')
             phone = request.form.get('phone')
 
-            user = User(userEmail=email, userFName=first_name, userLName=last_name,
-                password=password, userPhone=phone)
+            user = User(userEmail=email, userFName=first_name,
+                        userLName=last_name, userPhone=phone)
+
+            user.password = password # set and encrypt
 
             # hard coded values
-            user.userSubStatus = 'Deactive'
-            user.userStatus = UserStatus.INACTIVE.value
-            user.userType = UserType.CUSTOMER.value
+            user.set_subscription(False)
+            user.set_status(UserStatus.INACTIVE)
+            user.set_type(UserType.CUSTOMER)
 
             # if we have payment information add to the database and associate with user
             if (request.form.get('payment-skipped') == 'false'):
@@ -44,7 +47,8 @@ def register_user():
                 svc = request.form.get('svc')
                 exp_date = str(exp_year) + str(exp_month) + "01" # into datetime format
 
-                card = PaymentCard(cardNumber=card_number, cardExpDate=exp_date, cardType=svc)
+                card = PaymentCard(cardNumber=card_number, cardExpDate=exp_date,
+                                    cardType=card_type, cardSVC=svc)
                 user.cards.append(card)
 
             # if we have shipping information add to the database and associate with user
@@ -62,7 +66,6 @@ def register_user():
             db.session.commit()
 
             # send email with link in form of /verify/ + user_id
-            ### encrypt email ###
             verification_link = url_for('verify_email', email_encrypted = email, _external=True)
             print(verification_link)
             html_message = '''
@@ -93,7 +96,7 @@ def login():
         user = User.query.filter_by(userEmail=user_email).first()
 
         if user: # if the query returns anything
-            if (supplied_password == user.userPassword): # verify password
+            if (user.check_password(supplied_password)): # verify password
                 # verify status is active
                 if user.userStatus == UserStatus.SUSPENDED.value:
                     return render_template('login/messages/suspended_account.html')
@@ -112,50 +115,44 @@ def login():
 @app.route('/forgot-password', methods=['POST'])
 def forgot_password():
     if request.method == 'POST':
-        # PULL In Email and password from login form here and insert into sql statement below.
-        user_email = request.form.get('email')
-        print(user_email)
-        cursor = mysql.connection.cursor()
-        cursor.execute('''SELECT userEmail FROM users WHERE userEmail LIKE %s;''', [user_email])
-        confirmed_email = cursor.fetchone()
-        print("found email:")
-        print(confirmed_email)
 
-        if confirmed_email != None:
+        # PULL In Email and password from login form here and insert into sql statement below.
+        email = request.form.get('email')
+        user = User.query.filter_by(userEmail=email).first()
+
+        if user:
             # send email with link in form of /verify/ + user_id
-            ### encrypt email ###
-            reset_password_link = url_for('reset_password', email_encrypted = user_email, _external=True)
+            reset_password_link = url_for('reset_password', email_encrypted = email, _external=True)
             print(reset_password_link)
             html_message = '''
                 <h1>Reset Password Here:</h1>
                 <span>Click this <a href="''' + reset_password_link + '''">link</a> to reset password. If this was not you, ignore this message.</span>
             '''
             subject = "Reset Password"
-            email_server.send_email(html_message, subject, confirmed_email, app.debug)
+            email_server.send_email(html_message, subject, email, app.debug)
 
-        return redirect('/')
+        return redirect(url_for('homepage'))
 
 @app.route('/reset-password/<email_encrypted>', methods=['POST', 'GET'])
 def reset_password(email_encrypted):
-    #### unencrypt param here ####
     if request.method == 'POST':
-        print(str(email_encrypted))
         email = email_encrypted # definitely not secure but hopefully works
         password = request.form.get('password')
         passConfirm = request.form.get('passConfirm') # used to check if password is same in both fields
 
         if password:
-            cursor = mysql.connection.cursor()
-            cursor.execute('''UPDATE users SET userPassword = %s WHERE userEmail = %s;''', ([password], [email]))
-            mysql.connection.commit()
+            user = User.query.filter_by(userEmail=email).first()
+            if user:
+                user.password = password
+                db.session.commit()
+
         return render_template('index.html')
+
     if request.method == 'GET':
 
         # check link is valid by seeing if email is real
         email = email_encrypted
-        cursor = mysql.connection.cursor()
-        cursor.execute('SELECT * FROM users WHERE userEmail=%s;''', [email])
-        user = cursor.fetchall()
+        user = User.query.filter_by(userEmail=email).first()
 
         if user: # if query returned someone with that email
             return render_template('login/reset_password.html', email_encrypted=email_encrypted)
@@ -164,13 +161,15 @@ def reset_password(email_encrypted):
 
 @app.route('/verify/<email_encrypted>')
 def verify_email(email_encrypted):
-    #### unencrypt param here ####
-    print(str(email_encrypted))
+
     email = email_encrypted # definitely not secure but hopefully works
-    cursor = mysql.connection.cursor()
-    cursor.execute('''UPDATE users SET UserStatus = "Active" WHERE userEmail=%s;''', [email])
-    mysql.connection.commit()
-    return render_template('login/messages/email_confirmation.html')
+    user = User.query.filter_by(userEmail=email).first()
+    if user:
+        user.set_status(UserStatus.ACTIVE)
+        db.session.commit()
+        return render_template('login/messages/email_confirmation.html')
+    else:
+        return redirect(url_for('homepage'))
 
 #This function shoud be called when a user is first logging in.
 #Also, it's inherently called for every single page, so when you access current_user.fname, it will always be what was in the DB when you first loaded the page

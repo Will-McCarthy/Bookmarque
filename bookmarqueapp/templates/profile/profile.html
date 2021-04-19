@@ -7,11 +7,15 @@
   </h1>
   <div class="profile-format">
     <label class="profile-label">First Name <span class="profile-asterisks">*</span></label>
-    <span>{{ details[2] }}</span>
+    <span>{{ current_user.userFName }}</span>
     <label class="profile-label">Address</label>
-    <span>{{ add[0] }}<br>{{ add[1] }}, {{ add[2] }} {{ add[3] }}</span>
+    <span>
+    {% if current_user.address %}
+      {{ current_user.address.addressStreet }}<br>{{ current_user.address.addressCity }}, {{ current_user.address.addressState }} {{ current_user.address.addressZip }}
+    {% endif %}
+    </span>
     <label class="profile-label">Last Name <span class="profile-asterisks">*</span></label>
-    <span>{{ details[3] }}</span>
+    <span>{{ current_user.userLName }}</span>
 
     <!-- form for choosing the current payment card  -->
     <form action="/profile/update-card" method="POST">
@@ -19,8 +23,8 @@
         <label class="profile-label">Card Information</label><br>
         <select id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
             <option disabled="true">- Select Card -</option>
-            {% for card in cards %}
-              <option value="{{ card[0] }}">{{ card[3] }}</option>
+            {% for card in current_user.cards %}
+              <option value="{{ card.cardID }}">{{ card.cardType }}</option>
             {% endfor %}
         </select>
 
@@ -28,16 +32,16 @@
         <br><input class="profile-link-imitation" type="submit" value="Edit Card">
       </div>
     </form>
-    {% if cards[0] %}
-      {% for card in cards %}
+    {% if current_user.cards %}
+      {% for card in current_user.cards %}
         {% if (loop.index == 1) %}
-          <span class="card-information" id="{{ card[0] }}" style="display: block">
+          <span class="card-information" id="{{ card.cardID }}" style="display: block">
         {% else %}
-          <span class="card-information" id="{{ card[0] }}" style="display: none">
+          <span class="card-information" id="{{ card.cardID }}" style="display: none">
         {% endif %}
-        <p>{{ card[3] }}</p>
-        <p>{{ card[1] }}</p>
-        <p>Expires on {{ card[2].month ~ "/" ~ card[2].year }}</p>
+        <p>{{ card.cardType.value }}</p>
+        <p>{{ card.cardNumber }}</p>
+        <p>Expires on {{ card.cardExpDate.month ~ "/" ~ card.cardExpDate.year }}</p>
       </span>
       {% endfor %}
       {% else %}
@@ -45,20 +49,20 @@
       {% endif %}
     <!--</span>-->
     <label class="profile-label">Phone Number (XXX) XXX-XXXX <span class="profile-asterisks">*</span></label>
-    <span>{{ details[7] }}</span>
+    <span>{{ current_user.userPhone }}</span>
     <div>
       <label class="profile-label">Password <span class="profile-asterisks">*</span></label>
       <br><span class="profile-links"><a href="/profile/update-password">Update Password</a></span>
     </div>
     <span>
-      <span id="password-visible" style="display: none">{{ details[6] }}</span>
+      <span id="password-visible" style="display: none">{{ current_user.password }}</span>
       <span id="password-hidden">•••••••••••</span>
       <br><span class="profile-links clickable" id="toggle-password" onclick="togglePassword()" style="color: blue; text-decoration: underline;">Display Password</span>
     </span>
     <label class="profile-label">Email Address <span class="profile-asterisks">*</span></label>
-    <span>{{ details[1] }}</span>
+    <span>{{ current_user.userEmail }}</span>
     <label class="profile-label">Promotion Subscription</label>
-    <span>{{ details[8] }}</span>
+    <span>{{ current_user.userSubStatus }}</span>
   </div>
   <div class="profile-submit">
     <span class="profile-required">*Required</span><br>
