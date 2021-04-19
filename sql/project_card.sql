@@ -24,10 +24,10 @@ DROP TABLE IF EXISTS `card`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `card` (
   `cardID` int NOT NULL AUTO_INCREMENT,
-  `cardNumber` varchar(45) DEFAULT NULL,
+  `cardNumber` varchar(250) DEFAULT NULL,
   `cardExpDate` datetime DEFAULT NULL COMMENT 'Only Month and Year fields are relevant for records.',
   `cardType` varchar(45) DEFAULT NULL,
-  `cardSVC` int DEFAULT NULL,
+  `cardSVC` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`cardID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

@@ -6,8 +6,8 @@ from datetime import timedelta
 import time
 
 from bookmarqueapp import app, mysql, db, login_manager, email_server
-from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory
-from bookmarqueapp.models.users import PaymentCard, CardType, Address
+from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory, Address
+from bookmarqueapp.models.payment import PaymentCard, CardType
 
 # registration and login #
 @app.route('/register', methods=['POST'])

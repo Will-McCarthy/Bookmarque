@@ -7,7 +7,7 @@ from splinter import Browser
 
 from bookmarqueapp import app, mysql, login_manager, email_server
 from bookmarqueapp.models.users import User
-from bookmarqueapp.models.models import CardType
+from bookmarqueapp.models.payment import CardType
 
 @app.route('/profile', methods = ['POST', 'GET'])
 @login_required

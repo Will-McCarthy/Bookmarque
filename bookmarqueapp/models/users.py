@@ -2,7 +2,6 @@ import enum
 from sqlalchemy.ext.hybrid import hybrid_property
 from bookmarqueapp import app, db, fernet
 
-
 # factory design pattern object generator
 class UserFactory():
 
@@ -76,8 +75,6 @@ class User(db.Model):
     def check_password(self, attempted_password):
         return (self.password == attempted_password)
 
-
-
 # inheritance classes #
 class Customer(User):
 
@@ -116,25 +113,8 @@ class Address(db.Model):
     addressState = db.Column(db.String(45))
     addressZip = db.Column(db.String(45))
 
-class PaymentCard(db.Model):
-
-    __tablename__ = 'card'
-    cardID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    cardNumber = db.Column(db.String(45)) # varchar(115)
-    cardExpDate = db.Column(db.DateTime)
-    cardType = db.Column(db.String(45))
-    cardSVC = db.Column(db.Integer)
-
-    users = db.relationship('User', secondary='users_has_card', back_populates='cards')
-
 # associative table
 users_has_card = db.Table('users_has_card',
     db.Column('userEmail', db.String(45), db.ForeignKey('users.userEmail'), primary_key=True),
     db.Column('cardID', db.Integer, db.ForeignKey('card.cardID'),
     primary_key=True))
-
-class CardType(enum.Enum):
-    AMEX = 1
-    DISCOVER = 2
-    MASTERCARD = 3
-    VISA = 4

@@ -24,7 +24,7 @@
         <select id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
             <option disabled="true">- Select Card -</option>
             {% for card in current_user.cards %}
-              <option value="{{ card.cardID }}">{{ card.cardType }}</option>
+              <option value="{{ card.cardID }}">{{ card.cardType.value }}</option>
             {% endfor %}
         </select>
 
