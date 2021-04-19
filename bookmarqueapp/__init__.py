@@ -1,30 +1,27 @@
-from flask import Flask
-from flask import render_template # for file extends
-from flask import redirect
-from flask import request
-from flask import url_for
-from flask import session
+from flask import Flask, render_template  # for file extends
 from flask_mysqldb import MySQL #Mysql
-from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
+from flask_login import LoginManager #Logins
 from sassutils.wsgi import SassMiddleware # for sass/scss compilation
-from datetime import timedelta
-import time
-
 from flask_sqlalchemy import SQLAlchemy
+from flask_bcrypt import Bcrypt
 
 # custom imports
 from . import config as cfg # for loading in custom configuration information
 from . import email_server # setup of email server and associated functions
 #from . models import User, UserStatus
 
-DEBUG_MODE = True # changes whether certain tests are run
-
 app = Flask(__name__)
+
+# general
+app.config['DEBUG'] = True # changes whether certain tests are run and emails are sent
+app.config['SECRET_KEY'] = b'_5#y2L"F4Q8z\n\xec]/'
+
+# mysqldb setup
 app.config['MYSQL_HOST'] = cfg.mysql["host"]
 app.config['MYSQL_USER'] = cfg.mysql["user"]
 app.config['MYSQL_PASSWORD'] = cfg.mysql["password"]
 app.config['MYSQL_DB'] = cfg.mysql["db"]
-
+mysql = MySQL(app)
 
 # sql alchemy setup
 app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql://' + cfg.mysql["user"] + ':'
@@ -33,20 +30,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = ('mysql://' + cfg.mysql["user"] + ':'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-#Login initialization
-#Example secret key, probably should be changed.
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+# bcrypt setup
+bcrypt = Bcrypt(app)
+
+# login initialization
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 
-
-mysql = MySQL(app)
 # configure directory locations for Sass/SCSS
 app.wsgi_app = SassMiddleware(app.wsgi_app, {
     'bookmarqueapp': ('static/sass', 'static/css', '/static/css')
 })
 
+# mysql test url
 @app.route('/mysqltest')
 def test():
     cursor = mysql.connection.cursor()
@@ -57,12 +54,8 @@ def test():
     mysql.connection.commit()
     return render_template('index.html')
 
-
 ####
 # while not usually standard practice to include import statements at the bottom
-# of a file, the Flask documentation discusses this practice being necessary, as it
-# is here in order to make sure other configuration is performed first.
-# for instance, we currently need to import from THIS file app, mysql, and login_manager
-# and need to make sure they are setup first. could in future migrate this
-# functionality more locally.
+# of a file, the Flask documentation discusses this practice being necessary
+####
 from bookmarqueapp.views import views, admin, checkout, login, profile

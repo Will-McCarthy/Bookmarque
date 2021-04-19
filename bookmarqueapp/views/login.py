@@ -5,7 +5,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from datetime import timedelta
 import time
 
-from bookmarqueapp import app, mysql, db, login_manager, DEBUG_MODE, email_server
+from bookmarqueapp import app, mysql, db, login_manager, email_server
 from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory
 
 # registration and login #
@@ -80,7 +80,7 @@ def register_user():
                 <span>Click this <a href="''' + str(verification_link) + '''">link</a> or if this was not you, ignore this message.</span>
             '''
             subject = "Confirm Email"
-            email_server.send_email(html_message, subject, email, DEBUG_MODE)
+            email_server.send_email(html_message, subject, email, app.debug)
 
         else:
             print(email + " is taken")
@@ -142,7 +142,7 @@ def forgot_password():
                 <span>Click this <a href="''' + reset_password_link + '''">link</a> to reset password. If this was not you, ignore this message.</span>
             '''
             subject = "Reset Password"
-            email_server.send_email(html_message, subject, confirmed_email, DEBUG_MODE)
+            email_server.send_email(html_message, subject, confirmed_email, app.debug)
 
         return redirect('/')
 

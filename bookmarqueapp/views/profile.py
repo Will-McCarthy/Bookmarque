@@ -5,7 +5,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 #from bs4 import BeautifulSoup
 from splinter import Browser
 
-from bookmarqueapp import app, mysql, login_manager, email_server, DEBUG_MODE
+from bookmarqueapp import app, mysql, login_manager, email_server
 from bookmarqueapp.models.users import User
 from bookmarqueapp.models.models import CardType
 
@@ -74,7 +74,7 @@ def profile():
             message = "<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>"
             subject = "Your password has been changed"
 
-            email_server.send_email(message, subject, current_user.email, DEBUG_MODE) #----------
+            email_server.send_email(message, subject, current_user.email, app.debug)
 
         # handles update_card form and create_card form
         idCard = request.form.get('IdCard')

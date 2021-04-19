@@ -26,6 +26,7 @@ def send_email(html_message, subject, recipient, test_mode=False):
         message = MIMEMultipart()
         message["From"] = gmail_server_user
 
+        # if testing than send email to itself
         if test_mode:
             recipient = cfg.email['user']
 
@@ -44,5 +45,3 @@ def send_email(html_message, subject, recipient, test_mode=False):
         server.sendmail(gmail_server_user, recipient, text)
     except Exception as ex:
         print("Email could not be sent: " + str(ex))
-
-
