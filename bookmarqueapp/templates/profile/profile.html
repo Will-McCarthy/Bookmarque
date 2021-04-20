@@ -40,7 +40,7 @@
           <span class="card-information" id="{{ card.cardID }}" style="display: none">
         {% endif %}
         <p>{{ card.cardType }}</p>
-        <p>{{ card.number }}</p>
+        <p>{{ card.card_number }}</p>
         <p>Expires on {{ card.cardExpDate.month ~ "/" ~ card.cardExpDate.year }}</p>
       </span>
       {% endfor %}

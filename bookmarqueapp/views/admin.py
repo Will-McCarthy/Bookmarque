@@ -3,8 +3,8 @@ from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 from functools import wraps
 
-from bookmarqueapp import app, mysql, email_server
-from bookmarqueapp.models.users import User, UserType
+from bookmarqueapp import app, mysql, db, email_server
+from bookmarqueapp.models.users import User, UserType, UserStatus
 
 # custom decorator for validating user access level
 # takes a variadic number of UserType enums
@@ -117,25 +117,19 @@ def bookEntry():
 @restrict_access(UserType.ADMIN)
 def manageUsers():
     if request.method == 'POST':
-        #user_id = request.form.get('id')
-        print('posted here')
+
         id = request.form.get('id')
         status = request.form.get('status')
-        status = 'Active' if (status == 'Suspended') else 'Suspended'
-        cursor = mysql.connection.cursor()
-        cursor.execute('UPDATE users SET userStatus="' + status + '" WHERE userID=' + id)
-        mysql.connection.commit()
+        updated_status = UserStatus.ACTIVE if (status == UserStatus.SUSPENDED.value) else UserStatus.SUSPENDED
 
-    cursor = mysql.connection.cursor()
-    cursor.execute('SELECT * FROM users')
-    user_fetch = cursor.fetchall()
+        user = User.query.filter_by(userID=id).first()
+        if user:
+            user.set_status(updated_status)
+            db.session.commit()
+
+    user_fetch = User.query.all()
     return render_template('admin/manage_users.html', users = user_fetch)
 
-# @app.route('/admin/manage-users/user-entry')
-# @login_required
-# @restrict_access(UserType.ADMIN)
-# def userEntry():
-#     return render_template('admin/user_entry.html')
 
 @app.route('/admin/manage-promotions', methods=['POST','GET'])
 @login_required

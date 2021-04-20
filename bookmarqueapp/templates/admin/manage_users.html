@@ -13,18 +13,18 @@
     </tr>
     {% for user in users %}
     <tr>
-      <td>{{ user[0] }}</td>
-      <td>{{ user[1] }}</td>
-      <td>{{ user[2] ~ " " ~ user[3] }}</td>
-      <td>{{ user[5] }}</td>
+      <td>{{ user.userID }}</td>
+      <td>{{ user.userEmail }}</td>
+      <td>{{ user.userFName ~ " " ~ user.userLName }}</td>
+      <td>{{ user.userType }}</td>
       <td>
-        {% if user[8] == "Active" %} ✓ {% else %} ✗ {% endif %}
+        {% if user.userSubStatus == "Active" %} ✓ {% else %} ✗ {% endif %}
       <td class="toggle-status">
-      {% if user[4] == "Inactive" %} Unverified {% else %}
+      {% if user.userStatus == "Inactive" %} Unverified {% else %}
         <form action="/admin/manage-users" method="POST">
-          <span>{{ user[4] }}</span>
-          <input type="hidden" name="id" value="{{ user[0] }}">
-          <input type="hidden" name="status" value="{{ user[4] }}">
+          <span>{{ user.userStatus }}</span>
+          <input type="hidden" name="id" value="{{ user.userID }}">
+          <input type="hidden" name="status" value="{{ user.userStatus }}">
           <button>
             <img class="toggle-arrow clickable" src="{{ url_for('static', filename='assets/icons/toggle-arrow.svg')}}">
           </button>

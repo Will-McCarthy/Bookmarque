@@ -6,10 +6,10 @@ class PaymentCard(db.Model):
 
     __tablename__ = 'card'
     cardID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    cardNumber = db.Column(db.String(250)) # varchar(115)
+    cardNumber = db.Column(db.String(250)) # do not access directly
     cardExpDate = db.Column(db.DateTime)
     cardType = db.Column(db.String(45))
-    cardSVC = db.Column(db.String(250))
+    cardSVC = db.Column(db.String(250)) # do not access directly
 
     users = db.relationship('User', secondary='users_has_card', back_populates='cards')
 
@@ -19,24 +19,24 @@ class PaymentCard(db.Model):
         self.cardType = cardType
         self.cardExpDate = cardExpDate
 
-        self.number = cardNumber
-        self.svc = cardSVC
+        self.card_number = cardNumber
+        self.card_svc = cardSVC
 
     # encryption/decryption methods #
     @hybrid_property
-    def number(self):
+    def card_number(self):
         return fernet.decrypt(self.cardNumber.encode()).decode()
 
-    @number.setter
-    def number(self, number_string):
-        self.cardNumber = fernet.encrypt(number_string.encode())
+    @card_number.setter
+    def card_number(self, number):
+        self.cardNumber = fernet.encrypt(number.encode())
 
     @hybrid_property
-    def svc(self):
+    def card_svc(self):
         return fernet.decrypt(self.cardSVC.encode()).decode()
 
-    @svc.setter
-    def svc(self, svc):
+    @card_svc.setter
+    def card_svc(self, svc):
         self.cardSVC = fernet.encrypt(svc.encode())
 
 class CardType(enum.Enum):
