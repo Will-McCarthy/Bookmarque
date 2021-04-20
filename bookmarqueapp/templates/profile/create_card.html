@@ -1,7 +1,7 @@
 {% include "profile/profile.html" %}
 
 <div class="popup-overlay">
-  <form id="cForm" class="popup-plane" action="/profile" method="POST">
+  <form id="cForm" class="popup-plane" action="{{ url_for('create_card') }}" method="POST">
     <h1 class="main-logo">Bookmarqué</h1>
     <h1>Card Information</h1>
 

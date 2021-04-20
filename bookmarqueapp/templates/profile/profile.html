@@ -18,7 +18,7 @@
     <span>{{ current_user.userLName }}</span>
 
     <!-- form for choosing the current payment card  -->
-    <form action="/profile/update-card" method="POST">
+    <form action="{{ url_for('update_card') }}" method="POST">
       <div>
         <label class="profile-label">Card Information</label><br>
         <select id="card-selector" style="width: 50%;" name="cardOptions" onchange="changeCard()">
@@ -28,7 +28,7 @@
             {% endfor %}
         </select>
 
-        {% if cards|length < 3 %}<br><span class="profile-links"><a href="/profile/create-card">+ Add New Card</a></span>{% endif %}
+        {% if cards|length < 3 %}<br><span class="profile-links"><a href="{{ url_for('create_card')}}">+ Add New Card</a></span>{% endif %}
         <br><input class="profile-link-imitation" type="submit" value="Edit Card">
       </div>
     </form>
@@ -52,7 +52,7 @@
     <span>{{ current_user.userPhone }}</span>
     <div>
       <label class="profile-label">Password <span class="profile-asterisks">*</span></label>
-      <br><span class="profile-links"><a href="/profile/update-password">Update Password</a></span>
+      <br><span class="profile-links"><a href="{{ url_for('update_password') }}">Update Password</a></span>
     </div>
     <span>
       <span id="password-visible" style="display: none">{{ current_user.password }}</span>

@@ -33,7 +33,6 @@ class User(db.Model):
     userPhone = db.Column(db.String(45))
     userSubStatus = db.Column(db.String(45))
 
-
     addressID = db.Column(db.Integer, db.ForeignKey('address.addressID'))
     address = db.relationship('Address', lazy=True)
 

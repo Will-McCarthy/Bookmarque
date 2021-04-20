@@ -2,37 +2,37 @@
 {% block content %}
 <div class="center">
   <h1>Edit Profile</h1>
-  <form action="/profile" method="POST">
+  <form action="{{ url_for('edit_profile') }}" method="POST">
   <div class="profile-format">
     <label class="profile-label">First Name <span class="profile-asterisks">*</span></label>
     <div class="edit-fields">
-      <input type="text" name="fName">
+      <input type="text" name="fName" value={{ current_user.userFName }}>
     </div>
-    <label class="profile-label">Address</label>
+    <label class="profile-label">Street</label>
     <div class="edit-fields">
-      <input type="text" name="address">
+      <input type="text" name="street" {% if current_user.address %} value="{{ current_user.address.addressStreet }}" {% endif %}>
     </div>
     <label class="profile-label">Last Name<span class="profile-asterisks">*</span></label>
     <div class="edit-fields">
-      <input type="text" name="lName">
+      <input type="text" name="lName" value={{ current_user.userLName }}>
     </div>
     <label class="profile-label">City</label>
     <div class="edit-fields">
-      <input type="text" name="city">
+      <input type="text" name="city" {% if current_user.address %} value="{{ current_user.address.addressCity }}" {% endif %}>
     </div>
     <label class="profile-label">Phone Number (XXX) XXX-XXXX <span class="profile-asterisks">*</span></label>
      <div class="edit-fields">
-      <input type="text" name="phone">
+      <input type="text" name="phone" value={{ current_user.userPhone }}>
     </div>
     <label class="profile-label">State</label>
      <div class="edit-fields">
-      <input type="text" name="state">
+      <input type="text" name="state" {% if current_user.address %} value="{{ current_user.address.addressState }}" {% endif %}>
     </div>
     <label class="profile-label">Promotion Subscription</label>
-    <input type="checkbox" name="status" value="Active">
+    <input type="checkbox" name="subscription" {% if current_user.userSubStatus == "Active" %} checked {% endif %}>
     <label class="profile-label">Zip Code</label>
     <div class="edit-fields">
-      <input type="text" name="zip">
+      <input type="text" name="zip" {% if current_user.address %} value="{{ current_user.address.addressZip }}" {% endif %}>
     </div>
   </div>
   <br>
@@ -46,5 +46,3 @@
   </form>
 </div>
 {% endblock %}
-       
-

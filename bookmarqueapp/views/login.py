@@ -1,11 +1,10 @@
 from flask import Flask, redirect, request, render_template, url_for
 from flask import session
-from flask_mysqldb import MySQL #Mysql
 from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Logins
 from datetime import timedelta
 import time
 
-from bookmarqueapp import app, mysql, db, login_manager, email_server
+from bookmarqueapp import app, db, login_manager, email_server
 from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory, Address
 from bookmarqueapp.models.payment import PaymentCard, CardType
 

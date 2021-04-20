@@ -1,41 +1,41 @@
 {% include "profile/profile.html" %}
 
 <div class="popup-overlay">
-  <form id="cardForm" class="popup-plane" action="/profile" method="POST">
+  <form id="cardForm" class="popup-plane" action="{{ url_for('save_update_card') }}" method="POST">
     <h1 class="main-logo">Bookmarqué</h1>
     <h1>Card Information</h1>
 
     <label>Card Type</label>
-    <select form="cardForm" name="cardList">
+    <select name="cardList">
       <option disabled>Card Type</option>
-      <option value="American Express" {% if current_card[0][2] == "American Express" %} selected="selected" {% endif %}>American Express</option>
-      <option value="Discover" {% if current_card[0][2] == "Discover" %} selected="selected"{% endif %} >Discover</option>
-      <option value="MasterCard" {% if current_card[0][2] == "MasterCard" %} selected="selected" {% endif %}>MasterCard</option>
-      <option value="Visa" {% if current_card[0][2] == "Visa" %} selected="selected" {% endif %}>Visa</option>
+      <option value="American Express" {% if card.cardType == "American Express" %} selected="selected" {% endif %}>American Express</option>
+      <option value="Discover" {% if card.cardType == "Discover" %} selected="selected"{% endif %} >Discover</option>
+      <option value="MasterCard" {% if card.cardType == "MasterCard" %} selected="selected" {% endif %}>MasterCard</option>
+      <option value="Visa" {% if card.cardType == "Visa" %} selected="selected" {% endif %}>Visa</option>
     </select>
 
     <label>Card Number</label>
-    <input type="text" name="cardNumber" value="{{ current_card[0][0] }}">
+    <input type="text" name="cardNumber" value="{{ card.card_number }}">
 
     <label>Expiration Date</label>
     <div class="card-details-edit">
       <select form="cardForm" name="monthList">
       	<option disabled="true" value="">Month</option>
         {% for month in range(12) %}
-          <option value="{{ "{:02d}".format(month + 1) }}" {% if (month + 1) == current_card[0][1].month %} selected="selected" {% endif %}>{{ "{:02d}".format(month + 1) }}</option>
+          <option value="{{ "{:02d}".format(month + 1) }}" {% if (month + 1) == card.cardExpDate.month %} selected="selected" {% endif %}>{{ "{:02d}".format(month + 1) }}</option>
         {% endfor %}
 
       </select>
       <select form="cardForm" name="yearList">
       	<option disabled="true" value="">Year</option>
         {% for year in range(2021, 2031) %}
-          <option value="{{ year }}" {% if year == current_card[0][1].year %} selected="selected" {% endif %}>{{ year }}</option>
+          <option value="{{ year }}" {% if year == card.cardExpDate.year %} selected="selected" {% endif %}>{{ year }}</option>
         {% endfor %}
       </select>
 
-      <input type="text" placeholder="SVC" name="SVC" value="{{ current_card[0][3] }}">
+      <input type="text" placeholder="SVC" name="SVC" value="{{ card.card_svc }}">
     </div>
-    <input name="IdCard" type="hidden" value={{ cardId }}>
+    <input name="IdCard" type="hidden" value={{ card.cardID }}>
     <div class="submit-options">
       <input type="submit" class="button-grey clickable" name="cancelCard" value="Cancel">
       <input type="submit" class="button-blue" name="saveCard" value="Save">

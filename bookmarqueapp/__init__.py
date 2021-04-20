@@ -63,10 +63,6 @@ from bookmarqueapp.views import views, admin, checkout, login, profile
 
 
 
-
-
-
-
 ####### encryption testing #######
 # from bookmarqueapp.models.users import User
 # from bookmarqueapp.models.payment import PaymentCard, CardType
