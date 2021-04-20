@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for macos10.15 (x86_64)
 --
 -- Host: localhost    Database: project
 -- ------------------------------------------------------
@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `order`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `order` (
-  `orderID` int NOT NULL,
+  `orderID` int NOT NULL AUTO_INCREMENT,
   `orderTime` datetime DEFAULT NULL,
   `orderStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Pending, Placed, Shipped, or Arrived.',
   `orderAmount` double DEFAULT NULL,
@@ -57,4 +57,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:15:27
+-- Dump completed on 2021-04-20  8:22:13

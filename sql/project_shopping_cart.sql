@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for macos10.15 (x86_64)
 --
 -- Host: localhost    Database: project
 -- ------------------------------------------------------
@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `shopping_cart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `shopping_cart` (
-  `cartID` int NOT NULL,
+  `cartID` int NOT NULL AUTO_INCREMENT,
   `userID` int NOT NULL,
   PRIMARY KEY (`cartID`,`userID`),
   KEY `fk_shopping_cart_users1_idx` (`userID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1007 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:15:28
+-- Dump completed on 2021-04-20  8:22:14

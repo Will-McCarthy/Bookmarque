@@ -61,29 +61,18 @@ def test():
 from bookmarqueapp.views import views, admin, checkout, login, profile
 
 
-
-
 ####### encryption testing #######
-# from bookmarqueapp.models.users import User
-# from bookmarqueapp.models.payment import PaymentCard, CardType
-# # expDate = datetime.datetime.today()
-# # ex = PaymentCard('2333 4444 5555 6666', expDate, CardType.AMEX, '333')
-#
-# ex = PaymentCard.query.filter_by(cardID="1018").first()
-# #
-# #
-# # db.session.add(ex)
-# # db.session.commit()
-#
-# print('here')
-# print(ex.number)
-# print(ex.svc)
-# print(ex.cardType)
-#
-# # from bookmarqueapp.models.users import User
-# jane = User.query.filter_by(userEmail="admin@gmail.com").one()
-# print(jane)
-# jane.password = "password"
-# jane.cards.append(ex)
-# db.session.commit()
-# print(jane.password)
+def encrypt_plaintext_db():
+    from bookmarqueapp.models.users import User
+    from bookmarqueapp.models.payment import PaymentCard, CardType
+
+    users = User.query.all()
+    cards = PaymentCard.query.all()
+
+    for user in users:
+        user.password = str(user.userPassword)
+    for card in cards:
+        card.card_svc = str(card.cardSVC)
+        card.card_number = str(card.cardNumber)
+
+    db.session.commit()

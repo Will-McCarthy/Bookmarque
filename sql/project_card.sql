@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.23, for macos10.15 (x86_64)
 --
 -- Host: localhost    Database: project
 -- ------------------------------------------------------
@@ -29,7 +29,7 @@ CREATE TABLE `card` (
   `cardType` varchar(45) DEFAULT NULL,
   `cardSVC` varchar(250) DEFAULT NULL,
   PRIMARY KEY (`cardID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1006 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `card` (
 
 LOCK TABLES `card` WRITE;
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
-INSERT INTO `card` VALUES (1001,'0101 6969 8787 1111','2028-06-01 00:00:00','Visa',221),(1002,'1234 5678 9012 3456',NULL,'Visa',NULL),(1003,'8989 7474 5656 0000',NULL,'MasterCard',100),(1004,'1111 1111 1111 0000',NULL,'Discover',777),(1005,'7777 4444 0125 3210','2030-12-01 00:00:00','MasterCard',123);
+INSERT INTO `card` VALUES (1001,'gAAAAABgfsb2F01pPHYOc4KM4UMcXzC5sBP9n2YqMTN8v-C2iFxsl_jRmKwX4KdK0MAR1LgDBTzoTYaH1B5sjHWGQ1AAn9SkwBe6I50xu58rauuZpYA9_q0=','2028-06-01 00:00:00','Discover','gAAAAABgfsb2UWqtV63lU_O0pSsRQf9sRa7PbWZmIEZG6kOc0ku4F3HMnumN1Hsl6tAx7KNv1BQY58ZQpMYXMxf0yylrufHEXA=='),(1002,'gAAAAABgfsaH6ClcseErq6eRDybgtRotRuDPekmofKUFtNR9mmvQSwpuuFWNJSBGDZUEbdTnFlAqQi2RhAyJsXm0avJQgu-az7sqDYQCc4kMEnsQi3CwZQ0=','2022-03-01 00:00:00','Visa','gAAAAABgfsaHLdLXvUCmDIoBvq1q4YzxmhWWR5W0eYoCg-acY_z9r6oiY0r91wxasap2pV1b8W1BgonFsr8i2InyiO4SeE6zZw=='),(1003,'gAAAAABgfsaH_2aSrR-xEBBLSvuuG_-ObuMVNJ1Uqng2z9k4sMqYSelrcWj7j3SULUGRdOkxxusjKO8htz5l8Kj9Smwuui5rsFu86-UfVTFKI5lyUAFEZMQ=','2021-06-01 00:00:00','MasterCard','gAAAAABgfsaHhJ0pW5WLYRu5DCosEFv4LrXFAJhuXuDn6SsHG-CnXZiLUrJBIbwkCr0oZlOlyTn1h2gW1EBScpySYElIWKEuag=='),(1004,'gAAAAABgfsaHYu-d-SZUADJbJ86q3BuTNlB1JKpLmscjg7LByYE76s4Q1y7KLsQ-itpTcTBX0eHd0QWq8ayxkRKif7nGJF3I4Qs359YKKoyJh2F3zur2lz8=','2024-11-01 00:00:00','Discover','gAAAAABgfsaHD6WpmrHeC6SAgG2J39zDUC14qb3qZrvPr43QDcTkEgtovn20hEJvkeNes5jG3xfEuXmF45Ek68FwlZkmbqFusg=='),(1005,'gAAAAABgfsaH5P-LWAi-Enkj9HxbqV6q2ol2p8DMETDKBbTzMXXfcc3MPcbAbcijd6aGE-5rMD3hVlqfmhbb6mgNZCHvonhhgeUcBnJ1ZtVIrMHqkfqtmjE=','2030-12-01 00:00:00','MasterCard','gAAAAABgfsaHhme2fzf3NpQDPRxX3rISrDf1_5zfBUFhyMYpIZJ_Q8lofBnhDcithSAy16Zjhnae0_8XHNp8JhnpFep87tQlpA==');
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-07 15:15:27
+-- Dump completed on 2021-04-20  8:22:15
