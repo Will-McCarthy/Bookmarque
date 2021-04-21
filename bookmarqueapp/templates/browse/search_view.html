@@ -1,11 +1,22 @@
 {% extends "default_layout.html" %}
 {% block content %}
+
+<!-- Search Bar -->
 <div class = "search-container">
     <form class="full-search-bar">
-        <input type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN.">
-        <button type="submit"><img src="{{ url_for('static', filename='assets/search.svg') }}"></button>
-      </form>
+      <select>
+        <option>All</option>
+        <option>ISBN</option>
+        <option>Title</option>
+        <option>Author</option>
+        <option>Genre</option>
+      </select>
+      <input type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN.">
+      <button type="submit"><img src="{{ url_for('static', filename='assets/icons/search.svg') }}"></button>
+    </form>
 </div>
+
+<!-- Filters -->
 <div class = 'left-container'>
   <form id="search-filters">
     <fieldset>
@@ -44,71 +55,37 @@
   </form>
   </div>
 
-<div class = 'right-container'>
+<!-- Results Display -->
+<div class='search-result-display'>
+{% for book in search_results %}
     <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
+        <a href="{{ url_for('book_details', ISBN=book.ISBN)}}">
+            {% if book.bookImage %}
+              <img src="{{ url_for('static', filename='assets/covers/' + book.bookImage) }}" alt="{{ book.bookTitle }}">
+            {% else %}
+              <img src="{{ url_for('static', filename='assets/covers/placeholder-cover.jpg') }}" alt="{{ book.bookTitle }}">
+            {% endif %}
+            <h2 class="title">{{ book.bookTitle }}</h2>
+            <p class ="author">{{ book.authorFName ~ " " ~ book.authorLName }}</p>
+            <div class="star-rating">
+              {% for i in range(book.bookRating) %}
+                ★
+              {% endfor %}
+              {% for i in range(5 - book.bookRating) %}
+                ☆
+              {% endfor %}
+            </div>
+            <p class = "stock">{% if book.bookQuantity > 0 %} In Stock {% else %} Out of Stock {% endif %}</p>
+            <h2 class ="price">{{ book.bookPrice }} USD</h2>
             <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
+              <p> Tags: </p>
+              {% for tag in book.categories %}
+                {{ tag.categoryName }}
+                {% if not loop.last %}, {% endif %}
+              {% endfor %}
             </div>
         </a>
     </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
+{% endfor %}
 </div>
 {% endblock %}
