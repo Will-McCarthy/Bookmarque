@@ -6,7 +6,7 @@
     <h1 class="center">Shopping Cart</h1>
     <div id="book-list">
       <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}"></a>
+          <img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}"></a>
           <div class="book-info">
             <h3>Black Hole Blues</h3>
             <p><b>19.99 USD</b></p>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}"></a>
+          <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}"></a>
           <div id="book-info">
             <h3>The Selfie as Big as the Ritz</h3>
             <p><b>79.99 USD</b></p>
@@ -26,7 +26,7 @@
       </div>
 
       <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/the vacationers.jpg') }}"></a>
+          <img src="{{ url_for('static', filename='assets/covers/the vacationers.jpg') }}"></a>
           <div class="book-info">
             <h3>The Vacationers</h3>
             <p><b>42.00 USD</b></p>
@@ -36,7 +36,7 @@
       </div>
 
       <div class="book-item last">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/mrsdeath misses death.jpg') }}"></a>
+          <img src="{{ url_for('static', filename='assets/covers/mrsdeath misses death.jpg') }}"></a>
           <div class="book-info">
             <h3>Mrs. Death Misses Death</h3>
             <p><b>19.99 USD</b></p>
@@ -53,17 +53,34 @@
   <div id="ordersummary">
     <div id="innerbox">
       <h2 style="font-weight: lighter">Order Summary</h2>
-     <div id="first_section">
-          <h3 style="float: left; font-weight: lighter; margin: 0; padding-left: 2em;">Title</h3>
-          <h3 style="float: right; font-weight: lighter; margin: 0;">Price</h3>
-     </div>
-     <hr style="width:100%;">
-      <ul class="book-list">
-          <a href="#" img src="static/assets/checkout_ui_assets/trash.png" alt="trashcan-img"></a>
-          <li><span style="float:left;">Harry Potter & The Sorcerer's Stone</span><span style="float:right; padding-left:2em;">$12.99</span></li>
-          <li><span style="float:left;">The Alchemist</span><span style="float:right; padding-left:2em;">$9.99</span></li>
-      </ul>
-      <br><br><br><br><br><br><br><br>
+      <table>
+        <tr>
+          <th> Title</th>
+          <th> Quantity</th>
+          <th> Price</th>
+        </tr>
+        <tr>
+          <td> Black Hole Blues </td>
+          <td> 1</td>
+          <td> 19.99 USD</td>
+        </tr>
+        <tr>
+          <td> The Selfie as Big as the Ritz</td>
+          <td> 1</td>
+          <td> 79.99 USD</td>
+        </tr>
+        <tr>
+          <td> The Vacationers</td>
+          <td> 1</td>
+          <td> 42.00 USD</td>
+        </tr>
+        <tr>
+          <td> Mrs. Death Misses Death</td>
+          <td> 1</td>
+          <td> 19.99 USD</td>
+        </tr>
+      </table>
+      <br>
       <ul class="price-summary">
           <li class="merchandise-row">
                   <span class="merchandise-label" style="float:left;">Merchandise: </span>
@@ -82,8 +99,9 @@
       <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
       <h2 style="font-weight:lighter; float: right;">$27.94 </h2>
     </div>
-    <a class="button-blue" href="{{ url_for('checkout1') }}">Checkout</a>
+    <a class="button-blue" href="{{ url_for('checkout') }}">Checkout</a>
   </div>
+  
 </div>
 
 {% endblock %}

@@ -498,8 +498,10 @@ footer div {
 #shopping-cart {
   border-top: solid 0.15rem $blue;
   font-family: $font-serif;
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #cart-box {
@@ -713,7 +715,7 @@ td {
   background-color: #F5F5F5;
   z-index: 1000;
   padding: 2em;
-  height: 60%;
+  height: auto;
   padding-top: 1em;
 }
 
@@ -1253,3 +1255,31 @@ td a { //need to make a's in td's with this padding
   text-decoration: underline;
   cursor: pointer;
 }
+
+.body-grid {
+  border-top: solid 0.15rem $blue;
+  font-family: $font-serif;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.checkout-info {
+  display: block;
+}
+
+.checkout-form {
+  display: block;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checkout-form label {
+  width: 100%;
+  display: block;
+  padding-left: 1em;
+}
+
