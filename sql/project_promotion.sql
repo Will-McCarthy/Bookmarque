@@ -30,6 +30,7 @@ CREATE TABLE `promotion` (
   `promoEmailStatus` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Either Emailed or Not Sent.',
   `promoUses` varchar(45) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Keeps track of how many times a promotion was used.',
   `promoName` varchar(45) DEFAULT NULL,
+  `promoCode` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`promoID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
