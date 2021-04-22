@@ -1,0 +1,109 @@
+{% extends "default_layout.html" %}
+{% block content %}
+
+<div class="body-grid">
+    <div class="checkout-info">
+        <h1 class="center"> Checkout </h1>
+        <form class="checkout-form" action="{{ url_for('checkout') }}" method="POST">
+            <h2> Shipping: </h2>
+            {% if promo_success == true %}
+            <input type="hidden" name="promotion_hidden" value="{{ promo_code }} ">
+            {% else %}
+            <input type="hidden" name="promotion_hidden" value="">
+            {% endif %}
+            {% if current_user.address %}
+            <label><input type="radio" name="shipping-option" value={{ current_user.addressID }} checked> {{ current_user.address.addressStreet }} {{ current_user.address.addressCity }}, {{ current_user.address.addressState }} </label>
+            {% else %}
+            <span><a href="{{ url_for('checkout_create_address')}}">+ Add Address</a></span>
+            {% endif %}
+            <h2> Payment: </h2>
+            {% if current_user.cards %}
+              {% for card in current_user.cards %}    
+              <label><input type="radio" name="payment-option" value="{{ card.cardID }}" checked> **** **** **** {{ card.card_number[-4:] }}</label>
+              {% endfor %}
+            {% endif %}
+            {% if current_user.cards|length < 3 %}
+            <br><span><a href="{{ url_for('checkout_create_card')}}">+ Add New Card</a></span>
+            {% endif %}
+            <h2> Promotion: </h2>
+            <label>
+              <input type="text" name="promoCode" {% if promo_code %} value="{{ promo_code }}" {% endif %} ></input> 
+              <input type="submit" class="button-blue" name="applyButton" value="Apply">
+              {% if promo_success == true %}
+              <p> The promotion has been applied to the cart</p>
+              {% elif promo_success == false %}
+              <p> The promotion is invalid</p>
+              {% endif %}
+            </label>
+            
+            <br>
+            <br>
+            <input type="submit" class="button-blue" name="checkoutButton" value="Place Order">
+        </form> 
+    </div>
+
+
+
+    <div id="ordersummary">
+        <div id="innerbox">
+          <h2 style="font-weight: lighter">Order Summary</h2>
+          <table>
+            <tr>
+              <th> Title</th>
+              <th> Quantity</th>
+              <th> Price</th>
+            </tr>
+            <tr>
+              <td> Black Hole Blues </td>
+              <td> 1</td>
+              <td> 19.99 USD</td>
+            </tr>
+            <tr>
+              <td> The Selfie as Big as the Ritz</td>
+              <td> 1</td>
+              <td> 79.99 USD</td>
+            </tr>
+            <tr>
+              <td> The Vacationers</td>
+              <td> 1</td>
+              <td> 42.00 USD</td>
+            </tr>
+            <tr>
+              <td> Mrs. Death Misses Death</td>
+              <td> 1</td>
+              <td> 19.99 USD</td>
+            </tr>
+          </table>
+          <br>
+          <ul class="price-summary">
+              <li class="merchandise-row">
+                      <span class="merchandise-label" style="float:left;">Merchandise: </span>
+                      <span class="merchandise-amount" style="float:right;">$22.98</span><br>
+              </li>
+              {% if promo_success == true %}
+              <li class="merchandise-row">
+                <span class="merchandise-label" style="float:left;">Promotion: </span>
+                <span class="merchandise-amount" style="float:right;">{{ promo_discount * 100 }}%</span><br>
+              </li>
+              {% endif %}
+              <li class="shipping-row">
+                      <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
+                      <span class="shipping-amount" style="float:right;">$3.54</span><br>
+              </li>
+              <li class="tax-row">
+                  <span class="tax-label" style="float:left">Tax: </span>
+                  <span class="tax-amount" style="float:right">$1.42</span>
+              </li>
+          </ul>
+          <br><hr>
+          <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
+          <h2 style="font-weight:lighter; float: right;">$27.94 </h2>
+        </div>
+    </div>
+
+
+
+    
+</div>
+
+{% endblock %}
