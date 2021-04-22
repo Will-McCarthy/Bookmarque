@@ -36,7 +36,7 @@ class User(db.Model):
     addressID = db.Column(db.Integer, db.ForeignKey('address.addressID'))
     address = db.relationship('Address', lazy=True)
 
-    cards = db.relationship('PaymentCard', secondary='users_has_card', back_populates='users')
+    cards = db.relationship('PaymentCard', secondary='users_has_card')
 
     # override print
     def __str__(self):
