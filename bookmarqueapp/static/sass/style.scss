@@ -498,8 +498,10 @@ footer div {
 #shopping-cart {
   border-top: solid 0.15rem $blue;
   font-family: $font-serif;
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #cart-box {
@@ -713,7 +715,7 @@ td {
   background-color: #F5F5F5;
   z-index: 1000;
   padding: 2em;
-  height: 60%;
+  height: auto;
   padding-top: 1em;
 }
 

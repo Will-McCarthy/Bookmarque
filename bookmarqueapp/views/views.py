@@ -37,7 +37,7 @@ def book_details(ISBN):
         amount = request.form.get('addCartAmount')
         submit = request.form.get('addCart')
         if submit == "Add to Cart":
-            cID = current_user.get_id()
+            cID = current_user.get_id() #need to look into checking for non-registered users
             cursor.execute('''SELECT cartID FROM shopping_cart WHERE userID = %s;''', [cID])
             cart = cursor.fetchone()
             cart = cart[0]
