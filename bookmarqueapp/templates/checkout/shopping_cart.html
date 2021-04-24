@@ -47,7 +47,7 @@
         <tr>
           <td>{{item[4]}} </td>
           <td>{{item[2]}}</td>
-          <td>{{item[8] * item[2]}} USD</td>
+          <td>{{"%.2f" % (item[8] * item[2])}} USD</td>
         </tr>
 	{% endfor %}
       </table>
@@ -59,7 +59,7 @@
           </li>
           <li class="shipping-row">
                   <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
-                  <span class="shipping-amount" style="float:right;">$7.50</span><br>
+                  <span class="shipping-amount" style="float:right;">{{shipping}}</span><br>
           </li>
           <li class="tax-row">
               <span class="tax-label" style="float:left">Tax: </span>
@@ -68,9 +68,13 @@
       </ul>
       <br><hr>
       <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
-      <h2 style="font-weight:lighter; float: right;">${{"%.2f" % (total + total * 0.04 + 7.50)}}</h2>
+      <h2 style="font-weight:lighter; float: right;">${{"%.2f" % (total + total * 0.04 + shipping)}}</h2>
     </div>
+    {% if total > 0 %}
     <a class="button-blue" href="{{ url_for('checkout1') }}">Checkout</a>
+    {% else %}
+    <a class="button-blue" href="">Checkout</a>
+    {% endif %}
   </div>
   
 </div>

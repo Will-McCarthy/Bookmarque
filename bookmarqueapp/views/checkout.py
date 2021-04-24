@@ -48,7 +48,14 @@ def shopping_cart():
     cartInfo = cursor.fetchall()
     cursor.execute('''SELECT SUM(cartBookQuantity * bookPrice) FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
     total = cursor.fetchone()
-    return render_template('checkout/shopping_cart.html', cartInfo=cartInfo, total=total[0])
+    test = total[0]
+    mysql.connection.commit()
+    shipping = 7.50
+    if (test is None):
+        shipping = 0
+        return render_template('checkout/shopping_cart.html', cartInfo=cartInfo, total=0, shipping=shipping)
+    else:
+        return render_template('checkout/shopping_cart.html', cartInfo=cartInfo, total=total[0], shipping=shipping)
 
 @app.route('/cart/history')
 def order_history():
