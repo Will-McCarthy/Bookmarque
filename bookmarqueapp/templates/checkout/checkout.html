@@ -53,51 +53,42 @@
               <th> Quantity</th>
               <th> Price</th>
             </tr>
+            {% for item in cartInfo %}
             <tr>
-              <td> Black Hole Blues </td>
-              <td> 1</td>
-              <td> 19.99 USD</td>
+              <td>{{item[4]}} </td>
+              <td>{{item[2]}}</td>
+              <td>{{"%.2f" % (item[8] * item[2])}} USD</td>
             </tr>
-            <tr>
-              <td> The Selfie as Big as the Ritz</td>
-              <td> 1</td>
-              <td> 79.99 USD</td>
-            </tr>
-            <tr>
-              <td> The Vacationers</td>
-              <td> 1</td>
-              <td> 42.00 USD</td>
-            </tr>
-            <tr>
-              <td> Mrs. Death Misses Death</td>
-              <td> 1</td>
-              <td> 19.99 USD</td>
-            </tr>
+	          {% endfor %}
           </table>
           <br>
           <ul class="price-summary">
               <li class="merchandise-row">
                       <span class="merchandise-label" style="float:left;">Merchandise: </span>
-                      <span class="merchandise-amount" style="float:right;">$22.98</span><br>
+                      <span class="merchandise-amount" style="float:right;">${{"%.2f" % total}}</span><br>
               </li>
               {% if promo_success == true %}
               <li class="merchandise-row">
                 <span class="merchandise-label" style="float:left;">Promotion: </span>
-                <span class="merchandise-amount" style="float:right;">{{ promo_discount * 100 }}%</span><br>
+                <span class="merchandise-amount" style="float:right;">-${{ "%.2f" % (total*promo_discount) }}</span><br>
               </li>
               {% endif %}
               <li class="shipping-row">
                       <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
-                      <span class="shipping-amount" style="float:right;">$3.54</span><br>
+                      <span class="shipping-amount" style="float:right;">${{"%.2f" % shipping}}</span><br>
               </li>
               <li class="tax-row">
                   <span class="tax-label" style="float:left">Tax: </span>
-                  <span class="tax-amount" style="float:right">$1.42</span>
+                  <span class="tax-amount" style="float:right">${{"%.2f" % (total * 0.04)}}</span>
               </li>
           </ul>
           <br><hr>
           <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
-          <h2 style="font-weight:lighter; float: right;">$27.94 </h2>
+          {% if promo_success == true %}
+          <h2 style="font-weight:lighter; float: right;">${{"%.2f" % (total + (total * 0.04) + shipping - (total*promo_discount))}} </h2>
+          {% else %}
+          <h2 style="font-weight:lighter; float: right;">${{"%.2f" % (total + total * 0.04 + shipping)}}</h2>
+          {% endif %}
         </div>
     </div>
 

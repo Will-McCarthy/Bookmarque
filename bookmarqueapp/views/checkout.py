@@ -43,53 +43,124 @@ def order_history():
 
 @app.route('/checkout', methods = ['POST', 'GET'])
 def checkout():
+    #Abritary shipping value?
+    shipping = 7.50
+
+    #Retrieve User's cartID
+    cursor = mysql.connection.cursor()
+    cID = current_user.get_id()
+    cursor.execute('''SELECT cartID FROM shopping_cart WHERE userID = %s;''', [cID])
+    cart = cursor.fetchone()
+    cart = cart[0]
+
+    #Retrieving items in user's cart
+    cursor.execute('''SELECT * FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
+    cartInfo = cursor.fetchall()
+
+    #Retrieving cart price total before modifiers
+    cursor.execute('''SELECT SUM(cartBookQuantity * bookPrice) FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
+    total = cursor.fetchone()
+    #total must be assigned to something for page to render
+    if total[0]:
+        total = total[0]
+    else:
+        total = 0
+        shipping = 0
+
+    
+
     if request.method == 'POST':
         checkout = request.form.get("checkoutButton")
-        if (checkout and checkout == "checkout"):
+        if (checkout and checkout == "Place Order" and cartInfo):
+            print("Im in checkout")
             # Place order button has been pressed
+            today = datetime.today().strftime('%Y-%m-%d')
             #Pull data from forms
-            promotion = request.form.get("promotion_hidden")
+            promo_code = request.form.get("promotion_hidden")
             shipping_addressID = request.form['shipping-option']
             payment_cardID = request.form['payment-option']
 
+            #Pulling neccessary information from promotion for discount on total
+            cursor.execute('''SELECT * FROM promotion WHERE promoCode = %s AND promoEnd > %s;''', (promo_code, today))
+            promotion = cursor.fetchone()
+
+            #Then we should increment the promotion's timeUsed db column.
+            cursor.execute('''UPDATE promotion SET promoUses = promoUses+1 WHERE promoCode = %s''', ([promo_code]))
+
+            
             #In a production environment, we should check for consistency between client data and server data.
             #A malicious attacker could change the payment-option html value to another cardID, 
             # and charge a card that wasn't connected to their account
             #Therefore, we would be making sure that the payment_cardID == (one of the current_user.cardIDs)
 
-            #At this point, we would pull all items from the user's cart from the db
-            #Sum their totals
-            #Apply promotion discount to sum total.
-            #Apply tax to sum total.
-            #Create order with shipping_addressID & payment_cardID & promotionUsed
-            #Then we should increment the promotion's timeUsed db column.
+            #Get final cart price here after shipping, tax, and promotion discount
+            tax = total * 0.04
+            newTotal = total + tax
 
+            #Apply promotion discount to sum total if available
+            if(promotion):
+                 discount = total*promotion[1]
+                 newTotal -= discount
+            else: 
+                promotion = [-1]
+            newTotal += shipping
+
+            #Create order
+            cursor.execute('''INSERT INTO `order` (orderTime, orderStatus, orderAmount, promoID, addressID, cardID, userID) VALUES (%s,%s,%s,%s,%s,%s,%s);''', (today, "Success", newTotal, promotion[0], shipping_addressID, payment_cardID, cID))
+
+            #We need to fetch the most recent orderID that we just created for order_has_book
+            cursor.execute('''SELECT orderID FROM `order` WHERE userID = %s ORDER BY orderID DESC;''', [cID])
+            orderID = cursor.fetchone()
+            orderID = orderID[0]
+
+            #Translating user's cart items into order_has_book
+            for book in cartInfo:
+                quantity = book[2]
+                bookID = book[1]
+                cursor.execute('''INSERT INTO order_has_book (orderID, ISBN, orderBookQuantity) VALUES (%s, %s, %s);''', ([orderID, bookID, quantity]))
+
+            #Wiping user's cart because order has been made
+            cursor.execute('''DELETE FROM shopping_cart_has_book WHERE cartID = %s;''', [cart])
+            
             #Finally redirect to order confirmation
+            mysql.connection.commit()
 
-            return render_template('checkout/checkout.html')
+            #Redirect them to the order confirmation route
+            #Change this redirect to order confirmation screen
+            #HERE
+            return redirect('/')
         else:
             #Apply Promotion button has been pressed
-            apply = request.form.get("promoCode")
-            # HTML and SQL Date format is represented as YYYY-MM-DD 
-            today = datetime.today().strftime('%Y-%m-%d')
+            apply = request.form.get("applyButton")
+            if (apply and apply == "Apply"):
+                promo_code = request.form.get("promoCode")
+                # HTML and SQL Date format is represented as YYYY-MM-DD 
+                today = datetime.today().strftime('%Y-%m-%d')
 
-            #Verify Promotion exists and today's date is before the end of the promotion date.
-            cursor = mysql.connection.cursor()
-            cursor.execute('''SELECT * FROM promotion WHERE promoCode = %s AND promoEnd > %s;''', (apply, today))
-            promotion = cursor.fetchone()
-            success = False
-            if(promotion):
-                #Success! promotion exists, refresh page with appropriate visual changes
-                success = True
-                return render_template('checkout/checkout.html', promo_code=apply, promo_success=True, promo_discount=promotion[1] )
-                
-            #Promotion invalid, rerender page with appropriate visual changes
-            return render_template('checkout/checkout.html', promo_code=apply, promo_success=False )
+                #Verify Promotion exists and today's date is before the end of the promotion date.
+                cursor = mysql.connection.cursor()
+                cursor.execute('''SELECT * FROM promotion WHERE promoCode = %s AND promoEnd > %s;''', (promo_code, today))
+                promotion = cursor.fetchone()
+                success = False
+                if(promotion):
+                    #Success! promotion exists, refresh page with appropriate visual changes
+                    success = True
+                    mysql.connection.commit()
+                    return render_template('checkout/checkout.html', cartInfo = cartInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=True, promo_discount=promotion[1] )
+                    
+                #Promotion invalid, rerender page with appropriate visual changes
+                mysql.connection.commit()
+                return render_template('checkout/checkout.html', cartInfo = cartInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=False )
+            else:
+                #This is called when the user tries to place an order when they have nothing in their cart.
+                return render_template('checkout/checkout.html', cartInfo = cartInfo, total= total, shipping=shipping)
+
 
         
 
     if request.method == 'GET':
-        return render_template('checkout/checkout.html')
+        mysql.connection.commit()
+        return render_template('checkout/checkout.html', cartInfo = cartInfo, total= total, shipping=shipping)
         
     
 
