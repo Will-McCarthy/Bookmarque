@@ -7,13 +7,16 @@
     <div id="book-list">
       {% for item in cartInfo %}
       <div class="book-item">
-          <img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}">
+          <img src="{{ url_for('static', filename='assets/covers/' + item[7]) }}">
           <div class="book-info">
             <h3>{{item[4]}}</h3>
             <p><b>{{item[8]}} USD</b></p>
             <label>Quantity: </label><input type="number" value={{item[2]}}>
           </div>
-          <input type="button" class="button-gold" value="Delete">
+	  <form method="POST" action="{{ url_for('shopping_cart') }}">
+	    <input type="hidden" value={{item[3]}} name="bookID">
+            <input type="submit" name="deleteButton" class="button-gold" value="Delete">
+	  </form>
       </div>
       {% endfor %}
 
@@ -52,20 +55,20 @@
       <ul class="price-summary">
           <li class="merchandise-row">
                   <span class="merchandise-label" style="float:left;">Merchandise: </span>
-                  <span class="merchandise-amount" style="float:right;">$22.98</span><br>
+                  <span class="merchandise-amount" style="float:right;">${{"%.2f" % total}}</span><br>
           </li>
           <li class="shipping-row">
                   <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
-                  <span class="shipping-amount" style="float:right;">$3.54</span><br>
+                  <span class="shipping-amount" style="float:right;">$7.50</span><br>
           </li>
           <li class="tax-row">
               <span class="tax-label" style="float:left">Tax: </span>
-              <span class="tax-amount" style="float:right">$1.42</span>
+              <span class="tax-amount" style="float:right">${{"%.2f" % (total * 0.04)}}</span>
           </li>
       </ul>
       <br><hr>
       <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
-      <h2 style="font-weight:lighter; float: right;">$27.38</h2>
+      <h2 style="font-weight:lighter; float: right;">${{"%.2f" % (total + total * 0.04 + 7.50)}}</h2>
     </div>
     <a class="button-blue" href="{{ url_for('checkout1') }}">Checkout</a>
   </div>
