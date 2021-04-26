@@ -5,13 +5,13 @@
 <div class = "search-container">
     <form class="full-search-bar">
       <select>
-        <option>All</option>
-        <option>ISBN</option>
-        <option>Title</option>
-        <option>Author</option>
-        <option>Genre</option>
+        <option {% if type and type == "all" %} selected="selected" {% endif %}>All</option>
+        <option {% if type and type == "isbn" %} selected="selected" {% endif %}>ISBN</option>
+        <option {% if type and type == "title" %} selected="selected" {% endif %}>Title</option>
+        <option {% if type and type == "author" %} selected="selected" {% endif %}>Author</option>
+        <option {% if type and type == "genre" %} selected="selected" {% endif %}>Genre</option>
       </select>
-      <input type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN.">
+      <input type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN." {% if term %} value="{{ term }}" {% endif %}>
       <button type="submit"><img src="{{ url_for('static', filename='assets/icons/search.svg') }}"></button>
     </form>
 </div>
@@ -57,8 +57,9 @@
 
 <!-- Results Display -->
 <div class='search-result-display'>
+{% if search_results and (search_results|length > 0) %}
 {% for book in search_results %}
-    <div class = "search-card">
+    <div class="search-card">
         <a href="{{ url_for('book_details', ISBN=book.ISBN)}}">
             {% if book.bookImage %}
               <img src="{{ url_for('static', filename='assets/covers/' + book.bookImage) }}" alt="{{ book.bookTitle }}">
@@ -66,7 +67,7 @@
               <img src="{{ url_for('static', filename='assets/covers/placeholder-cover.jpg') }}" alt="{{ book.bookTitle }}">
             {% endif %}
             <h2 class="title">{{ book.bookTitle }}</h2>
-            <p class ="author">{{ book.authorFName ~ " " ~ book.authorLName }}</p>
+            <p class="author">{{ book.authorFName ~ " " ~ book.authorLName }}</p>
             <div class="star-rating">
               {% for i in range(book.bookRating) %}
                 ★
@@ -75,9 +76,9 @@
                 ☆
               {% endfor %}
             </div>
-            <p class = "stock">{% if book.bookQuantity > 0 %} In Stock {% else %} Out of Stock {% endif %}</p>
-            <h2 class ="price">{{ book.bookPrice }} USD</h2>
-            <div class = "tags">
+            <p class="stock">{% if book.bookQuantity > 0 %} In Stock {% else %} Out of Stock {% endif %}</p>
+            <h2 class="price">{{ book.bookPrice }} USD</h2>
+            <div class="tags">
               <p> Tags: </p>
               {% for tag in book.categories %}
                 {{ tag.categoryName }}
@@ -87,5 +88,12 @@
         </a>
     </div>
 {% endfor %}
+{% else %}
+<!--- No Results --->
+<h1 class="center">No results</h1>
+<p class="center">
+  Double check your search or try broadening your filters for more results!
+</p>
+{% endif %}
 </div>
 {% endblock %}

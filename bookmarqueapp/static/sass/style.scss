@@ -96,6 +96,26 @@ header {
   height: 1.75rem;
 }
 
+#cart-icon {
+  position: relative;
+}
+
+.badge {
+  height: .5rem;
+  width: .5rem;
+  position: absolute;
+  top: -10px;
+  right: 0px;
+  // padding: 5px 10px;
+  border-radius: 50%;
+  background: $gold;
+  color: white;
+  font-family: $font-sans;
+  font-size: .5rem;
+  font-weight: bold;
+
+}
+
 /* admin utility bar */
 #admin-utilities {
   background-image: linear-gradient($dark-blue, $blue, $dark-blue);
@@ -900,6 +920,8 @@ td a { //need to make a's in td's with this padding
   float: left;
   background-color: #c4c4c4;
 }
+
+.search-result-display {}
 
 .search-card {
    padding-top: 1em;
