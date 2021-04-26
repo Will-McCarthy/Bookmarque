@@ -36,6 +36,7 @@ def search(type=None, term=None):
             # iterate through search options
             if type == "all":
                 results = Book.query.all()
+                term = None
             elif type == "isbn":
                 if term.isdigit():
                     results = Book.query.filter(Book.ISBN.contains(term)).all()
