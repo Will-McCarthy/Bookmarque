@@ -37,12 +37,11 @@ def search(type=None, term=None):
             if type == "all":
                 results = Book.query.all()
             elif type == "isbn":
-                print('isbn')
+                if term.isdigit():
+                    results = Book.query.filter(Book.ISBN.contains(term)).all()
+
             elif type == "title":
-                print('title')
-
-                Book.query.filter(Book.bookTitle.contains(term))
-
+                results = Book.query.filter(Book.bookTitle.contains(term)).all()
 
             elif type == "author":
                 search_names = term.strip().split(" ") # strip and split the input name on spaces
