@@ -8,11 +8,16 @@
       {% for item in cartInfo %}
       <div class="book-item">
           <img src="{{ url_for('static', filename='assets/covers/' + item[7]) }}">
-          <div class="book-info">
+	  <!--<form method="POST" action="{{ url_for('shopping_cart') }}">-->
+	  <div class="book-info">
             <h3>{{item[4]}}</h3>
             <p><b>{{item[8]}} USD</b></p>
-            <label>Quantity: </label><input type="number" value={{item[2]}}>
+	    <form method="POST" action="{{ url_for('shopping_cart') }}">
+            <label>Quantity: </label><input type="number" name="bookQuantity" min="1" value={{item[2]}}>
+	    <input type="hidden" value={{item[3]}} name="book">
           </div>
+	    <input type="submit" name="updateAmount" class="button-blue" value="Update">
+	  </form>
 	  <form method="POST" action="{{ url_for('shopping_cart') }}">
 	    <input type="hidden" value={{item[3]}} name="bookID">
             <input type="submit" name="deleteButton" class="button-gold" value="Delete">
@@ -20,7 +25,7 @@
       </div>
       {% endfor %}
 
-     <!-- <div class="book-item last">
+     <!--<div class="book-item last">
           <img src="{{ url_for('static', filename='assets/covers/mrsdeath misses death.jpg') }}"></a>
           <div class="book-info">
             <h3>Mrs. Death Misses Death</h3>
@@ -28,7 +33,7 @@
             <label>Quantity: </label><input type="number" placeholder="1">
           </div>
           <input type="button" class="button-gold" value="Delete">
-      </div>-->
+     </div>-->
 
     </div>
     <h3 class="center"><a href="{{ url_for('order_history')}}">View History</a></h3>

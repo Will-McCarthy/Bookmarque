@@ -43,7 +43,12 @@ def shopping_cart():
         if (delete == "Delete"):
             ISBN = request.form.get("bookID")
             cursor.execute('''DELETE FROM shopping_cart_has_book WHERE cartID = %s AND ISBN = %s;''', ([cart, ISBN]))
-
+        update = request.form.get("updateAmount")
+        if (update == "Update"):
+            ISBN = request.form.get("book")
+            quantity = request.form.get("bookQuantity")
+            cursor.execute('''UPDATE shopping_cart_has_book SET cartBookQuantity = %s WHERE ISBN = %s AND cartID = %s;''', ([quantity, ISBN, cart]))
+            
     cursor.execute('''SELECT * FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
     cartInfo = cursor.fetchall()
     cursor.execute('''SELECT SUM(cartBookQuantity * bookPrice) FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
