@@ -15,6 +15,7 @@
 	    <form method="POST" action="{{ url_for('shopping_cart') }}">
             <label>Quantity: </label><input type="number" name="bookQuantity" min="1" value={{item[2]}}>
 	    <input type="hidden" value={{item[3]}} name="book">
+
           </div>
 	    <input type="submit" name="updateAmount" class="button-blue" value="Update">
 	  </form>
@@ -26,6 +27,7 @@
       {% endfor %}
 
      <!--<div class="book-item last">
+  
           <img src="{{ url_for('static', filename='assets/covers/mrsdeath misses death.jpg') }}"></a>
           <div class="book-info">
             <h3>Mrs. Death Misses Death</h3>
@@ -55,6 +57,7 @@
           <td>{{"%.2f" % (item[8] * item[2])}} USD</td>
         </tr>
 	{% endfor %}
+        
       </table>
       <br>
       <ul class="price-summary">
@@ -75,8 +78,9 @@
       <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
       <h2 style="font-weight:lighter; float: right;">${{"%.2f" % (total + total * 0.04 + shipping)}}</h2>
     </div>
+
     {% if total > 0 %}
-    <a class="button-blue" href="{{ url_for('checkout1') }}">Checkout</a>
+    <a class="button-blue" href="{{ url_for('checkout') }}">Checkout</a>
     {% else %}
     <a class="button-blue" href="">Checkout</a>
     {% endif %}

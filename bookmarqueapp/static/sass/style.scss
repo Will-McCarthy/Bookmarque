@@ -704,7 +704,19 @@ td {
   min-height: 100%;
   display: flex;
   flex-direction: column;
+}
 
+#orderConfirmation{
+  background-color: $gold;
+  padding: 10%;
+  padding-top: 2%;
+  padding-left: 2%;
+  font-family: $font-serif;
+  font-weight: lighter;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .book-list, .price-summary{
   list-style-type: none;
@@ -1254,4 +1266,31 @@ td a { //need to make a's in td's with this padding
   font-size: x-small;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.body-grid {
+  border-top: solid 0.15rem $blue;
+  font-family: $font-serif;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+}
+
+.checkout-info {
+  display: block;
+}
+
+.checkout-form {
+  display: block;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.checkout-form label {
+  width: 100%;
+  display: block;
+  padding-left: 1em;
 }
