@@ -921,14 +921,19 @@ td a { //need to make a's in td's with this padding
   background-color: #c4c4c4;
 }
 
-.search-result-display {}
+.search-result-display {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 .search-card {
-   padding-top: 1em;
-   padding-bottom: 1em;
-   padding-left: 2em;
-   padding-right: 2em;
-   background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  padding-right: 2rem;
+  padding-bottom: 2rem;
 }
 
 .search-card a {
@@ -956,12 +961,9 @@ td a { //need to make a's in td's with this padding
 }
 
 .tags {
-  display: block;
   font-family: $font-sans;
   font-size: small;
   color: gray;
-  padding-top: 10%;
-
 }
 
 .tags p {
