@@ -1077,11 +1077,24 @@ td a { //need to make a's in td's with this padding
   margin-top: 1rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  padding: 1rem;
+  border: solid .25rem $blue;
+  box-shadow: .25rem .25rem .5rem .1rem $light-grey;
 }
 
 #search-filters fieldset {
   border-color: $blue;
   margin-top: .5rem;
+}
+
+#price-min-filter {
+  width: 4rem;
+  border: solid .05rem black;
+}
+
+#price-max-filter {
+  width: 4rem;
+  border: solid .05rem black;
 }
 
 // CSS used for profile pages

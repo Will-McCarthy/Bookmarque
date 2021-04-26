@@ -23,9 +23,9 @@
   <form id="search-filters">
     <fieldset>
       <legend>Price</legend>
-      <input type="number" id="price-min-filter" placeholder="min" name="priceMin" min=0>
+      <input type="number" id="price-min-filter" placeholder="min" name="priceMin" min=0 onchange="checkPriceRange()">
       -
-      <input type="number" id="price-max-filter" placeholder="max" name="priceMax" min=0>
+      <input type="number" id="price-max-filter" placeholder="max" name="priceMax" min=0 onchange="checkPriceRange()">
     </fieldset>
     <fieldset>
       <legend>Rating</legend>
@@ -35,20 +35,26 @@
       <span id="star-3" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
       <span id="star-4" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
       <span id="star-5" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span>& up</span>
     </fieldset>
     <fieldset>
       <legend>Misc.</legend>
-      <input type="checkbox"><label>In Stock</label>
+      <input id="in-stock" type="checkbox" onchange="filterResultsShown()"><label>In Stock</label>
     </fieldset>
   </form>
   </div>
 
 <!-- Results Display -->
 {% if search_results and (search_results|length > 0) %}
-<h3 class="center">Showing {{ search_results|length }} results</h3>
+<h3 id="num-results-message" class="center">Showing {{ search_results|length }} results</h3>
 <div class='search-result-display'>
 {% for book in search_results %}
     <div class="search-card">
+      <!--- Values for easier filtering --->
+      <input class="rating-value" type="hidden" value="{{ book.bookRating }}">
+      <input class="price-value" type="hidden" value="{{ book.bookPrice }}">
+      <input class="stock-value" type="hidden" {% if (book.bookQuantity > 0) %} checked {% endif %}>
+      <!--- End values for filtering --->
         <a href="{{ url_for('book_details', ISBN=book.ISBN)}}">
             {% if book.bookImage %}
               <img src="{{ url_for('static', filename='assets/covers/' + book.bookImage) }}" alt="{{ book.bookTitle }}">
