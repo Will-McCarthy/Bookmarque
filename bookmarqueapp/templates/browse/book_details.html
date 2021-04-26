@@ -27,9 +27,9 @@
     </div>
   </div>
   <div id="book-add-box">
-    <form class="quant-button">
-      <input class="button-blue" type="submit" value="Add to Cart">
-      <input type="number" placeholder="1">
+    <form class="quant-button" method="POST">
+      <input class="button-blue" type="submit" name="addCart" value="Add to Cart">
+      <input type="number" name="addCartAmount" placeholder="1" value="1" min="1">
     </form>
     <h1>{{ book.bookPrice }} USD</h1>
     <span>In Stock</span>

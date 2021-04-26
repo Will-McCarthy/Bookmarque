@@ -5,37 +5,29 @@
   <div id="cart-box">
     <h1 class="center">Shopping Cart</h1>
     <div id="book-list">
+      {% for item in cartInfo %}
       <div class="book-item">
-          <img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}"></a>
-          <div class="book-info">
-            <h3>Black Hole Blues</h3>
-            <p><b>19.99 USD</b></p>
-            <label>Quantity: </label><input type="number" placeholder="1">
-          </div>
-          <input type="button" class="button-gold" value="Delete">
-      </div>
+          <img src="{{ url_for('static', filename='assets/covers/' + item[7]) }}">
+	  <!--<form method="POST" action="{{ url_for('shopping_cart') }}">-->
+	  <div class="book-info">
+            <h3>{{item[4]}}</h3>
+            <p><b>{{item[8]}} USD</b></p>
+	    <form method="POST" action="{{ url_for('shopping_cart') }}">
+            <label>Quantity: </label><input type="number" name="bookQuantity" min="1" value={{item[2]}}>
+	    <input type="hidden" value={{item[3]}} name="book">
 
-      <div class="book-item">
-          <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}"></a>
-          <div id="book-info">
-            <h3>The Selfie as Big as the Ritz</h3>
-            <p><b>79.99 USD</b></p>
-            <label>Quantity: </label><input type="number" placeholder="1">
           </div>
-          <input type="button" class="button-gold" value="Delete">
+	    <input type="submit" name="updateAmount" class="button-blue" value="Update">
+	  </form>
+	  <form method="POST" action="{{ url_for('shopping_cart') }}">
+	    <input type="hidden" value={{item[3]}} name="bookID">
+            <input type="submit" name="deleteButton" class="button-gold" value="Delete">
+	  </form>
       </div>
+      {% endfor %}
 
-      <div class="book-item">
-          <img src="{{ url_for('static', filename='assets/covers/the vacationers.jpg') }}"></a>
-          <div class="book-info">
-            <h3>The Vacationers</h3>
-            <p><b>42.00 USD</b></p>
-            <label>Quantity: </label><input type="number" placeholder="1">
-          </div>
-          <input type="button" class="button-gold" value="Delete">
-      </div>
-
-      <div class="book-item last">
+     <!--<div class="book-item last">
+  
           <img src="{{ url_for('static', filename='assets/covers/mrsdeath misses death.jpg') }}"></a>
           <div class="book-info">
             <h3>Mrs. Death Misses Death</h3>
@@ -43,12 +35,11 @@
             <label>Quantity: </label><input type="number" placeholder="1">
           </div>
           <input type="button" class="button-gold" value="Delete">
-      </div>
+     </div>-->
 
     </div>
     <h3 class="center"><a href="{{ url_for('order_history')}}">View History</a></h3>
   </div>
-
 
   <div id="ordersummary">
     <div id="innerbox">
@@ -59,47 +50,40 @@
           <th> Quantity</th>
           <th> Price</th>
         </tr>
+	{% for item in cartInfo %}
         <tr>
-          <td> Black Hole Blues </td>
-          <td> 1</td>
-          <td> 19.99 USD</td>
+          <td>{{item[4]}} </td>
+          <td>{{item[2]}}</td>
+          <td>{{"%.2f" % (item[8] * item[2])}} USD</td>
         </tr>
-        <tr>
-          <td> The Selfie as Big as the Ritz</td>
-          <td> 1</td>
-          <td> 79.99 USD</td>
-        </tr>
-        <tr>
-          <td> The Vacationers</td>
-          <td> 1</td>
-          <td> 42.00 USD</td>
-        </tr>
-        <tr>
-          <td> Mrs. Death Misses Death</td>
-          <td> 1</td>
-          <td> 19.99 USD</td>
-        </tr>
+	{% endfor %}
+        
       </table>
       <br>
       <ul class="price-summary">
           <li class="merchandise-row">
                   <span class="merchandise-label" style="float:left;">Merchandise: </span>
-                  <span class="merchandise-amount" style="float:right;">$22.98</span><br>
+                  <span class="merchandise-amount" style="float:right;">${{"%.2f" % total}}</span><br>
           </li>
           <li class="shipping-row">
                   <span class="shipping-label" style="float:left;">Shipping and Handling: </span>
-                  <span class="shipping-amount" style="float:right;">$3.54</span><br>
+                  <span class="shipping-amount" style="float:right;">{{shipping}}</span><br>
           </li>
           <li class="tax-row">
               <span class="tax-label" style="float:left">Tax: </span>
-              <span class="tax-amount" style="float:right">$1.42</span>
+              <span class="tax-amount" style="float:right">${{"%.2f" % (total * 0.04)}}</span>
           </li>
       </ul>
       <br><hr>
       <h2 style="font-weight:lighter; float: left;">Order Total: </h2>
-      <h2 style="font-weight:lighter; float: right;">$27.94 </h2>
+      <h2 style="font-weight:lighter; float: right;">${{"%.2f" % (total + total * 0.04 + shipping)}}</h2>
     </div>
+
+    {% if total > 0 %}
     <a class="button-blue" href="{{ url_for('checkout') }}">Checkout</a>
+    {% else %}
+    <a class="button-blue" href="">Checkout</a>
+    {% endif %}
   </div>
   
 </div>
