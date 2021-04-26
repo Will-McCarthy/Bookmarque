@@ -23,13 +23,18 @@
   <form id="search-filters">
     <fieldset>
       <legend>Price</legend>
-      <input type="number" id="priceMin" placeholder="min" name="priceMin" min=0>
+      <input type="number" id="price-min-filter" placeholder="min" name="priceMin" min=0>
       -
-      <input type="number" id="priceMax" placeholder="max" name="priceMax" min=0>
+      <input type="number" id="price-max-filter" placeholder="max" name="priceMax" min=0>
     </fieldset>
     <fieldset>
       <legend>Rating</legend>
-      <input type="range" min="1" max="5">
+      <input id="rating-filter" type="hidden" value=0>
+      <span id="star-1" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span id="star-2" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span id="star-3" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span id="star-4" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span id="star-5" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
     </fieldset>
     <fieldset>
       <legend>Misc.</legend>
