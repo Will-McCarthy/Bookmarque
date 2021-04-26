@@ -1,17 +1,19 @@
 {% extends "default_layout.html" %}
 {% block content %}
 
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
+
 <!-- Search Bar -->
 <div class = "search-container">
-    <form class="full-search-bar">
-      <select>
+    <form class="full-search-bar" action="{{ url_for('search') }}" method="POST">
+      <select name="search-type">
         <option {% if type and type == "all" %} selected="selected" {% endif %}>All</option>
         <option {% if type and type == "isbn" %} selected="selected" {% endif %}>ISBN</option>
         <option {% if type and type == "title" %} selected="selected" {% endif %}>Title</option>
         <option {% if type and type == "author" %} selected="selected" {% endif %}>Author</option>
         <option {% if type and type == "genre" %} selected="selected" {% endif %}>Genre</option>
       </select>
-      <input type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN." {% if term %} value="{{ term }}" {% endif %}>
+      <input name="search-text" type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN." {% if term %} value="{{ term }}" {% endif %}>
       <button type="submit"><img src="{{ url_for('static', filename='assets/icons/search.svg') }}"></button>
     </form>
 </div>
@@ -20,29 +22,10 @@
 <div class = 'left-container'>
   <form id="search-filters">
     <fieldset>
-      <legend>Category</legend>
-      <input type ="checkbox">
-      <label>Featured</label><br>
-      <input type ="checkbox">
-      <label>Classics</label><br>
-      <input type ="checkbox">
-      <label>Thrillers</label><br>
-      <input type ="checkbox">
-      <label>Science</label><br>
-      <input type ="checkbox">
-      <label>Esoteric</label><br>
-      <input type ="checkbox">
-      <label>Business</label><br>
-      <input type ="checkbox">
-      <label>Self-Help</label><br>
-      <input type ="checkbox">
-      <label>Non-Fiction</label><br>
-      <input type ="checkbox">
-      <label>Sci-Fi</label><br>
-    </fieldset>
-    <fieldset>
       <legend>Price</legend>
-      <input type="text" id="priceMin" placeholder="min" name="priceMin" require> - <input type="text" id="priceMax" placeholder="max" name="priceMax" require>
+      <input type="number" id="priceMin" placeholder="min" name="priceMin" min=0>
+      -
+      <input type="number" id="priceMax" placeholder="max" name="priceMax" min=0>
     </fieldset>
     <fieldset>
       <legend>Rating</legend>
@@ -58,6 +41,7 @@
 <!-- Results Display -->
 <div class='search-result-display'>
 {% if search_results and (search_results|length > 0) %}
+<h3 class="center">Showing {{ search_results|length }} results</h3>
 {% for book in search_results %}
     <div class="search-card">
         <a href="{{ url_for('book_details', ISBN=book.ISBN)}}">

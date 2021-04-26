@@ -41,9 +41,9 @@ class Categories(enum.Enum):
     THRILLER = 6
     ROMANCE = 7
     HISTORY = 8
-    YA = 9
+    YOUNG_ADULT = 9
     ESOTERIC = 10
-    SCI_FI = 11
+    SCIENCE_FICTION = 11
     SCIENCE = 12
     SELF_HELP = 13
     NON_FICTION = 14
