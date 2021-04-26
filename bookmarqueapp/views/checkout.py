@@ -67,7 +67,7 @@ def checkout():
         total = 0
         shipping = 0
 
-    
+
 
     if request.method == 'POST':
         checkout = request.form.get("checkoutButton")
@@ -87,9 +87,9 @@ def checkout():
             #Then we should increment the promotion's timeUsed db column.
             cursor.execute('''UPDATE promotion SET promoUses = promoUses+1 WHERE promoCode = %s''', ([promo_code]))
 
-            
+
             #In a production environment, we should check for consistency between client data and server data.
-            #A malicious attacker could change the payment-option html value to another cardID, 
+            #A malicious attacker could change the payment-option html value to another cardID,
             # and charge a card that wasn't connected to their account
             #Therefore, we would be making sure that the payment_cardID == (one of the current_user.cardIDs)
 
@@ -101,7 +101,7 @@ def checkout():
             if(promotion):
                  discount = total*promotion[1]
                  newTotal -= discount
-            else: 
+            else:
                 promotion = [-1]
             newTotal += shipping
 
@@ -121,20 +121,20 @@ def checkout():
 
             #Wiping user's cart because order has been made
             cursor.execute('''DELETE FROM shopping_cart_has_book WHERE cartID = %s;''', [cart])
-            
+
             #Finally redirect to order confirmation
             mysql.connection.commit()
 
             #Redirect them to the order confirmation route
             #Change this redirect to order confirmation screen
             #HERE
-            return redirect('/')
+            return redirect('/checkout/confirm')
         else:
             #Apply Promotion button has been pressed
             apply = request.form.get("applyButton")
             if (apply and apply == "Apply"):
                 promo_code = request.form.get("promoCode")
-                # HTML and SQL Date format is represented as YYYY-MM-DD 
+                # HTML and SQL Date format is represented as YYYY-MM-DD
                 today = datetime.today().strftime('%Y-%m-%d')
 
                 #Verify Promotion exists and today's date is before the end of the promotion date.
@@ -147,7 +147,7 @@ def checkout():
                     success = True
                     mysql.connection.commit()
                     return render_template('checkout/checkout.html', cartInfo = cartInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=True, promo_discount=promotion[1] )
-                    
+
                 #Promotion invalid, rerender page with appropriate visual changes
                 mysql.connection.commit()
                 return render_template('checkout/checkout.html', cartInfo = cartInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=False )
@@ -156,13 +156,13 @@ def checkout():
                 return render_template('checkout/checkout.html', cartInfo = cartInfo, total= total, shipping=shipping)
 
 
-        
+
 
     if request.method == 'GET':
         mysql.connection.commit()
         return render_template('checkout/checkout.html', cartInfo = cartInfo, total= total, shipping=shipping)
-        
-    
+
+
 
 @app.route('/checkout/create-card', methods = ['POST', 'GET'])
 @login_required
@@ -214,13 +214,13 @@ def checkout_create_address():
             state = request.form.get('state')
             zip = request.form.get('zip')
             print("ADDY"+street+" "+city+", " + state + " " + zip)
-            
+
 
             if ((street and street != "") and (city and city != "")
                     and (state and state != "") and (zip and zip != "")):
                 print("Now we're creating an object")
 
-            
+
                 address = Address(addressStreet=street, addressCity=city,
                     addressState=state, addressZip=zip)
 
@@ -233,3 +233,8 @@ def checkout_create_address():
 
     if request.method == 'GET':
         return render_template('checkout/checkout_create_address.html')
+
+@app.route('/checkout/confirm')
+def confirm():
+    #send email here
+    return render_template('checkout/order_confirm.html')
