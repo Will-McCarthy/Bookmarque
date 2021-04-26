@@ -1,114 +1,95 @@
 {% extends "default_layout.html" %}
 {% block content %}
+
+<script src="{{ url_for('static', filename='js/search.js') }}"></script>
+
+<!-- Search Bar -->
 <div class = "search-container">
-    <form class="full-search-bar">
-        <input type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN.">
-        <button type="submit"><img src="{{ url_for('static', filename='assets/search.svg') }}"></button>
-      </form>
+    <form class="full-search-bar" action="{{ url_for('search') }}" method="POST">
+      <select name="search-type">
+        <option {% if type and type == "all" %} selected="selected" {% endif %}>All</option>
+        <option {% if type and type == "isbn" %} selected="selected" {% endif %}>ISBN</option>
+        <option {% if type and type == "title" %} selected="selected" {% endif %}>Title</option>
+        <option {% if type and type == "author" %} selected="selected" {% endif %}>Author</option>
+        <option {% if type and type == "genre" %} selected="selected" {% endif %}>Genre</option>
+      </select>
+      <input name="search-text" type="text" placeholder="What are you looking for? Search by Name, Author, Subject, & ISBN." {% if term %} value="{{ term }}" {% endif %}>
+      <button type="submit"><img src="{{ url_for('static', filename='assets/icons/search.svg') }}"></button>
+    </form>
 </div>
+
+<!-- Filters -->
 <div class = 'left-container'>
   <form id="search-filters">
     <fieldset>
-      <legend>Category</legend>
-      <input type ="checkbox">
-      <label>Featured</label><br>
-      <input type ="checkbox">
-      <label>Classics</label><br>
-      <input type ="checkbox">
-      <label>Thrillers</label><br>
-      <input type ="checkbox">
-      <label>Science</label><br>
-      <input type ="checkbox">
-      <label>Esoteric</label><br>
-      <input type ="checkbox">
-      <label>Business</label><br>
-      <input type ="checkbox">
-      <label>Self-Help</label><br>
-      <input type ="checkbox">
-      <label>Non-Fiction</label><br>
-      <input type ="checkbox">
-      <label>Sci-Fi</label><br>
-    </fieldset>
-    <fieldset>
       <legend>Price</legend>
-      <input type="text" id="priceMin" placeholder="min" name="priceMin" require> - <input type="text" id="priceMax" placeholder="max" name="priceMax" require>
+      <input type="number" id="price-min-filter" placeholder="min" name="priceMin" min=0 onchange="checkPriceRange()">
+      -
+      <input type="number" id="price-max-filter" placeholder="max" name="priceMax" min=0 onchange="checkPriceRange()">
     </fieldset>
     <fieldset>
       <legend>Rating</legend>
-      <input type="range" min="1" max="5">
+      <input id="rating-filter" type="hidden" value=1>
+      <span id="star-1" class="star-rating clickable" onclick="toggleStarFilter(this)">★</span>
+      <span id="star-2" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span id="star-3" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span id="star-4" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span id="star-5" class="star-rating clickable" onclick="toggleStarFilter(this)">☆</span>
+      <span>& up</span>
     </fieldset>
     <fieldset>
       <legend>Misc.</legend>
-      <input type="checkbox"><label>In Stock</label>
+      <input id="in-stock" type="checkbox" onchange="filterResultsShown()"><label>In Stock</label>
     </fieldset>
   </form>
   </div>
 
-<div class = 'right-container'>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
+<!-- Results Display -->
+{% if search_results and (search_results|length > 0) %}
+<h3 id="num-results-message" class="center">Showing {{ search_results|length }} results</h3>
+<div class='search-result-display'>
+{% for book in search_results %}
+    <div class="search-card">
+      <!--- Values for easier filtering --->
+      <input class="rating-value" type="hidden" value="{{ book.bookRating }}">
+      <input class="price-value" type="hidden" value="{{ book.bookPrice }}">
+      <input class="stock-value" type="hidden" {% if (book.bookQuantity > 0) %} checked {% endif %}>
+      <!--- End values for filtering --->
+        <a href="{{ url_for('book_details', ISBN=book.ISBN)}}">
+            {% if book.bookImage %}
+              <img src="{{ url_for('static', filename='assets/covers/' + book.bookImage) }}" alt="{{ book.bookTitle }}">
+            {% else %}
+              <img src="{{ url_for('static', filename='assets/covers/placeholder-cover.jpg') }}" alt="{{ book.bookTitle }}">
+            {% endif %}
+            <h2 class="title">{{ book.bookTitle }}</h2>
+            <p class="author">{{ book.authorFName ~ " " ~ book.authorLName }}</p>
+            <div class="star-rating">
+              {% for i in range(book.bookRating) %}
+                ★
+              {% endfor %}
+              {% for i in range(5 - book.bookRating) %}
+                ☆
+              {% endfor %}
+            </div>
+            <p class="stock">{% if book.bookQuantity > 0 %} In Stock {% else %} Out of Stock {% endif %}</p>
+            <h2 class="price">{{ book.bookPrice }} USD</h2>
+            <div class="tags">
+              <p> Tags: </p>
+              {% for tag in book.categories %}
+                {{ tag.categoryName }}
+                {% if not loop.last %}, {% endif %}
+              {% endfor %}
             </div>
         </a>
     </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
-    <div class = "search-card">
-        <a href="{{ url_for('book_details') }}">
-            <img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}" alt="cheffe"/>
-            <h2 class="title"> The Selfie as Big as the Ritz</h2>
-            <p class ="author"> Lara Williams </p>
-            <p class = "stock"> In Stock</p>
-            <h2 class ="price"> 79.99 USD </h2>
-            <div class = "tags">
-                <p> Tags: </p>
-                <p> Featured, Fiction </p>
-            </div>
-        </a>
-    </div>
+{% endfor %}
+</div>
+{% else %}
+<!--- No Results --->
+<h1 class="center">No results</h1>
+<p class="center">
+  Double check your search or try broadening your filters for more results!
+</p>
+{% endif %}
 </div>
 {% endblock %}
