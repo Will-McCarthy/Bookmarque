@@ -1059,7 +1059,7 @@ td a { //need to make a's in td's with this padding
 
 .full-search-bar button {
   width: 2rem;
-  height: 2rem;
+  align-self: stretch;
   background: $blue;
   border: none;
   outline: none;

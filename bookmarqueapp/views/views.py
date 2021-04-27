@@ -7,13 +7,6 @@ from bookmarqueapp import app, db, mysql, login_manager, email_server
 from bookmarqueapp.models.books import Book, BookCategory, Categories
 from bookmarqueapp.models.users import User, Address
 
-#from flask import session
-#from flask_mysqldb import MySQL #Mysql
-#from flask_login import LoginManager, current_user, login_user, logout_user, login_required #Login
-
-#from bookmarqueapp import app, mysql, db, login_manager, email_server
-#from bookmarqueapp.models.users import User, Address
-
 @app.route('/')
 def homepage():
 
@@ -47,8 +40,25 @@ def search(type=None, term=None):
         if type and term:
             # iterate through search options
             if type == "all":
-                results = Book.query.all()
-                term = None
+                search_terms = term.strip().split(" ") # strip and split the input name on spaces
+                current = []
+                for word in search_terms:
+                    current += Book.query.filter(
+                        db.or_(
+                            Book.bookTitle.contains(word),
+                            Book.bookPublisher.contains(word),
+                            Book.bookDescription.contains(word),
+                            Book.categories.any(BookCategory.categoryName.contains(word)),
+                            Book.authorFName.like(word),
+                            Book.authorLName.like(word)
+                        )).all()
+
+                    if word.isdigit():
+                        current += Book.query.filter(Book.ISBN.contains(word)).all()
+
+                if len(current) != 0:
+                    results = unique_list(current)
+
             elif type == "isbn":
                 if term.isdigit():
                     results = Book.query.filter(Book.ISBN.contains(term)).all()
@@ -61,14 +71,12 @@ def search(type=None, term=None):
 
                 # iterate through names and see if any match to either first or last name of authors
                 for name in search_names:
-                    print(name)
 
                     current = Book.query.filter(
                         db.or_(
                             Book.authorFName.like(name),
                             Book.authorLName.like(name)
-                        )
-                    ).all()
+                        )).all()
 
                     if len(current) != 0:
                         if results == None:
@@ -78,11 +86,8 @@ def search(type=None, term=None):
 
                 # if results, ensure uniqueness
                 if results:
-                    unique_results = []
-                    for book in results:
-                        if book not in unique_results:
-                            unique_results.append(book)
-                    results = unique_results
+                    results = unique_list(results)
+
 
             elif type == "genre":
 
@@ -116,6 +121,15 @@ def search(type=None, term=None):
         return render_template('browse/search_view.html', search_results=results, type=type, term=term)
 
     return redirect(url_for('search'))
+
+def unique_list(list):
+    unique = []
+    for item in list:
+        if item not in unique:
+            unique.append(item)
+        list = unique
+    return list
+
 
 @app.route('/view/<ISBN>', methods = ['POST', 'GET'])
 def book_details(ISBN):
