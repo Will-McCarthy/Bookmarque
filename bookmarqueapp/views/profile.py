@@ -6,6 +6,7 @@ from flask_login import LoginManager, current_user, login_user, logout_user, log
 from bookmarqueapp import app, mysql, db, login_manager, email_server
 from bookmarqueapp.models.users import User, Address
 from bookmarqueapp.models.payment import PaymentCard, CardType
+from bookmarqueapp.models.emailFactory import PasswordUpdateEmailFactory
 
 @app.route('/profile')
 @login_required
@@ -27,11 +28,8 @@ def update_password():
         elif (submit == "Save" and password == passConfirm and len(password) >= 8):
             current_user.password = password
             db.session.commit()
-
-            message = "<h2>Your password has been changed. </h2> <p><br> Your password has been changed, as you asked. </p> <br> <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>"
-            subject = "Your password has been changed"
-
-            email_server.send_email(message, subject, current_user.userEmail, app.debug)
+            email_factory = PasswordUpdateEmailFactory()
+            email_factory.email(current_user.userID)
 
         return redirect(url_for('profile'))
 

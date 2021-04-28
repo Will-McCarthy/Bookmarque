@@ -7,6 +7,7 @@ from bookmarqueapp import app, mysql, db, login_manager, email_server
 from bookmarqueapp.models.books import Book, BookCategory, Categories
 from bookmarqueapp.models.users import User, Address
 from bookmarqueapp.models.payment import PaymentCard, CardType
+from bookmarqueapp.models.emailFactory import ForgotPasswordEmailFactory, VerifyAccountEmailFactory, OrderSummaryEmailFactory, PromotionEmailFactory, PasswordUpdateEmailFactory
 
 from datetime import datetime
 

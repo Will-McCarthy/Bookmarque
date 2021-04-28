@@ -6,6 +6,7 @@ import time
 
 from bookmarqueapp import app, db, login_manager, email_server
 from bookmarqueapp.models.users import User, UserType, UserStatus, UserFactory, Address
+from bookmarqueapp.models.emailFactory import ForgotPasswordEmailFactory, VerifyAccountEmailFactory, OrderSummaryEmailFactory, PromotionEmailFactory, PasswordUpdateEmailFactory
 from bookmarqueapp.models.payment import PaymentCard, CardType
 
 # registration and login #
@@ -63,16 +64,8 @@ def register_user():
 
             db.session.add(user)
             db.session.commit()
-
-            # send email with link in form of /verify/ + user_id
-            verification_link = url_for('verify_email', email_encrypted = email, _external=True)
-            print(verification_link)
-            html_message = '''
-                <h1>Please Confirm Your Email</h1>
-                <span>Click this <a href="''' + str(verification_link) + '''">link</a> or if this was not you, ignore this message.</span>
-            '''
-            subject = "Confirm Email"
-            email_server.send_email(html_message, subject, email, app.debug)
+            email_factory = VerifyAccountEmailFactory()
+            email_factory.email(user.userID)
 
         else:
             print(email + " is taken")
@@ -121,14 +114,8 @@ def forgot_password():
 
         if user:
             # send email with link in form of /verify/ + user_id
-            reset_password_link = url_for('reset_password', email_encrypted = email, _external=True)
-            print(reset_password_link)
-            html_message = '''
-                <h1>Reset Password Here:</h1>
-                <span>Click this <a href="''' + reset_password_link + '''">link</a> to reset password. If this was not you, ignore this message.</span>
-            '''
-            subject = "Reset Password"
-            email_server.send_email(html_message, subject, email, app.debug)
+            email_factory = ForgotPasswordEmailFactory()
+            email_factory.email(user.userID)
 
         return redirect(url_for('homepage'))
 

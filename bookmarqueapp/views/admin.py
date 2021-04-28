@@ -5,6 +5,7 @@ from functools import wraps
 
 from bookmarqueapp import app, mysql, db, email_server
 from bookmarqueapp.models.users import User, UserType, UserStatus
+from bookmarqueapp.models.emailFactory import PromotionEmailFactory
 
 # custom decorator for validating user access level
 # takes a variadic number of UserType enums
@@ -157,7 +158,10 @@ def managePromotions():
             promotion_fetch = cursor.fetchall()
             mysql.connection.commit()
             #TEST EMAIL, CREATE A PROMOTION/DOESN
-            #send_promo_email(promo_name, promo_code, promo_end,promo_discount)
+            email_factory = PromotionEmailFactory()
+            email_factory.setPromoID(1)
+            #You could loop through all userID's sending out this email
+            email_factory.email(current_user.userID)
             return redirect(url_for('managePromotions'))
     else:
         cursor = mysql.connection.cursor()
