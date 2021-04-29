@@ -40,6 +40,14 @@ def checkout6():
 def shopping_cart():
     cursor = mysql.connection.cursor()
     cID = current_user.get_id() #need to look into checking for non-registered users
+
+    #print(cID)
+    cursor.execute('''SELECT COUNT(*) FROM shopping_cart WHERE userID = %s;''', [cID])
+    cartExist = cursor.fetchone()
+    cartExist = cartExist[0]
+    if (cartExist == 0):
+        cursor.execute('''INSERT INTO shopping_cart SET userID = %s;''', [cID])
+    
     cursor.execute('''SELECT cartID FROM shopping_cart WHERE userID = %s;''', [cID])
     cart = cursor.fetchone()
     cart = cart[0]
