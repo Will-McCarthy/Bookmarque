@@ -5,67 +5,25 @@
   <h1 class="center">Your Orders</h1>
 
   <div id="book-list">
-
+    {%for i in range(0, ordersLen)%}
     <div class="order">
       <div class="order-details">
-        <span>Order Placed: February 24, 2021</span>
-        <span>Total: $16.12 USD</span>
-        <span>Order ID: 2131-23123-523462</span>
+        <span>Order Placed: {{orders[i][1]}}</span>
+        <span>Total: {{ "$%.2f"|format(orders[i][3])}} USD</span>
+        <span>Order ID: {{orders[i][0]}}</span>
       </div>
-
+      {% for item in ordersInfo[i] %}
       <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/black hole blues.jpg') }}"></a>
-          <div class="book-info">
-            <h3>Black Hole Blues</h3>
-            <p>Quantity: 1</p>
-          </div>
-          <input type="button" class="button-gold" value="Reorder">
+        <a href="{{ url_for('book_details', ISBN=item[1]) }}"><img src="{{ url_for('static', filename='assets/covers/'+ item[7] ) }}"></a>
+        <div class="book-info">
+          <h3>{{item[4]}}</h3>
+          <p>Quantity: {{item[2]}}</p>
+        </div>
+        <input type="button" class="button-gold" value="Reorder">
       </div>
-
-      <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/selfie as big as the ritz.jpg') }}"></a>
-          <div class="book-info">
-            <h3>The Selfie as Big as the Ritz</h3>
-            <p>Quantity: 1</p>
-          </div>
-          <input type="button" class="button-gold" value="Reorder">
-      </div>
+      {% endfor %}
     </div>
-
-    <div class="order">
-      <div class="order-details">
-        <span>Order Placed: September 22, 2001</span>
-        <span>Total: $16.12 USD</span>
-        <span>Order ID: 5423-67248-837621</span>
-      </div>
-
-      <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/the vacationers.jpg') }}"></a>
-          <div class="book-info">
-            <h3>The Vacationers</h3>
-            <p>Quantity: 1</p>
-          </div>
-          <input type="button" class="button-gold" value="Reorder">
-      </div>
-
-      <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/mrsdeath misses death.jpg') }}"></a>
-          <div class="book-info">
-            <h3>Mrs. Death Misses Death</h3>
-            <p>Quantity: 1</p>
-          </div>
-          <input type="button" class="button-gold" value="Reorder">
-      </div>
-
-      <div class="book-item">
-          <a href="{{ url_for('book_details') }}"><img src="{{ url_for('static', filename='assets/covers/voices in the night.jpg') }}"></a>
-          <div class="book-info">
-            <h3>Voices in the Night</h3>
-            <p>Quantity: 1</p>
-          </div>
-          <input type="button" class="button-gold" value="Reorder">
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </div>
 

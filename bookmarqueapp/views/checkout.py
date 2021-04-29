@@ -77,7 +77,25 @@ def shopping_cart():
 
 @app.route('/cart/history')
 def order_history():
-    return render_template('checkout/order_history.html')
+    #get customer ID
+    cursor = mysql.connection.cursor()
+    cID = current_user.get_id()
+
+    #Get order and order ID
+    cursor.execute('''SELECT * FROM `order` WHERE userID = %s ORDER BY orderID DESC;''', [cID])
+    orders = cursor.fetchall()
+    ordersInfo = []
+    ordersLen = len(orders)
+    for i in range(0, ordersLen):
+        orderID = orders[i][0]
+        #Get the books in the order
+        cursor.execute('''SELECT * FROM order_has_book JOIN book ON book.ISBN = order_has_book.ISBN WHERE orderID = %s;''', [orderID])
+        ordersInfo.append(cursor.fetchall())
+
+    #orders feilds:
+    #orderID, orderTime, orderStatus, orderAmount, promoID, addressID, cardID, userID
+
+    return render_template('checkout/order_history.html', orders=orders, ordersInfo=ordersInfo, ordersLen=ordersLen)
 
 @app.route('/checkout', methods = ['POST', 'GET'])
 def checkout():
@@ -334,7 +352,7 @@ def confirm():
     cursor.execute('''SELECT * FROM order_has_book JOIN book ON book.ISBN = order_has_book.ISBN WHERE orderID = %s;''', [oID])
     orderInfo = cursor.fetchall()
 
-    #orderInfo feilds:
+    #order feilds:
     #orderID, orderTime, orderStatus, orderAmount, promoID, addressID, cardID, userID
 
     #get variables for the html page and email
