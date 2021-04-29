@@ -53,7 +53,7 @@ def shopping_cart():
             ISBN = request.form.get("book")
             quantity = request.form.get("bookQuantity")
             cursor.execute('''UPDATE shopping_cart_has_book SET cartBookQuantity = %s WHERE ISBN = %s AND cartID = %s;''', ([quantity, ISBN, cart]))
-            
+
     cursor.execute('''SELECT * FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
     cartInfo = cursor.fetchall()
     cursor.execute('''SELECT SUM(cartBookQuantity * bookPrice) FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
@@ -220,7 +220,7 @@ def checkout_create_card():
     else:
         total = 0
         shipping = 0
-    
+
     # save card data
     if request.method == 'POST':
 
@@ -314,4 +314,25 @@ def checkout_create_address():
 @app.route('/checkout/confirm')
 def confirm():
     #send email here
-    return render_template('checkout/order_confirm.html')
+    #need to get order id:
+    cursor = mysql.connection.cursor()
+    cID = current_user.get_id() #need to look into checking for non-registered users
+    cursor.execute('''SELECT * FROM `order` WHERE userID = %s ORDER BY orderID DESC;''', [cID])
+    order = cursor.fetchone()
+    print("Order =")
+    print(order)
+    oID = order[0]
+    print("Order ID=")
+    print(oID)
+    cursor.execute('''SELECT * FROM order_has_book JOIN book ON book.ISBN = order_has_book.ISBN WHERE orderID = %s;''', [oID])
+    orderInfo = cursor.fetchall()
+    print(orderInfo)
+    #orderID, orderTime, orderStatus, orderAmount, promoID, addressID, cardID, userID
+    shipping = 7.50
+    total = order[3]
+    promo_code = order[4]
+    promo_success = True
+    if promo_code == -1: promo_success = False
+    #email_factory = OrderSummaryEmailFactory()
+    #email_factory.email(cID, oID)
+    return render_template('checkout/order_confirm.html', orderInfo = orderInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=promo_success )
