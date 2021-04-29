@@ -494,6 +494,33 @@ footer div {
   color: black;
 }
 
+.button-blue-cart {
+  background-color: $blue;
+  color: white;
+  text-decoration: none;
+  font-family: $font-sans;
+  font-weight: normal;
+  outline: none;
+  border: none;
+  text-align: center;
+  /*box-shadow: */
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+}
+
+.button-gold-cart {
+  background-color: $gold;
+  color: $dark-blue;
+  text-decoration: none;
+  font-family: $font-sans;
+  font-weight: normal;
+  outline: none;
+  border: none;
+  text-align: center;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+}
+
 /* shopping cart and order history */
 #book-list {
   overflow-y: scroll;

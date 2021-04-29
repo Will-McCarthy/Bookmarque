@@ -17,11 +17,11 @@
 	    <input type="hidden" value={{item[3]}} name="book">
 
           </div>
-	    <input type="submit" name="updateAmount" class="button-blue" value="Update">
+	    <input type="submit" name="updateAmount" class="button-blue-cart" value="Update">
 	  </form>
 	  <form method="POST" action="{{ url_for('shopping_cart') }}">
 	    <input type="hidden" value={{item[3]}} name="bookID">
-            <input type="submit" name="deleteButton" class="button-gold" value="Delete">
+            <input type="submit" name="deleteButton" class="button-gold-cart" value="Delete">
 	  </form>
       </div>
       {% endfor %}
@@ -80,9 +80,9 @@
     </div>
 
     {% if total > 0 %}
-    <a class="button-blue" href="{{ url_for('checkout') }}">Checkout</a>
+    <a class="button-blue-cart" href="{{ url_for('checkout') }}">Checkout</a>
     {% else %}
-    <a class="button-blue" href="">Checkout</a>
+    <a class="button-blue-cart" href="">Checkout</a>
     {% endif %}
   </div>
   
