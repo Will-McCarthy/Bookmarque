@@ -157,9 +157,12 @@ def managePromotions():
             cursor.execute('''INSERT INTO promotion(promoDiscount, promoStart, promoEnd, promoEmailStatus, promoUses, promoName,promoCode) VALUES (%s,%s,%s,%s,%s,%s,%s)''', (promo_discount, promo_start, promo_end, "Not Sent", 0, promo_name,promo_code))
             promotion_fetch = cursor.fetchall()
             mysql.connection.commit()
+            cursor.execute('''SELECT promoID FROM `promotion` ORDER BY promoID DESC;''')
+            promoID = cursor.fetchone()
+            promoID = promoID[0]
             #TEST EMAIL, CREATE A PROMOTION/DOESN
             email_factory = PromotionEmailFactory()
-            email_factory.setPromoID(1)
+            email_factory.setPromoID(promoID)
             #You could loop through all userID's sending out this email
             email_factory.email(current_user.userID)
             return redirect(url_for('managePromotions'))
