@@ -197,6 +197,30 @@ def checkout():
 @app.route('/checkout/create-card', methods = ['POST', 'GET'])
 @login_required
 def checkout_create_card():
+    #Abritary shipping value?
+    shipping = 7.50
+
+    #Retrieve User's cartID
+    cursor = mysql.connection.cursor()
+    cID = current_user.get_id()
+    cursor.execute('''SELECT cartID FROM shopping_cart WHERE userID = %s;''', [cID])
+    cart = cursor.fetchone()
+    cart = cart[0]
+
+    #Retrieving items in user's cart
+    cursor.execute('''SELECT * FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
+    cartInfo = cursor.fetchall()
+
+    #Retrieving cart price total before modifiers
+    cursor.execute('''SELECT SUM(cartBookQuantity * bookPrice) FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
+    total = cursor.fetchone()
+    #total must be assigned to something for page to render
+    if total[0]:
+        total = total[0]
+    else:
+        total = 0
+        shipping = 0
+    
     # save card data
     if request.method == 'POST':
 
@@ -225,11 +249,34 @@ def checkout_create_card():
         return redirect(url_for('checkout'))
 
     if request.method == 'GET':
-        return render_template('checkout/checkout_create_card.html')
+        return render_template('checkout/checkout_create_card.html', cartInfo = cartInfo, total= total, shipping=shipping)
 
 @app.route('/checkout/create-address', methods = ['POST', 'GET'])
 @login_required
 def checkout_create_address():
+    #Abritary shipping value?
+    shipping = 7.50
+
+    #Retrieve User's cartID
+    cursor = mysql.connection.cursor()
+    cID = current_user.get_id()
+    cursor.execute('''SELECT cartID FROM shopping_cart WHERE userID = %s;''', [cID])
+    cart = cursor.fetchone()
+    cart = cart[0]
+
+    #Retrieving items in user's cart
+    cursor.execute('''SELECT * FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
+    cartInfo = cursor.fetchall()
+
+    #Retrieving cart price total before modifiers
+    cursor.execute('''SELECT SUM(cartBookQuantity * bookPrice) FROM shopping_cart_has_book JOIN book ON book.ISBN = shopping_cart_has_book.ISBN WHERE cartID = %s;''', [cart])
+    total = cursor.fetchone()
+    #total must be assigned to something for page to render
+    if total[0]:
+        total = total[0]
+    else:
+        total = 0
+        shipping = 0
     # save address data
     if request.method == 'POST':
         print("We're POSTING")
@@ -262,7 +309,7 @@ def checkout_create_address():
         return redirect(url_for('checkout'))
 
     if request.method == 'GET':
-        return render_template('checkout/checkout_create_address.html')
+        return render_template('checkout/checkout_create_address.html', cartInfo = cartInfo, total= total, shipping=shipping)
 
 @app.route('/checkout/confirm')
 def confirm():
