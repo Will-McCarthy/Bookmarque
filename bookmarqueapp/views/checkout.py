@@ -47,7 +47,7 @@ def shopping_cart():
     cartExist = cartExist[0]
     if (cartExist == 0):
         cursor.execute('''INSERT INTO shopping_cart SET userID = %s;''', [cID])
-    
+
     cursor.execute('''SELECT cartID FROM shopping_cart WHERE userID = %s;''', [cID])
     cart = cursor.fetchone()
     cart = cart[0]
@@ -321,26 +321,31 @@ def checkout_create_address():
 
 @app.route('/checkout/confirm')
 def confirm():
-    #send email here
-    #need to get order id:
+    #get customer ID
     cursor = mysql.connection.cursor()
-    cID = current_user.get_id() #need to look into checking for non-registered users
+    cID = current_user.get_id()
+
+    #Get order and order ID
     cursor.execute('''SELECT * FROM `order` WHERE userID = %s ORDER BY orderID DESC;''', [cID])
     order = cursor.fetchone()
-    print("Order =")
-    print(order)
     oID = order[0]
-    print("Order ID=")
-    print(oID)
+
+    #Get the books in the order
     cursor.execute('''SELECT * FROM order_has_book JOIN book ON book.ISBN = order_has_book.ISBN WHERE orderID = %s;''', [oID])
     orderInfo = cursor.fetchall()
-    print(orderInfo)
+
+    #orderInfo feilds:
     #orderID, orderTime, orderStatus, orderAmount, promoID, addressID, cardID, userID
+
+    #get variables for the html page and email
     shipping = 7.50
     total = order[3]
     promo_code = order[4]
     promo_success = True
     if promo_code == -1: promo_success = False
-    #email_factory = OrderSummaryEmailFactory()
-    #email_factory.email(cID, oID)
+
+    #send email here
+    email_factory = OrderSummaryEmailFactory()
+    email_factory.email(cID, orderInfo, total, shipping, promo_code, promo_success)
+
     return render_template('checkout/order_confirm.html', orderInfo = orderInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=promo_success )

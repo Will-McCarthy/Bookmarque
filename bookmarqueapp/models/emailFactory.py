@@ -59,15 +59,22 @@ class VerifyAccountEmailFactory(EmailFactory):
         email_server.send_email(html_message, subject, email, app.debug)
 
 #Requirement for email construction:
-# - Order ID    for emailing a list of items bought and their totals
 # - User ID     for recipient name/email
+# - Order Info  All of the books in a given order
+# - total       total cost
+# - shipping    shipping price
+# - promo_code  promo code ID
+# - promo_success   if there is a promo code
 class OrderSummaryEmailFactory(EmailFactory):
     def __init__(self):
         self.orderID = 0
-    def setOrderID(orderID):
-        self.orderID = orderID
-    def email(user_id):
-        pass
+    def email(self, userID, orderInfo, total, shipping, promo_code, promo_success):
+        user = User.query.filter_by(userID=userID).first()
+        email = user.userEmail
+
+        subject = "Order Summary"
+        html_message = render_template('checkout/order_summary.html', orderInfo = orderInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=promo_success )
+        email_server.send_email(html_message, subject, email, app.debug)
 
 #Requirement for email construction:
 # - Promotion ID for promotion information
@@ -79,7 +86,7 @@ class PromotionEmailFactory(EmailFactory):
 
     def setPromoID(self, promoID):
         self.promoID = promoID
-        
+
     def email(self, userID):
         #Pull email from user_id here
         user = User.query.filter_by(userID=userID).first()
@@ -117,11 +124,10 @@ class PasswordUpdateEmailFactory(EmailFactory):
 
         subject = "Your password has been changed"
         message = '''
-            <h2>Your password has been changed. </h2> 
+            <h2>Your password has been changed. </h2>
             <br>
-            <p> Your password has been changed, as you asked. </p> 
+            <p> Your password has been changed, as you asked. </p>
             <br>
             <p> If you didn’t ask to change your password, we’re here to help keep your account secure. Visit our support page for more info. </p>
         '''
         email_server.send_email(message, subject, current_user.userEmail, app.debug)
-        
