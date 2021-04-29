@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `order_has_book`;
 CREATE TABLE `order_has_book` (
   `orderID` int NOT NULL,
   `ISBN` char(13) NOT NULL,
-  `orderBookQuantity` int DEFAULT NULL COMMENT 'Number of copies of the book ordered.'
+  `orderBookQuantity` int DEFAULT NULL COMMENT 'Number of copies of the book ordered.',
   PRIMARY KEY (`orderID`,`ISBN`),
   KEY `fk_order_has_book_book1_idx` (`ISBN`),
   KEY `fk_order_has_book_order1_idx` (`orderID`),
