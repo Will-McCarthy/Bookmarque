@@ -37,6 +37,7 @@ def checkout6():
     return render_template('checkout/checkout6.html')
 
 @app.route('/cart', methods = ['POST', 'GET'])
+@login_required
 def shopping_cart():
     cursor = mysql.connection.cursor()
     cID = current_user.get_id() #need to look into checking for non-registered users

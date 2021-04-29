@@ -139,8 +139,10 @@ def book_details(ISBN):
         cursor = mysql.connection.cursor()
         amount = request.form.get('addCartAmount')
         submit = request.form.get('addCart')
-        if submit == "Add to Cart":
-            cID = current_user.get_id() #need to look into checking for non-registered users
+        cID = current_user.get_id()
+        #print (cID)
+        if (submit == "Add to Cart" and cID is not None):
+            #cID = current_user.get_id() #need to look into checking for non-registered users
             #print(cID)
             cursor.execute('''SELECT COUNT(*) FROM shopping_cart WHERE userID = %s;''', [cID])
             cartExist = cursor.fetchone()
