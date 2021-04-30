@@ -79,6 +79,10 @@ def manageBooks():
         if (subject == ""):
             check = False
 
+        description = ''
+        rating = 1
+        image =  'placeholder-cover.svg'
+
         if check and subject is not None:
             if (',' in subject):
                 subject = subject.split(',')
@@ -95,9 +99,9 @@ def manageBooks():
                     cursor.execute('''INSERT INTO book_has_book_categories (ISBN, categoryID) VALUES (%s, %s);''', (ISBN, [subject]))
 
         if check and len(author) > 1:
-            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorFName, authorLName, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], author[1], [copies], publisher, pubDate, [price]))
+            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorFName, authorLName, bookImage, bookRating, bookDescription, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], author[1], image, rating, description, [copies], publisher, pubDate, [price]))
         elif check:
-            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorLName, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], [copies], publisher, pubDate, [price]))
+            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorLName, bookImage, bookRating, bookDescription, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], image, rating, description, [copies], publisher, pubDate, [price]))
 
         mysql.connection.commit()
         return redirect(url_for('manageBooks'))
