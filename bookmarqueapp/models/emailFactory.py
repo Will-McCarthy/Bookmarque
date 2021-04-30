@@ -68,12 +68,12 @@ class VerifyAccountEmailFactory(EmailFactory):
 class OrderSummaryEmailFactory(EmailFactory):
     def __init__(self):
         self.orderID = 0
-    def email(self, userID, orderInfo, total, shipping, promo_code, promo_success):
+    def email(self, userID, orderInfo, total, shipping, promo_code, promo_success, merchandise):
         user = User.query.filter_by(userID=userID).first()
         email = user.userEmail
 
         subject = "Order Summary"
-        html_message = render_template('checkout/order_summary.html', orderInfo = orderInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=promo_success )
+        html_message = render_template('checkout/order_summary.html', orderInfo = orderInfo, total=total, shipping=shipping, promo_discount=promo_code, promo_success=promo_success, merchandise=merchandise )
         email_server.send_email(html_message, subject, email, app.debug)
 
 #Requirement for email construction:

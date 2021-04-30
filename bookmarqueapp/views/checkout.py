@@ -355,16 +355,26 @@ def confirm():
 
     #order feilds:
     #orderID, orderTime, orderStatus, orderAmount, promoID, addressID, cardID, userID
+    promoID = order[4]
+    promo_success = False
+    if promoID != -1:
+        promo_success = True
+        today = datetime.today().strftime('%Y-%m-%d')
+        cursor.execute('''SELECT * FROM promotion WHERE promoID = %s AND promoEnd > %s;''', (promoID, today))
+        promotion = cursor.fetchone()
+        print(promotion)
 
     #get variables for the html page and email
     shipping = 7.50
     total = order[3]
-    promo_code = order[4]
-    promo_success = True
-    if promo_code == -1: promo_success = False
+    merchandise = 0;
+    for item in orderInfo:
+        merchandise = merchandise + item[8]*item[2]
+
+
 
     #send email here
     email_factory = OrderSummaryEmailFactory()
-    email_factory.email(cID, orderInfo, total, shipping, promo_code, promo_success)
+    email_factory.email(cID, orderInfo, total, shipping, promotion[1], promo_success, merchandise)
 
-    return render_template('checkout/order_confirm.html', orderInfo = orderInfo, total=total, shipping=shipping, promo_code=promo_code, promo_success=promo_success )
+    return render_template('checkout/order_confirm.html', orderInfo = orderInfo, total=total, shipping=shipping, promo_discount=promotion[1], promo_success=promo_success, merchandise=merchandise )
