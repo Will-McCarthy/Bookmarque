@@ -59,7 +59,7 @@
             {% if book.bookImage %}
               <img src="{{ url_for('static', filename='assets/covers/' + book.bookImage) }}" alt="{{ book.bookTitle }}">
             {% else %}
-              <img src="{{ url_for('static', filename='assets/covers/placeholder-cover.jpg') }}" alt="{{ book.bookTitle }}">
+              <img src="{{ url_for('static', filename='assets/icons/placeholder-cover.svg') }}" alt="{{ book.bookTitle }}">
             {% endif %}
             <h2 class="title">{{ book.bookTitle }}</h2>
             <p class="author">{{ book.authorFName ~ " " ~ book.authorLName }}</p>
