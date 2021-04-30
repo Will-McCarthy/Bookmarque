@@ -28,7 +28,7 @@
             <h2> Promotion: </h2>
             <label>
               <input type="text" name="promoCode" {% if promo_code %} value="{{ promo_code }}" {% endif %} ></input> 
-              <input type="submit" class="button-blue" name="applyButton" value="Apply">
+              <input type="submit" class="button-blue-cart" name="applyButton" value="Apply">
               {% if promo_success == true %}
               <p> The promotion has been applied to the cart</p>
               {% elif promo_success == false %}
@@ -38,7 +38,7 @@
             
             <br>
             <br>
-            <input type="submit" class="button-blue" name="checkoutButton" value="Place Order">
+            <input type="submit" class="button-blue-cart" name="checkoutButton" value="Place Order">
         </form> 
     </div>
 
