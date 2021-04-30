@@ -79,6 +79,10 @@ def manageBooks():
         if (subject == ""):
             check = False
 
+        description = ''
+        rating = 1
+        image =  'placeholder-cover.svg'
+
         if check and subject is not None:
             if (',' in subject):
                 subject = subject.split(',')
@@ -95,9 +99,9 @@ def manageBooks():
                     cursor.execute('''INSERT INTO book_has_book_categories (ISBN, categoryID) VALUES (%s, %s);''', (ISBN, [subject]))
 
         if check and len(author) > 1:
-            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorFName, authorLName, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], author[1], [copies], publisher, pubDate, [price]))
+            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorFName, authorLName, bookImage, bookRating, bookDescription, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], author[1], image, rating, description, [copies], publisher, pubDate, [price]))
         elif check:
-            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorLName, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], [copies], publisher, pubDate, [price]))
+            cursor.execute('''INSERT INTO book (ISBN, bookTitle, authorLName, bookImage, bookRating, bookDescription, bookQuantity, bookPublisher, bookPublicationDate, bookPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);''', (ISBN, bookTitle, author[0], image, rating, description, [copies], publisher, pubDate, [price]))
 
         mysql.connection.commit()
         return redirect(url_for('manageBooks'))
@@ -157,9 +161,12 @@ def managePromotions():
             cursor.execute('''INSERT INTO promotion(promoDiscount, promoStart, promoEnd, promoEmailStatus, promoUses, promoName,promoCode) VALUES (%s,%s,%s,%s,%s,%s,%s)''', (promo_discount, promo_start, promo_end, "Not Sent", 0, promo_name,promo_code))
             promotion_fetch = cursor.fetchall()
             mysql.connection.commit()
+            cursor.execute('''SELECT promoID FROM `promotion` ORDER BY promoID DESC;''')
+            promoID = cursor.fetchone()
+            promoID = promoID[0]
             #TEST EMAIL, CREATE A PROMOTION/DOESN
             email_factory = PromotionEmailFactory()
-            email_factory.setPromoID(1)
+            email_factory.setPromoID(promoID)
             #You could loop through all userID's sending out this email
             email_factory.email(current_user.userID)
             return redirect(url_for('managePromotions'))
